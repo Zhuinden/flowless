@@ -23,7 +23,7 @@ Manage all types of UIs-- complex master-detail views, multiple layers, and wind
 
 ## Using Flow
 
-Currently it's not set up to be added through Gradle, so you'd have to copy the sources.
+Currently **Flowless** is not set up to be added through Gradle, so you'd have to copy the sources.
 I'm working on that... I think.
 
 Then, install Flow into your Activity:
