@@ -37,7 +37,6 @@ public class MainActivity {
 }
 ```
 
-~~By default, Flow will take over your Activity's content view. When you start your Activity, you should see a "Hello world" screen.~~ 
 ### Defining UI states with key objects
 
 Your Activity's UI states are represented in Flow by Objects, which Flow refers to as "keys". Keys are typically [value objects][valueobject] with just enough information to identify a discrete UI state.
