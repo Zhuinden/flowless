@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha *(2016-05-05)*
+--------------------------------
+* Completely removed `Flow.Services` and resource management, and all relevant classes.
+* MultiKeys and TreeKeys no longer exist, KeyChanger and KeyDispatcher no longer exist.
+* Removed default dispatcher, and the provided default key `"Hello, world"`.
+* Added ForceBundler and Bundleable to preserve custom view state to Bundle in `onSaveInstanceState()`.
+* Added a simple and a master-detail example using Flowless.
+
 Version 1.0-alpha *(2016-02-18)*
 --------------------------------
 Presented for review and feedback. API should still be considered unstable, docs incomplete, and functionality buggy. All of the above should be mostly resolved before beta.

@@ -23,7 +23,7 @@ Manage all types of UIs-- complex master-detail views, multiple layers, and wind
 
 ## Using Flow
 
-Currently it's not set up to be added through Gradle, so you'd have to copy the sources.
+Currently **Flowless** is not set up to be added through Gradle, so you'd have to copy the sources.
 I'm working on that... I think.
 
 Then, install Flow into your Activity:
@@ -31,7 +31,21 @@ Then, install Flow into your Activity:
 ```java
 public class MainActivity {
   @Override protected void attachBaseContext(Context baseContext) {
-    baseContext = Flow.configure(baseContext, this).install();
+    baseContext = Flow.configure(baseContext, this) //
+                      .keyParceler(new KeyParceler() { //
+                         @Override
+                         public Parcelable toParcelable(Object key) {
+                             return (Parcelable) key;
+                         }
+
+                         @Override
+                         public Object toKey(Parcelable parcelable) {
+                             return parcelable;
+                         }
+                      }) //
+                      .defaultKey(new DefaultKey()) //
+                      .dispatcher(new MainDispatcher(this)) //
+                      .install();
     super.attachBaseContext(baseContext);
   }
 }
