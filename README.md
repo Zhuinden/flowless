@@ -85,12 +85,12 @@ Flow also lets you rewrite history safely and easily.
 
 `Flow#setHistory(history, direction)` -- Change history to whatever you want.
 
-See the [Flow][Flow.java] class for other convenient operators.
+See the [Flow](https://github.com/Zhuinden/flowless/blob/master/flow/src/main/java/flow/Flow.java) class for other convenient operators.
 
 As you navigate the app, Flow keeps track of where you've been. And Flow makes it easy to save view state (and any other state you wish) so that when your users go back to a place they've been before, it's just as they left it.
 
 ### Controlling UI
-Navigation only counts if it changes UI state. Because every app has different needs, Flow lets you plug in [your own logic][Dispatcher.java] for responding to navigation and updating your UI.
+Navigation only counts if it changes UI state. Because every app has different needs, Flow lets you plug in [your own logic][https://github.com/Zhuinden/flowless/blob/master/flow/src/main/java/flow/Dispatcher.java] for responding to navigation and updating your UI.
 
 ### ~~Managing resources~~
 ~~Your app requires different resources when it's in different states; sometimes those resources are shared between states. Flow makes it easy to associate resources with keys so they're set up when needed and torn down (only) when they're not anymore.~~
@@ -98,7 +98,7 @@ Navigation only counts if it changes UI state. Because every app has different n
 ### Surviving configuration changes and process death
 Android is a hostile environment. One of its greatest challenges is that your Activity or even your process can be destroyed and recreated under a variety of circumstances. Flow makes it easy to weather the storm, by automatically remembering your app's state and its history. 
 
-You [supply the serialization][KeyParceler.java] for your keys, and Flow does the rest. Flow  automatically saves and restores your History (including any state you've saved), taking care of all of the Android lifecycle events so you don't have to worry about them.
+You [supply the serialization][https://github.com/Zhuinden/flowless/blob/master/flow/src/main/java/flow/KeyParceler.java] for your keys, and Flow does the rest. Flow  automatically saves and restores your History (including any state you've saved), taking care of all of the Android lifecycle events so you don't have to worry about them.
 
 
 ## License
