@@ -19,6 +19,7 @@ package flow;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import java.util.ArrayList;
@@ -62,6 +63,19 @@ public final class Installer {
     }
     if(defaultKey == null) {
       throw new IllegalStateException("Default Key must be defined, but is missing.");
+    }
+    if(parceler == null) {
+      parceler = new KeyParceler() { //
+        @Override
+        public Parcelable toParcelable(Object key) {
+          return (Parcelable) key;
+        }
+
+        @Override
+        public Object toKey(Parcelable parcelable) {
+          return parcelable;
+        }
+      };
     }
     final Object defState = defaultKey;
 
