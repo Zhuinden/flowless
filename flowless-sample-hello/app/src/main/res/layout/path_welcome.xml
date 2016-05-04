@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhuinden.flow_alpha_project.WelcomeView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world"/>
+
+    <Button
+        android:id="@+id/welcome_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_settings"/>
+
+    <EditText
+        android:id="@+id/welcome_edittext"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="welcome"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/welcome_setstate1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set State 1"/>
+
+    <Button
+        android:id="@+id/welcome_setstate2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set State 2"/>
+
+    <Button
+        android:id="@+id/welcome_setstate3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set State 3"/>
+</com.zhuinden.flow_alpha_project.WelcomeView>
