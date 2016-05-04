@@ -10,6 +10,8 @@ _"It's better if you're good at one thing than if you're bad at many things just
 
 **Flow(less) gives names to your Activity's UI states, navigates between them, and remembers where it's been; and that's all it does.**
 
+This is a fork of Flow 1.0-alpha by Square, with the "resource management" aspects completely removed.
+
 ## Features
 
 Navigate between UI states. Support the back button easily without confusing your users with surprising results.
