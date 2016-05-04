@@ -32,17 +32,6 @@ Then, install Flow into your Activity:
 public class MainActivity {
   @Override protected void attachBaseContext(Context baseContext) {
     baseContext = Flow.configure(baseContext, this) //
-                      .keyParceler(new KeyParceler() { //
-                         @Override
-                         public Parcelable toParcelable(Object key) {
-                             return (Parcelable) key;
-                         }
-
-                         @Override
-                         public Object toKey(Parcelable parcelable) {
-                             return parcelable;
-                         }
-                      }) //
                       .defaultKey(new DefaultKey()) //
                       .dispatcher(new MainDispatcher(this)) //
                       .install();
