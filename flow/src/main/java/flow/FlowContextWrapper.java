@@ -20,34 +20,41 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.view.LayoutInflater;
 
-final class FlowContextWrapper extends ContextWrapper {
-  static final String SYSTEM_SERVICE = "flow_services_context_wrapper";
+final class FlowContextWrapper
+        extends ContextWrapper {
+    static final String SYSTEM_SERVICE = "flow_services_context_wrapper";
 
-  static FlowContextWrapper get(Context context) {
-    @SuppressWarnings("WrongConstant") FlowContextWrapper wrapper =
-        (FlowContextWrapper) context.getSystemService(SYSTEM_SERVICE);
-    return wrapper;
-  }
-
-  final Services services;
-
-  private LayoutInflater inflater;
-
-  FlowContextWrapper(Services services, Context baseContext) {
-    super(baseContext);
-    this.services = services;
-  }
-
-  @Override public Object getSystemService(String name) {
-    if (SYSTEM_SERVICE.equals(name)) {
-      return this;
+    static FlowContextWrapper get(Context context) {
+        //noinspection ResourceType
+        @SuppressWarnings("WrongConstant") FlowContextWrapper wrapper = (FlowContextWrapper) context.getSystemService(SYSTEM_SERVICE);
+        return wrapper;
     }
-    if (LAYOUT_INFLATER_SERVICE.equals(name)) {
-      if (inflater == null) {
-        inflater = LayoutInflater.from(getBaseContext()).cloneInContext(this);
-      }
-      return inflater;
+
+    final Object key;
+
+    private LayoutInflater inflater;
+
+    FlowContextWrapper(Object key, Context baseContext) {
+        super(baseContext);
+        this.key = key;
     }
-    return super.getSystemService(name);
-  }
+
+    @Override
+    public Object getSystemService(String name) {
+        if(SYSTEM_SERVICE.equals(name)) {
+            return this;
+        }
+        if(LAYOUT_INFLATER_SERVICE.equals(name)) {
+            if(inflater == null) {
+                inflater = LayoutInflater.from(getBaseContext()).cloneInContext(this);
+            }
+            return inflater;
+        }
+        return super.getSystemService(name);
+    }
+
+    public <T> T getKey() {
+        //noinspection unchecked
+        return (T)key;
+    }
 }

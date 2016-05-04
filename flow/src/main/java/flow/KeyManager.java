@@ -18,6 +18,7 @@ package flow;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -25,131 +26,35 @@ import java.util.List;
 import java.util.Map;
 
 class KeyManager {
-  static final Object ROOT_KEY = new Object() {
-    @Override public String toString() {
-      return KeyManager.class.getSimpleName() + ".ROOT";
+    private final Map<Object, State> states = new LinkedHashMap<>();
+
+    KeyManager() {
     }
-  };
-  private final Map<Object, ManagedServices> managedServices = new LinkedHashMap<>();
-  private final Map<Object, State> states = new LinkedHashMap<>();
 
-  private final List<ServicesFactory> servicesFactories = new ArrayList<>();
-
-  KeyManager(List<ServicesFactory> servicesFactories) {
-    this.servicesFactories.addAll(servicesFactories);
-    managedServices.put(ROOT_KEY, new ManagedServices(Services.ROOT_SERVICES));
-  }
-
-
-  boolean hasState(Object key) {
-    return states.containsKey(key);
-  }
-
-  void addState(State state) {
-    states.put(state.getKey(), state);
-  }
-
-  State getState(Object key) {
-    State state = states.get(key);
-    if (state == null) {
-      state = new State(key);
-      addState(state);
+    boolean hasState(Object key) {
+        return states.containsKey(key);
     }
-    return state;
-  }
 
-  void clearStatesExcept(List<Object> keep) {
-    Iterator<Object> keys = states.keySet().iterator();
-    while (keys.hasNext()) {
-      final Object key = keys.next();
-      if (!keep.contains(key)) keys.remove();
+    void addState(State state) {
+        states.put(state.getKey(), state);
     }
-  }
 
-  Services findServices(Object key) {
-    final ManagedServices managed = managedServices.get(key);
-    if (managed == null) {
-      throw new IllegalStateException("No services currently exists for key " + key);
+    State getState(Object key) {
+        State state = states.get(key);
+        if(state == null) {
+            state = new State(key);
+            addState(state);
+        }
+        return state;
     }
-    return managed.services;
-  }
 
-  void setUp(Object key) {
-    Services parent = managedServices.get(ROOT_KEY).services;
-    if (key instanceof MultiKey) {
-      for (Object part : ((MultiKey) key).getKeys()) {
-        setUp(part);
-      }
-      ensureNode(parent, key).uses++;
-    } else if (key instanceof TreeKey) {
-      TreeKey treeKey = (TreeKey) key;
-      final Object parentKey = treeKey.getParentKey();
-      setUp(parentKey);
-      parent = managedServices.get(parentKey).services;
-      ensureNode(parent, key).uses++;
-    } else {
-      ensureNode(parent, key).uses++;
+    void clearStatesExcept(List<Object> keep) {
+        Iterator<Object> keys = states.keySet().iterator();
+        while(keys.hasNext()) {
+            final Object key = keys.next();
+            if(!keep.contains(key)) {
+                keys.remove();
+            }
+        }
     }
-  }
-
-  void tearDown(Object key) {
-    if (key instanceof MultiKey) {
-      decrementAndMaybeRemoveKey(key);
-      final List<Object> parts = ((MultiKey) key).getKeys();
-      final int count = parts.size();
-      for (int i = count - 1; i >= 0; i--) {
-        tearDown(parts.get(i));
-      }
-    } else if (key instanceof TreeKey) {
-      decrementAndMaybeRemoveKey(key);
-      TreeKey treeKey = (TreeKey) key;
-      tearDown(treeKey.getParentKey());
-    } else {
-      decrementAndMaybeRemoveKey(key);
-    }
-  }
-
-  @NonNull private ManagedServices ensureNode(@Nullable Services parent, Object key) {
-    ManagedServices node = managedServices.get(key);
-    if (node == null) {
-      // Bind the local key as a service.
-      @SuppressWarnings("ConstantConditions") //
-      Services.Binder binder = parent.extend(key);
-      // Add any services from the factories
-      int count = servicesFactories.size();
-      for (int i = 0; i < count; i++) {
-        servicesFactories.get(i).bindServices(binder);
-      }
-      node = new ManagedServices(binder.build());
-      managedServices.put(key, node);
-    }
-    return node;
-  }
-
-  private boolean decrementAndMaybeRemoveKey(Object key) {
-    ManagedServices node = managedServices.get(key);
-    node.uses--;
-    if (key != ROOT_KEY && node.uses == 0) {
-      int count = servicesFactories.size();
-      for (int i = count - 1; i >= 0; i--) {
-        servicesFactories.get(i).tearDownServices(node.services);
-      }
-      managedServices.remove(key);
-      return true;
-    }
-    if (node.uses < 0) {
-      throw new IllegalStateException("Over-decremented uses of key " + key);
-    }
-    return false;
-  }
-
-  private static final class ManagedServices {
-    final Services services;
-    /** Includes uses as a leaf and as a direct parent. */
-    int uses = 0;
-
-    private ManagedServices(Services services) {
-      this.services = services;
-    }
-  }
 }

@@ -41,7 +41,7 @@ public final class Traversal {
    * Contexts can be created only for keys at the top of the origin and destination Histories.
    */
   @NonNull public Context createContext(@NonNull Object key, @NonNull Context baseContext) {
-    return new FlowContextWrapper(keyManager.findServices(key), baseContext);
+    return new FlowContextWrapper(key, baseContext);
   }
 
   @NonNull public State getState(@NonNull Object key) {

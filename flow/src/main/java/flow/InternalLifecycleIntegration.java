@@ -160,7 +160,6 @@ public final class InternalLifecycleIntegration extends Fragment {
   }
 
   @Override public void onDestroy() {
-    keyManager.tearDown(flow.getHistory().top());
     super.onDestroy();
   }
 

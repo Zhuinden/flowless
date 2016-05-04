@@ -28,7 +28,6 @@ public final class Installer {
 
   private final Context baseContext;
   private final Activity activity;
-  private final List<ServicesFactory> contextFactories = new ArrayList<>();
   private KeyParceler parceler;
   private Object defaultKey;
   private Dispatcher dispatcher;
@@ -53,31 +52,22 @@ public final class Installer {
     return this;
   }
 
-  /**
-   * Applies a factory when creating a Context associated with a given key.
-   *
-   * May be called multiple times. Factories are called in the order given during setup, and
-   * in reverse order during teardown.
-   */
-  @NonNull public Installer addServicesFactory(@NonNull ServicesFactory factory) {
-    contextFactories.add(factory);
-    return this;
-  }
-
   @NonNull public Context install() {
     if (InternalLifecycleIntegration.find(activity) != null) {
       throw new IllegalStateException("Flow is already installed in this Activity.");
     }
     Dispatcher dispatcher = this.dispatcher;
     if (dispatcher == null) {
-      dispatcher = KeyDispatcher.configure(activity, new DefaultKeyChanger(activity)) //
-          .build();
+      throw new IllegalStateException("Dispatcher must be defined, but is missing.");
     }
-    final Object defState = defaultKey == null ? "Hello, World!" : defaultKey;
+    if(defaultKey == null) {
+      throw new IllegalStateException("Default Key must be defined, but is missing.");
+    }
+    final Object defState = defaultKey;
 
     final History defaultHistory = History.single(defState);
     final Application app = (Application) baseContext.getApplicationContext();
-    final KeyManager keyManager = new KeyManager(contextFactories);
+    final KeyManager keyManager = new KeyManager();
     InternalLifecycleIntegration.install(app, activity, parceler, defaultHistory, dispatcher,
         keyManager);
     return new InternalContextWrapper(baseContext, activity);

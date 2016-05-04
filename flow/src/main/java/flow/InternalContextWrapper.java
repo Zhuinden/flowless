@@ -26,12 +26,14 @@ final class InternalContextWrapper extends ContextWrapper {
       "flow.InternalContextWrapper.CONTEXT_MANAGER_SERVICE";
 
   static Flow getFlow(Context context) {
+    //noinspection ResourceType
     @SuppressWarnings("WrongConstant")
     Flow systemService = (Flow) context.getSystemService(FLOW_SERVICE);
     return systemService;
   }
 
-  static KeyManager getContextManager(Context context) {
+  static KeyManager getKeyManager(Context context) {
+    //noinspection ResourceType
     @SuppressWarnings("WrongConstant")
     final KeyManager service =
         (KeyManager) context.getSystemService(CONTEXT_MANAGER_SERVICE);
