@@ -43,8 +43,8 @@ public class MainActivity {
                              return parcelable;
                          }
                       }) //
-                      .defaultKey(new WelcomeKey()) //
-                      .dispatcher(new MainKeyChanger(this)) //
+                      .defaultKey(new DefaultKey()) //
+                      .dispatcher(new MainDispatcher(this)) //
                       .install();
     super.attachBaseContext(baseContext);
   }
