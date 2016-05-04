@@ -46,7 +46,7 @@ Flow relies on a key's [equals][equals] and [hashCode][hashcode] methods for its
 To give an idea of what keys might look like, here are some examples:
 
 ```java
-public enum TabKey {se
+public enum TabKey {
   TIMELINE,
   NOTIFICATIONS,
   PROFILE
