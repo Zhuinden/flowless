@@ -46,7 +46,7 @@ Flow relies on a key's [equals][equals] and [hashCode][hashcode] methods for its
 To give an idea of what keys might look like, here are some examples:
 
 ```java
-public enum TabKey {
+public enum TabKey {se
   TIMELINE,
   NOTIFICATIONS,
   PROFILE
@@ -93,7 +93,7 @@ As you navigate the app, Flow keeps track of where you've been. And Flow makes i
 Navigation only counts if it changes UI state. Because every app has different needs, Flow lets you plug in [your own logic][Dispatcher.java] for responding to navigation and updating your UI.
 
 ### ~~Managing resources~~
-~~Your app requires different resources when it's in different states; sometimes those resources are shared between states. Flow [makes it easy][ServicesFactory.java] to associate resources with keys so they're set up when needed and torn down (only) when they're not anymore.~~
+~~Your app requires different resources when it's in different states; sometimes those resources are shared between states. Flow makes it easy to associate resources with keys so they're set up when needed and torn down (only) when they're not anymore.~~
 
 ### Surviving configuration changes and process death
 Android is a hostile environment. One of its greatest challenges is that your Activity or even your process can be destroyed and recreated under a variety of circumstances. Flow makes it easy to weather the storm, by automatically remembering your app's state and its history. 
@@ -117,10 +117,7 @@ You [supply the serialization][KeyParceler.java] for your keys, and Flow does th
     See the License for the specific language governing permissions and
     limitations under the License.
 
-[Dispatcher.java]: flow/src/main/java/flow/Dispatcher.java
 [equals]: http://developer.android.com/reference/java/lang/Object.html#equals(java.lang.Object)
-[Flow.java]: flow/src/main/java/flow/Flow.java
 [hashcode]: http://developer.android.com/reference/java/lang/Object.html#hashCode()
-[KeyParceler.java]: https://github.com/square/flow/blob/master/flow/src/main/java/flow/KeyParceler.java
 [keys]: #defining-ui-states-with-key-objects
 [valueobject]: https://en.wikipedia.org/wiki/Value_object
