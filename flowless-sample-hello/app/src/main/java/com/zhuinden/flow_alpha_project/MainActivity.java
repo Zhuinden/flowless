@@ -56,7 +56,7 @@ public class MainActivity
         public void dispatch(@NonNull Traversal traversal, final @NonNull TraversalCallback callback) {
             History destination = traversal.destination;
             History origin = traversal.origin;
-            if(origin != null && origin.top() != null && origin.top() == destination.top()) { //short circuit on same key
+            if(origin != null && origin.top() != null && origin.top().equals(destination.top())) { //short circuit on same key
                 callback.onTraversalCompleted();
                 return;
             }
