@@ -1,3 +1,4 @@
 include ':flow'
+include ':flow-sample-basic'
 include ':flowless-sample-hello'
 include ':flowless-sample-master-detail'
