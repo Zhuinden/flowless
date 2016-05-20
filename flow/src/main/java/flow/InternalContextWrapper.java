@@ -20,47 +20,55 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 
-final class InternalContextWrapper extends ContextWrapper {
-  private static final String FLOW_SERVICE = "flow.InternalContextWrapper.FLOW_SERVICE";
-  private static final String CONTEXT_MANAGER_SERVICE =
-      "flow.InternalContextWrapper.CONTEXT_MANAGER_SERVICE";
+public final class InternalContextWrapper
+        extends ContextWrapper {
+    private static final String FLOW_SERVICE = "flow.InternalContextWrapper.FLOW_SERVICE";
+    private static final String CONTEXT_MANAGER_SERVICE = "flow.InternalContextWrapper.CONTEXT_MANAGER_SERVICE";
+    private static final String ACTIVITY = "flow.InternalContextWrapper.ACTIVITY_SERVICE";
 
-  static Flow getFlow(Context context) {
-    //noinspection ResourceType
-    @SuppressWarnings("WrongConstant")
-    Flow systemService = (Flow) context.getSystemService(FLOW_SERVICE);
-    return systemService;
-  }
-
-  static KeyManager getKeyManager(Context context) {
-    //noinspection ResourceType
-    @SuppressWarnings("WrongConstant")
-    final KeyManager service =
-        (KeyManager) context.getSystemService(CONTEXT_MANAGER_SERVICE);
-    return service;
-  }
-
-  private final Activity activity;
-  private Flow flow;
-  private KeyManager keyManager;
-
-  InternalContextWrapper(Context baseContext, Activity activity) {
-    super(baseContext);
-    this.activity = activity;
-  }
-
-  @Override public Object getSystemService(String name) {
-    if (FLOW_SERVICE.equals(name)) {
-      if (flow == null) {
-        flow = InternalLifecycleIntegration.find(activity).flow;
-      }
-      return flow;
-    } else if (CONTEXT_MANAGER_SERVICE.equals(name)) {
-      if (keyManager == null) {
-        keyManager = InternalLifecycleIntegration.find(activity).keyManager;
-      }
-      return keyManager;
+    static Flow getFlow(Context context) {
+        //noinspection ResourceType
+        @SuppressWarnings("WrongConstant") Flow systemService = (Flow) context.getSystemService(FLOW_SERVICE);
+        return systemService;
     }
-    return super.getSystemService(name);
-  }
+
+    static KeyManager getKeyManager(Context context) {
+        //noinspection ResourceType
+        @SuppressWarnings("WrongConstant") final KeyManager service = (KeyManager) context.getSystemService(CONTEXT_MANAGER_SERVICE);
+        return service;
+    }
+
+    public static Activity getActivity(Context context) {
+        //noinspection ResourceType
+        Activity activity = (Activity) context.getSystemService(ACTIVITY);
+        return activity;
+    }
+
+    private final Activity activity;
+    private Flow flow;
+    private KeyManager keyManager;
+
+    InternalContextWrapper(Context baseContext, Activity activity) {
+        super(baseContext);
+        this.activity = activity;
+    }
+
+    @Override
+    public Object getSystemService(String name) {
+        if(FLOW_SERVICE.equals(name)) {
+            if(flow == null) {
+                flow = InternalLifecycleIntegration.find(activity).flow;
+            }
+            return flow;
+        } else if(CONTEXT_MANAGER_SERVICE.equals(name)) {
+            if(keyManager == null) {
+                keyManager = InternalLifecycleIntegration.find(activity).keyManager;
+            }
+            return keyManager;
+        } else if(ACTIVITY_SERVICE.equals(name)) {
+            return activity;
+        } else {
+            return super.getSystemService(name);
+        }
+    }
 }
