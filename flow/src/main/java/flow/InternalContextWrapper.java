@@ -20,7 +20,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 
-public final class InternalContextWrapper
+final class InternalContextWrapper
         extends ContextWrapper {
     private static final String FLOW_SERVICE = "flow.InternalContextWrapper.FLOW_SERVICE";
     private static final String CONTEXT_MANAGER_SERVICE = "flow.InternalContextWrapper.CONTEXT_MANAGER_SERVICE";
