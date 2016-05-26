@@ -24,9 +24,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+
+import hu.telekom.smarty.utils.EspressoIdlingResource;
 
 import static flow.Preconditions.checkArgument;
 import static flow.Preconditions.checkNotNull;
@@ -119,10 +119,10 @@ public final class Flow {
      * not be affected.
      */
     public void setDispatcher(@NonNull Dispatcher dispatcher) {
-        setDispatcher(dispatcher, false);
+        setDispatcher(dispatcher, true);
     }
 
-    void setDispatcher(@NonNull Dispatcher dispatcher, final boolean restore) {
+    void setDispatcher(@NonNull Dispatcher dispatcher, final boolean isBootstrapNeeded) {
         this.dispatcher = checkNotNull(dispatcher, "dispatcher");
 
         if(pendingTraversal == null || //
@@ -130,13 +130,21 @@ public final class Flow {
             // Nothing is happening;
             // OR, there is an outstanding callback and nothing will happen after it;
             // So enqueue a bootstrap traversal.
-            move(new PendingTraversal() {
-                @Override
-                void doExecute() {
-                    bootstrap(history, restore);
+            if(isBootstrapNeeded) {
+                move(new PendingTraversal() {
+                    @Override
+                    void doExecute() {
+                        bootstrap(history, isBootstrapNeeded);
+                    }
+                });
+            } else {
+                if(pendingTraversal != null) {
+                    pendingTraversal.state = TraversalState.FINISHED;
+                    pendingTraversal = null;
                 }
-            });
+            }
             return;
+
         }
 
         if(pendingTraversal.state == TraversalState.ENQUEUED) {
@@ -270,6 +278,7 @@ public final class Flow {
     }
 
     private void move(PendingTraversal pendingTraversal) {
+        EspressoIdlingResource.increment();
         if(this.pendingTraversal == null) {
             this.pendingTraversal = pendingTraversal;
             // If there is no dispatcher wait until one shows up before executing.
@@ -279,6 +288,7 @@ public final class Flow {
         } else {
             this.pendingTraversal.enqueue(pendingTraversal);
         }
+        EspressoIdlingResource.decrement();
     }
 
     private static History preserveEquivalentPrefix(History current, History proposed) {
@@ -341,6 +351,7 @@ public final class Flow {
 
         @Override
         public void onTraversalCompleted() {
+            EspressoIdlingResource.increment();
             if(state != TraversalState.DISPATCHED) {
                 throw new IllegalStateException(state == TraversalState.FINISHED ? "onComplete already called for this transition" : "transition not yet dispatched!");
             }
@@ -356,13 +367,18 @@ public final class Flow {
             } else if(dispatcher != null) {
                 pendingTraversal.execute();
             }
+            EspressoIdlingResource.decrement();
         }
 
         void bootstrap(History history, boolean restore) {
             if(dispatcher == null) {
                 throw new AssertionError("Bad doExecute method allowed dispatcher to be cleared");
             }
-            dispatcher.dispatch(new Traversal(null, history, Direction.REPLACE, keyManager), this);
+            EspressoIdlingResource.increment();
+            if(restore) {
+                dispatcher.dispatch(new Traversal(null, history, Direction.REPLACE, keyManager), this);
+            }
+            EspressoIdlingResource.decrement();
         }
 
         void dispatch(History nextHistory, Direction direction) {
@@ -370,10 +386,13 @@ public final class Flow {
             if(dispatcher == null) {
                 throw new AssertionError("Bad doExecute method allowed dispatcher to be cleared");
             }
+            EspressoIdlingResource.increment();
             dispatcher.dispatch(new Traversal(getHistory(), nextHistory, direction, keyManager), this);
+            EspressoIdlingResource.decrement();
         }
 
         final void execute() {
+            EspressoIdlingResource.increment();
             if(state != TraversalState.ENQUEUED) {
                 throw new AssertionError("unexpected state " + state);
             }
@@ -383,6 +402,7 @@ public final class Flow {
 
             state = TraversalState.DISPATCHED;
             doExecute();
+            EspressoIdlingResource.decrement();
         }
 
         /**
