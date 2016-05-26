@@ -65,7 +65,7 @@ public final class InternalContextWrapper
                 keyManager = InternalLifecycleIntegration.find(activity).keyManager;
             }
             return keyManager;
-        } else if(ACTIVITY_SERVICE.equals(name)) {
+        } else if(ACTIVITY.equals(name)) {
             return activity;
         } else {
             return super.getSystemService(name);
