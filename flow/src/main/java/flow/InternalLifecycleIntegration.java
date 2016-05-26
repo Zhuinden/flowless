@@ -96,11 +96,14 @@ public final class InternalLifecycleIntegration extends Fragment {
   History defaultHistory;
   Dispatcher dispatcher;
   Intent intent;
+
   private boolean dispatcherSet;
+  private boolean isBootstrapNeeded;
 
   public InternalLifecycleIntegration() {
     super();
     setRetainInstance(true);
+    isBootstrapNeeded = true;
   }
 
   static void addHistoryToIntent(Intent intent, History history, KeyParceler parceler) {
@@ -138,23 +141,23 @@ public final class InternalLifecycleIntegration extends Fragment {
       }
       History history = selectHistory(intent, savedHistory, defaultHistory, parceler, keyManager);
       flow = new Flow(keyManager, history);
-      flow.setDispatcher(dispatcher, false);
-    } else {
-      flow.setDispatcher(dispatcher, true);
     }
+    flow.setDispatcher(dispatcher, true);
+    isBootstrapNeeded = false;
     dispatcherSet = true;
   }
 
   @Override public void onResume() {
     super.onResume();
     if (!dispatcherSet) {
-      flow.setDispatcher(dispatcher);
+      flow.setDispatcher(dispatcher, isBootstrapNeeded);
       dispatcherSet = true;
     }
   }
 
   @Override public void onPause() {
     flow.removeDispatcher(dispatcher);
+    isBootstrapNeeded = false;
     dispatcherSet = false;
     super.onPause();
   }
