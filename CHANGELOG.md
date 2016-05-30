@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha *(2016-05-27)*
+--------------------------------
+* Added `ActivityUtils` class to obtain `Activity` from Flow Contexts
+* Fixed calling bootstrap traversal on `onResume()` even in case the View still exists
+
 Flowless Version 1.0-alpha *(2016-05-05)*
 --------------------------------
 * Completely removed `Flow.Services` and resource management, and all relevant classes.
