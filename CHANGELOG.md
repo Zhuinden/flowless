@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha *(2016-06-17)*
+--------------------------------
+* Fixed `Flow.addHistoryToIntent()` state restoration
+
 Flowless Version 1.0-alpha *(2016-05-27)*
 --------------------------------
 * Added `ActivityUtils` class to obtain `Activity` from Flow Contexts
