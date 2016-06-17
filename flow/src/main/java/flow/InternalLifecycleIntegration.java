@@ -33,10 +33,9 @@ import static flow.Preconditions.checkNotNull;
  * Pay no attention to this class. It's only public because it has to be.
  */
 public final class InternalLifecycleIntegration extends Fragment {
+  static final String INTENT_KEY = "Flow_history";
   static final String TAG = "flow-lifecycle-integration";
-  static final String PERSISTENCE_KEY =
-      InternalLifecycleIntegration.class.getSimpleName() + "_state";
-  static final String INTENT_KEY = InternalLifecycleIntegration.class.getSimpleName() + "_history";
+  static final String PERSISTENCE_KEY = "Flow_state";
 
   static InternalLifecycleIntegration find(Activity activity) {
     return (InternalLifecycleIntegration) activity.getFragmentManager().findFragmentByTag(TAG);
@@ -106,7 +105,7 @@ public final class InternalLifecycleIntegration extends Fragment {
     isBootstrapNeeded = true;
   }
 
-  static void addHistoryToIntent(Intent intent, History history, KeyParceler parceler) {
+  static void addHistoryToIntent(Intent intent, History history, KeyParceler parceler, KeyManager keyManager) {
     Bundle bundle = new Bundle();
     ArrayList<Parcelable> parcelables = new ArrayList<>(history.size());
     final Iterator<Object> keys = history.reverseIterator();
@@ -116,6 +115,7 @@ public final class InternalLifecycleIntegration extends Fragment {
     }
     bundle.putParcelableArrayList("FLOW_STATE", parcelables);
     intent.putExtra(INTENT_KEY, bundle);
+    save(bundle, parceler, history, keyManager);
   }
 
   void onNewIntent(Intent intent) {
