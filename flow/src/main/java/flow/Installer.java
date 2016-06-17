@@ -65,18 +65,7 @@ public final class Installer {
       throw new IllegalStateException("Default Key must be defined, but is missing.");
     }
     if(parceler == null) {
-      parceler = new KeyParceler() { //
-        @Override
-        public Parcelable toParcelable(Object key) {
-          return (Parcelable) key;
-        }
-
-        @Override
-        public Object toKey(Parcelable parcelable) {
-          return parcelable;
-        }
-      };
-    }
+      parceler = Flow.DEFAULT_KEY_PARCELER;
     final Object defState = defaultKey;
 
     final History defaultHistory = History.single(defState);
