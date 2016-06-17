@@ -19,6 +19,7 @@ package flow;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -33,6 +34,18 @@ import static flow.Preconditions.checkNotNull;
  * Holds the current truth, the history of screens, and exposes operations to change it.
  */
 public final class Flow {
+    public static final KeyParceler DEFAULT_KEY_PARCELER = new KeyParceler() { //
+        @Override
+        public Parcelable toParcelable(Object key) {
+            return (Parcelable) key;
+        }
+
+        @Override
+        public Object toKey(Parcelable parcelable) {
+            return parcelable;
+        }
+    };
+    
     @NonNull
     public static Flow get(@NonNull View view) {
         return get(view.getContext());
@@ -76,8 +89,8 @@ public final class Flow {
     /**
      * Adds a history as an extra to an Intent.
      */
-    public static void addHistory(@NonNull Intent intent, @NonNull History history, @NonNull KeyParceler parceler) {
-        InternalLifecycleIntegration.addHistoryToIntent(intent, history, parceler);
+    public void addHistory(@NonNull Intent intent, @NonNull History history, @NonNull KeyParceler parceler) {
+        InternalLifecycleIntegration.addHistoryToIntent(intent, history, parceler, keyManager);
     }
 
     /**
