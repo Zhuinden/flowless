@@ -23,6 +23,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -59,6 +61,7 @@ public final class InternalLifecycleIntegration extends Fragment {
           }
           // We always replace the dispatcher because it frequently references the Activity.
           fragment.dispatcher = dispatcher;
+            fragment.intent = a.getIntent();
           if (newFragment) {
             activity.getFragmentManager() //
                 .beginTransaction() //
@@ -111,9 +114,18 @@ public final class InternalLifecycleIntegration extends Fragment {
     final Iterator<Object> keys = history.reverseIterator();
     while (keys.hasNext()) {
       Object key = keys.next();
-      parcelables.add(State.empty(key).toBundle(parceler));
+        //parcelables.add(State.empty(key).toBundle(parceler)); // original code
+        State keyState;
+        if(keyManager.hasState(key)) {
+            //Log.d(TAG, "Key [" + key + "] has state");
+            keyState = keyManager.getState(key);
+        } else {
+            //Log.d(TAG, "Key [" + key + "] has no state");
+            keyState = State.empty(key);
+        }
+        parcelables.add(keyState.toBundle(parceler));
     }
-    bundle.putParcelableArrayList("FLOW_STATE", parcelables);
+      bundle.putParcelableArrayList(PERSISTENCE_KEY, parcelables);
     intent.putExtra(INTENT_KEY, bundle);
     save(bundle, parceler, history, keyManager);
   }
@@ -183,6 +195,7 @@ public final class InternalLifecycleIntegration extends Fragment {
   private static History selectHistory(Intent intent, History saved, History defaultHistory,
       @Nullable KeyParceler parceler, KeyManager keyManager) {
     if (saved != null) {
+        //Log.i(TAG, "Saved selected [" + saved + "]");
       return saved;
     }
     if (intent != null && intent.hasExtra(INTENT_KEY)) {
@@ -190,8 +203,16 @@ public final class InternalLifecycleIntegration extends Fragment {
           "Intent has a Flow history extra, but Flow was not installed with a KeyParceler");
       History.Builder history = History.emptyBuilder();
       load(intent.<Bundle>getParcelableExtra(INTENT_KEY), parceler, history, keyManager);
+        //Log.i(TAG, "Intent Key selected [" + history + "]");
       return history.build();
+    } else {
+        if(intent == null) {
+            //Log.i(TAG, "Starting intent is null");
+        } else {
+            //Log.i(TAG, "The intent [" + intent + "] has no extra called [" + INTENT_KEY + "]");
+        }
     }
+    //Log.i(TAG, "Default history selected [" + defaultHistory + "]");
     return defaultHistory;
   }
 
@@ -220,5 +241,4 @@ public final class InternalLifecycleIntegration extends Fragment {
       }
     }
   }
-
 }
