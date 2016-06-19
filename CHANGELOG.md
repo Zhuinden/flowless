@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-Flowless Version 1.0-alpha *(2016-06-17)*
+Flowless Version 1.0-alpha *(2016-06-17, 2016-06-19)*
 --------------------------------
 * Fixed `Flow.addHistoryToIntent()` state restoration
 
