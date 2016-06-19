@@ -24,9 +24,10 @@ import android.util.SparseArray;
 import android.view.View;
 
 public class State {
-  /** Creates a State instance that has no state and is effectively immutable. */
-  @NonNull public static State empty(@NonNull final Object key) {
-    return new EmptyState(key);
+  /** Creates a State instance that has no initial state. */
+  @NonNull
+  public static State empty(@NonNull final Object key) {
+    return new State(key);
   }
 
   @NonNull static State fromBundle(@NonNull Bundle savedState, @NonNull KeyParceler parceler) {
@@ -96,24 +97,5 @@ public class State {
 
   @Override public String toString() {
     return getKey().toString();
-  }
-
-  private static final class EmptyState extends State {
-    public EmptyState(Object flowState) {
-      super(flowState);
-    }
-
-    @Override public void save(@NonNull View view) {
-    }
-
-    @Override public void restore(@NonNull View view) {
-    }
-
-    @Override public void setBundle(Bundle bundle) {
-    }
-
-    @Nullable @Override public Bundle getBundle() {
-      return null;
-    }
   }
 }
