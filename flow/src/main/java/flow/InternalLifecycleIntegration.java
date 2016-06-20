@@ -120,10 +120,8 @@ public final class InternalLifecycleIntegration
         final Iterator<Object> keys = history.reverseIterator();
         while(keys.hasNext()) {
             Object key = keys.next();
-            //parcelables.add(State.empty(key).toBundle(parceler)); // original code
             State keyState;
-            if(keyManager.hasState(key)) {
-                //Log.d(TAG, "Key [" + key + "] has state");
+            if(keyManager != null && keyManager.hasState(key)) {
                 keyState = keyManager.getState(key);
             } else {
                 //Log.d(TAG, "Key [" + key + "] has no state");
@@ -133,7 +131,6 @@ public final class InternalLifecycleIntegration
         }
         bundle.putParcelableArrayList(PERSISTENCE_KEY, parcelables);
         intent.putExtra(INTENT_KEY, bundle);
-        save(bundle, parceler, history, keyManager);
     }
 
     void onNewIntent(Intent intent) {
