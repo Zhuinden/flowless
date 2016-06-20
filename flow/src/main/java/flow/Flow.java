@@ -88,8 +88,12 @@ public final class Flow {
     /**
      * Adds a history as an extra to an Intent.
      */
-    public void addHistory(@NonNull Intent intent, @NonNull History history, @NonNull KeyParceler parceler) {
+    public void addHistoryToIntent(@NonNull Intent intent, @NonNull History history, @NonNull KeyParceler parceler) {
         InternalLifecycleIntegration.addHistoryToIntent(intent, history, parceler, keyManager);
+    }
+
+    public static void addHistoryToIntentWithoutState(@NonNull Intent intent, @NonNull History history, @NonNull KeyParceler parceler) {
+        InternalLifecycleIntegration.addHistoryToIntent(intent, history, parceler, null);
     }
 
     /**
