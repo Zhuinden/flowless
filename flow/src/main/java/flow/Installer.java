@@ -66,6 +66,7 @@ public final class Installer {
     }
     if(parceler == null) {
       parceler = Flow.DEFAULT_KEY_PARCELER;
+    }
     final Object defState = defaultKey;
 
     final History defaultHistory = History.single(defState);
