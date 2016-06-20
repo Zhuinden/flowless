@@ -21,11 +21,13 @@ package flow;
  */
 public abstract class ClassKey {
 
-  @Override public boolean equals(Object o) {
-    return this == o || (o != null && getClass() == o.getClass());
-  }
+    @Override
+    public boolean equals(Object o) {
+        return this == o || (o != null && getClass() == o.getClass());
+    }
 
-  @Override public int hashCode() {
-    return getClass().hashCode();
-  }
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
