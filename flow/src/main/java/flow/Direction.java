@@ -17,5 +17,7 @@
 package flow;
 
 public enum Direction {
-  FORWARD, BACKWARD, REPLACE
+    FORWARD,
+    BACKWARD,
+    REPLACE
 }

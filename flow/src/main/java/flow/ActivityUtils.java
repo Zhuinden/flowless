@@ -1,10 +1,9 @@
+package flow;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.util.Log;
-
-import flow.FlowContextWrapper;
-import flow.InternalContextWrapper;
 
 /**
  * Created by Zhuinden on 2016.05.26..
@@ -14,7 +13,7 @@ public class ActivityUtils {
 
     public static Activity getActivity(Context context) {
         if(context instanceof Activity) {
-            return (Activity)context;
+            return (Activity) context;
         } else if(context instanceof ContextWrapper) {
             if(context instanceof FlowContextWrapper) {
                 FlowContextWrapper flowContextWrapper = (FlowContextWrapper) context;
@@ -27,7 +26,7 @@ public class ActivityUtils {
             } else {
                 Context baseContext = ((ContextWrapper) context).getBaseContext();
                 if(baseContext instanceof Activity) {
-                    return (Activity)baseContext;
+                    return (Activity) baseContext;
                 }
             }
         }

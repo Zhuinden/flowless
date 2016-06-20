@@ -45,7 +45,7 @@ public final class Flow {
             return parcelable;
         }
     };
-    
+
     @NonNull
     public static Flow get(@NonNull View view) {
         return get(view.getContext());
@@ -53,12 +53,11 @@ public final class Flow {
 
     @NonNull
     public static Flow get(@NonNull Context context) {
-      Flow flow = InternalContextWrapper.getFlow(context);
-      if (null == flow) {
-        throw new IllegalStateException("Context was not wrapped with flow. "
-           + "Make sure attachBaseContext was overridden in your main activity");
-      }
-      return flow;
+        Flow flow = InternalContextWrapper.getFlow(context);
+        if(null == flow) {
+            throw new IllegalStateException("Context was not wrapped with flow. " + "Make sure attachBaseContext was overridden in your main activity");
+        }
+        return flow;
     }
 
     /**
@@ -289,6 +288,7 @@ public final class Flow {
     }
 
     private void move(PendingTraversal pendingTraversal) {
+        //EspressoIdlingResource.increment();
         if(this.pendingTraversal == null) {
             this.pendingTraversal = pendingTraversal;
             // If there is no dispatcher wait until one shows up before executing.
@@ -298,6 +298,7 @@ public final class Flow {
         } else {
             this.pendingTraversal.enqueue(pendingTraversal);
         }
+        //EspressoIdlingResource.decrement();
     }
 
     private static History preserveEquivalentPrefix(History current, History proposed) {
@@ -360,6 +361,7 @@ public final class Flow {
 
         @Override
         public void onTraversalCompleted() {
+            //EspressoIdlingResource.increment();
             if(state != TraversalState.DISPATCHED) {
                 throw new IllegalStateException(state == TraversalState.FINISHED ? "onComplete already called for this transition" : "transition not yet dispatched!");
             }
@@ -375,15 +377,18 @@ public final class Flow {
             } else if(dispatcher != null) {
                 pendingTraversal.execute();
             }
+            //EspressoIdlingResource.decrement();
         }
 
         void bootstrap(History history, boolean restore) {
             if(dispatcher == null) {
                 throw new AssertionError("Bad doExecute method allowed dispatcher to be cleared");
             }
+            //EspressoIdlingResource.increment();
             if(restore) {
                 dispatcher.dispatch(new Traversal(null, history, Direction.REPLACE, keyManager), this);
             }
+            //EspressoIdlingResource.decrement();
         }
 
         void dispatch(History nextHistory, Direction direction) {
@@ -391,10 +396,13 @@ public final class Flow {
             if(dispatcher == null) {
                 throw new AssertionError("Bad doExecute method allowed dispatcher to be cleared");
             }
+            //EspressoIdlingResource.increment();
             dispatcher.dispatch(new Traversal(getHistory(), nextHistory, direction, keyManager), this);
+            //EspressoIdlingResource.decrement();
         }
 
         final void execute() {
+            //EspressoIdlingResource.increment();
             if(state != TraversalState.ENQUEUED) {
                 throw new AssertionError("unexpected state " + state);
             }
@@ -404,6 +412,7 @@ public final class Flow {
 
             state = TraversalState.DISPATCHED;
             doExecute();
+            //EspressoIdlingResource.decrement();
         }
 
         /**
