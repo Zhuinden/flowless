@@ -78,6 +78,19 @@ public final class ArticleKey {
 }
 ```
 
+But if you want to be really cool, you can use [Auto-Parcel](https://github.com/frankiesardo/auto-parcel) to generate Parcelable immutable objects to define your keys.
+
+``` java
+@AutoValue
+public abstract class CalendarEventKey
+        implements LayoutPath, Parcelable {
+    abstract long eventId();
+
+    public static CalendarEventKey create(long eventId) {
+        return new AutoValue_CalendarEventKey(R.layout.path_calendarevent, FlowAnimation.SEGUE, eventId);
+    }
+}
+```
 
 ### Navigation and History
 Flow offers simple commands for navigating within your app.
@@ -105,6 +118,9 @@ Android is a hostile environment. One of its greatest challenges is that your Ac
 
 You [supply the serialization](https://github.com/Zhuinden/flowless/blob/master/flow/src/main/java/flow/KeyParceler.java) for your keys, and Flow does the rest. Flow  automatically saves and restores your History (including any state you've saved), taking care of all of the Android lifecycle events so you don't have to worry about them.
 
+## Pre-set dispatchers for common use-cases
+
+Currently the only use-case supported out of the box by Flowless is that your Activity has a *single root*. The dispatcher provides optional lifecycle callbacks and the [sample shows the necessary configuration to make it all work](https://github.com/Zhuinden/flowless/blob/master/flowless-sample-single-root/app/src/main/java/com/zhuinden/flowless_dispatcher_sample/MainActivity.java).
 
 ## License
 
