@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha *(2016-06-28)*
+--------------------------------
+* Added `SingleRootDispatcher` preset and sample
+
 Flowless Version 1.0-alpha *(2016-06-17, 2016-06-19)*
 --------------------------------
 * Fixed `Flow.addHistoryToIntent()` state restoration
