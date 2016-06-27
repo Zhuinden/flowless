@@ -37,6 +37,7 @@ public class MainActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         flowDispatcher.getRootHolder().setRoot(root);
+        flowDispatcher.onActivityCreated(this, savedInstanceState); // dispatcher root cannot know about this event unless explicitly called
     }
 
     @Override
