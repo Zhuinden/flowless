@@ -37,7 +37,13 @@ public class MainActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         flowDispatcher.getRootHolder().setRoot(root);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
         flowDispatcher.onActivityCreated(this, savedInstanceState); // dispatcher root cannot know about this event unless explicitly called
+        //please note that this method is called after `onStart()`. It's most likely not needed anyways.
     }
 
     @Override
