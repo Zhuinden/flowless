@@ -15,7 +15,9 @@ import flow.preset.SingleRootDispatcher;
 /**
  * Created by Zhuinden on 2016.06.28..
  */
-public class SecondView extends RelativeLayout implements SingleRootDispatcher.ViewLifecycleListener, Bundleable {
+public class SecondView
+        extends RelativeLayout
+        implements SingleRootDispatcher.ViewLifecycleListener, Bundleable {
     public SecondView(Context context) {
         super(context);
         init();
