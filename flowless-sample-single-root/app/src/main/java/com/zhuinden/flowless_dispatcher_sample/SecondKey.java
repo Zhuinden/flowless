@@ -13,6 +13,6 @@ import flow.preset.LayoutPath;
 @AutoValue
 public abstract class SecondKey implements LayoutPath {
     public static SecondKey create() {
-        return new AutoValue_SecondKey(R.layout.path_second, FlowAnimation.NONE);
+        return new AutoValue_SecondKey(R.layout.path_second, FlowAnimation.SEGUE);
     }
 }

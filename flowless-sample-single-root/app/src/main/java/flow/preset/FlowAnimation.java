@@ -1,6 +1,8 @@
 package flow.preset;
 
 import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.support.annotation.Nullable;
 import android.view.View;
 
@@ -17,6 +19,28 @@ public abstract class FlowAnimation implements Serializable {
         @Override
         public Animator createAnimation(View previousView, View newView, Direction direction) {
             return null;
+        }
+
+        @Override
+        public boolean showChildOnTopWhenAdded(Direction direction) {
+            return true;
+        }
+    };
+
+    public static FlowAnimation SEGUE = new FlowAnimation() {
+        @Nullable
+        @Override
+        public Animator createAnimation(View previousView, View newView, Direction direction) {
+            boolean backward = direction == Direction.BACKWARD;
+            int fromTranslation = backward ? previousView.getWidth() : -previousView.getWidth();
+            int toTranslation = backward ? -newView.getWidth() : newView.getWidth();
+
+            AnimatorSet set = new AnimatorSet();
+
+            set.play(ObjectAnimator.ofFloat(previousView, View.TRANSLATION_X, fromTranslation));
+            set.play(ObjectAnimator.ofFloat(newView, View.TRANSLATION_X, toTranslation, 0));
+
+            return set;
         }
 
         @Override
