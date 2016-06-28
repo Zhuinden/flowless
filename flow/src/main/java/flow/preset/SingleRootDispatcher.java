@@ -131,9 +131,10 @@ public class SingleRootDispatcher
         if(rootHolder != null && rootHolder.root != null && rootHolder.root.getChildCount() > 0 && rootHolder.root.getChildAt(0) instanceof BackPressListener) {
             return ((BackPressListener) rootHolder.root.getChildAt(0)).onBackPressed();
         }
-        return false;
+        Flow flow = Flow.get(baseContext);
+        return flow.goBack();
     }
-
+    
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(rootHolder != null && rootHolder.root != null && rootHolder.root.getChildCount() > 0 && rootHolder.root.getChildAt(0) instanceof ActivityResultListener) {
             ((ActivityResultListener)rootHolder.root.getChildAt(0)).onActivityResult(requestCode, resultCode, data);

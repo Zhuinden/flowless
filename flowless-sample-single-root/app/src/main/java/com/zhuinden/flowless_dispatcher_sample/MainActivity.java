@@ -52,10 +52,6 @@ public class MainActivity
         if(didGoBack) {
             return;
         }
-        didGoBack = Flow.get(root).goBack();
-        if(didGoBack) {
-            return;
-        }
         super.onBackPressed();
     }
 
