@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.RelativeLayout;
 
 import butterknife.ButterKnife;
@@ -17,7 +18,9 @@ import flow.preset.SingleRootDispatcher;
  */
 public class SecondView
         extends RelativeLayout
-        implements SingleRootDispatcher.ViewLifecycleListener, Bundleable {
+        implements Bundleable, SingleRootDispatcher.ViewLifecycleListener {
+    private static final String TAG = "SecondView";
+
     public SecondView(Context context) {
         super(context);
         init();
@@ -44,34 +47,39 @@ public class SecondView
     private void init() {
         if(!isInEditMode()) {
             secondKey = Flow.getKey(this);
+            Log.i(TAG, "init()");
         }
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        Log.i(TAG, "onFinishInflate()");
         ButterKnife.bind(this);
     }
 
 
     @Override
     public Bundle toBundle() {
+        Log.i(TAG, "toBundle()");
         return new Bundle();
     }
 
     @Override
     public void fromBundle(@Nullable Bundle bundle) {
+        Log.i(TAG, "fromBundle()");
         if(bundle != null) {
+            Log.i(TAG, "fromBundle() with bundle");
         }
     }
 
     @Override
-    public void onViewRestored() {
-
+    public void onViewRestored(boolean forcedWithBundler) {
+        Log.i(TAG, "onViewRestored()");
     }
 
     @Override
     public void onViewDestroyed(boolean removedByFlow) {
-
+        Log.i(TAG, "onViewDestroyed(" + removedByFlow + ")");
     }
 }

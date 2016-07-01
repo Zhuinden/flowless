@@ -1,7 +1,5 @@
 package com.zhuinden.flowless_dispatcher_sample;
 
-import android.os.Parcelable;
-
 import com.google.auto.value.AutoValue;
 
 import flow.preset.FlowAnimation;

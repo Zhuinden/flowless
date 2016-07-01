@@ -105,13 +105,9 @@ public final class InternalLifecycleIntegration
     Dispatcher dispatcher;
     Intent intent;
 
-    private boolean dispatcherSet;
-    private boolean isBootstrapNeeded;
-
     public InternalLifecycleIntegration() {
         super();
         setRetainInstance(true);
-        isBootstrapNeeded = true;
     }
 
     static void addHistoryToIntent(Intent intent, History history, KeyParceler parceler, KeyManager keyManager) {
@@ -124,7 +120,6 @@ public final class InternalLifecycleIntegration
             if(keyManager != null && keyManager.hasState(key)) {
                 keyState = keyManager.getState(key);
             } else {
-                //Log.d(TAG, "Key [" + key + "] has no state");
                 keyState = State.empty(key);
             }
             parcelables.add(keyState.toBundle(parceler));
@@ -158,24 +153,22 @@ public final class InternalLifecycleIntegration
             flow = new Flow(keyManager, history);
         }
         flow.setDispatcher(dispatcher, true);
-        isBootstrapNeeded = false;
-        dispatcherSet = true;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(!dispatcherSet) {
-            flow.setDispatcher(dispatcher, isBootstrapNeeded);
-            dispatcherSet = true;
+        if(!flow.hasDispatcher()) {
+            flow.setDispatcher(dispatcher, false);
         }
+
     }
 
     @Override
     public void onPause() {
-        flow.removeDispatcher(dispatcher);
-        isBootstrapNeeded = false;
-        dispatcherSet = false;
+        if(flow.hasDispatcher()) {
+            flow.removeDispatcher(dispatcher);
+        }
         super.onPause();
     }
 

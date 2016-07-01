@@ -23,6 +23,7 @@ import android.os.Parcelable;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 import java.util.Iterator;
@@ -36,12 +37,14 @@ import static flow.Preconditions.checkNotNull;
 public final class Flow {
     public static final KeyParceler DEFAULT_KEY_PARCELER = new KeyParceler() { //
         @Override
-        public Parcelable toParcelable(Object key) {
+        @NonNull
+        public Parcelable toParcelable(@NonNull Object key) {
             return (Parcelable) key;
         }
 
         @Override
-        public Object toKey(Parcelable parcelable) {
+        @NonNull
+        public Object toKey(@NonNull Parcelable parcelable) {
             return parcelable;
         }
     };
@@ -132,43 +135,31 @@ public final class Flow {
      * Traversal Traversal} is currently in progress with a previous Dispatcher, that Traversal will
      * not be affected.
      */
-    public void setDispatcher(@NonNull Dispatcher dispatcher) {
-        setDispatcher(dispatcher, true);
-    }
-
-    void setDispatcher(@NonNull Dispatcher dispatcher, final boolean isBootstrapNeeded) {
+    void setDispatcher(@NonNull Dispatcher dispatcher, boolean created) {
         this.dispatcher = checkNotNull(dispatcher, "dispatcher");
 
-        if(pendingTraversal == null || //
-                (pendingTraversal.state == TraversalState.DISPATCHED && pendingTraversal.next == null)) {
-            // Nothing is happening;
-            // OR, there is an outstanding callback and nothing will happen after it;
-            // So enqueue a bootstrap traversal.
-            if(isBootstrapNeeded) {
-                move(new PendingTraversal() {
-                    @Override
-                    void doExecute() {
-                        bootstrap(history, isBootstrapNeeded);
-                    }
-                });
-            } else {
-                if(pendingTraversal != null) {
-                    pendingTraversal.state = TraversalState.FINISHED;
-                    pendingTraversal = null;
+        if(pendingTraversal == null && created) {
+            // initialization should occur for current state if views are created or re-created
+            move(new PendingTraversal() {
+                @Override
+                void doExecute() {
+                    bootstrap(history);
                 }
-            }
+            });
+        } else if(pendingTraversal == null) { // no-op if the view still exists and nothing to be done
             return;
-
-        }
-
-        if(pendingTraversal.state == TraversalState.ENQUEUED) {
-            // A traversal was enqueued while we had no dispatcher, run it now.
+        } else if(pendingTraversal.state == TraversalState.DISPATCHED) { // a traversal is in progress
+            // do nothing, pending traversal will finish
+        } else if(pendingTraversal.state == TraversalState.ENQUEUED) {
+            // a traversal was enqueued while we had no dispatcher, run it now.
             pendingTraversal.execute();
-            return;
-        }
-
-        if(pendingTraversal.state != TraversalState.DISPATCHED) {
-            throw new AssertionError("Hanging traversal in unexpected state " + pendingTraversal.state);
+        } else if(pendingTraversal.state == TraversalState.FINISHED) {
+            if(pendingTraversal.next != null) { //finished with a pending traversal
+                pendingTraversal = pendingTraversal.next;
+                pendingTraversal.execute();
+            } else {
+                pendingTraversal = null;
+            }
         }
     }
 
@@ -273,26 +264,23 @@ public final class Flow {
     /**
      * Go back one key.
      *
-     * @return false if going back is not possible or a traversal is in progress.
+     * @return false if going back is not possible.
      */
     @CheckResult
     public boolean goBack() {
-        if(pendingTraversal != null && pendingTraversal.state != TraversalState.FINISHED) {
+        if(pendingTraversal != null && pendingTraversal.state != TraversalState.FINISHED) { //traversal is in progress
             return true;
         }
         boolean canGoBack = history.size() > 1;
         if(!canGoBack) {
             return false;
         }
-        History.Builder builder = history.buildUpon();
-        builder.pop();
-        final History newHistory = builder.build();
-        setHistory(newHistory, Direction.BACKWARD);
+        setHistory(history.buildUpon().pop(1).build(), Direction.BACKWARD);
         return true;
     }
 
     private void move(PendingTraversal pendingTraversal) {
-        //EspressoIdlingResource.increment();
+        incrementIdlingResource();
         if(this.pendingTraversal == null) {
             this.pendingTraversal = pendingTraversal;
             // If there is no dispatcher wait until one shows up before executing.
@@ -302,7 +290,7 @@ public final class Flow {
         } else {
             this.pendingTraversal.enqueue(pendingTraversal);
         }
-        //EspressoIdlingResource.decrement();
+        decrementIdlingResource();
     }
 
     private static History preserveEquivalentPrefix(History current, History proposed) {
@@ -313,23 +301,27 @@ public final class Flow {
 
         while(newIt.hasNext()) {
             Object newEntry = newIt.next();
-            if(!oldIt.hasNext()) {
+            if(!oldIt.hasNext()) {          // old history cannot contain new history, preserve
                 preserving.push(newEntry);
                 break;
             }
-            Object oldEntry = oldIt.next();
-            if(oldEntry.equals(newEntry)) {
+            Object oldEntry = oldIt.next(); // old history contains elements
+            if(oldEntry.equals(newEntry)) { // preserve previous history if state can exist bound to it
                 preserving.push(oldEntry);
-            } else {
+            } else {                        // if it's not the same, we need the new entry
                 preserving.push(newEntry);
                 break;
             }
         }
 
-        while(newIt.hasNext()) {
+        while(newIt.hasNext()) {            // preserve any additional new elements not found in old history
             preserving.push(newIt.next());
         }
         return preserving.build();
+    }
+
+    boolean hasDispatcher() {
+        return dispatcher != null;
     }
 
     private enum TraversalState {
@@ -365,7 +357,7 @@ public final class Flow {
 
         @Override
         public void onTraversalCompleted() {
-            //EspressoIdlingResource.increment();
+            incrementIdlingResource();
             if(state != TraversalState.DISPATCHED) {
                 throw new IllegalStateException(state == TraversalState.FINISHED ? "onComplete already called for this transition" : "transition not yet dispatched!");
             }
@@ -381,18 +373,16 @@ public final class Flow {
             } else if(dispatcher != null) {
                 pendingTraversal.execute();
             }
-            //EspressoIdlingResource.decrement();
+            decrementIdlingResource();
         }
 
-        void bootstrap(History history, boolean restore) {
+        void bootstrap(History history) {
             if(dispatcher == null) {
                 throw new AssertionError("Bad doExecute method allowed dispatcher to be cleared");
             }
-            //EspressoIdlingResource.increment();
-            if(restore) {
-                dispatcher.dispatch(new Traversal(null, history, Direction.REPLACE, keyManager), this);
-            }
-            //EspressoIdlingResource.decrement();
+            incrementIdlingResource();
+            dispatcher.dispatch(new Traversal(null, history, Direction.REPLACE, keyManager), this);
+            decrementIdlingResource();
         }
 
         void dispatch(History nextHistory, Direction direction) {
@@ -400,13 +390,13 @@ public final class Flow {
             if(dispatcher == null) {
                 throw new AssertionError("Bad doExecute method allowed dispatcher to be cleared");
             }
-            //EspressoIdlingResource.increment();
+            incrementIdlingResource();
             dispatcher.dispatch(new Traversal(getHistory(), nextHistory, direction, keyManager), this);
-            //EspressoIdlingResource.decrement();
+            decrementIdlingResource();
         }
 
         final void execute() {
-            //EspressoIdlingResource.increment();
+            incrementIdlingResource();
             if(state != TraversalState.ENQUEUED) {
                 throw new AssertionError("unexpected state " + state);
             }
@@ -416,7 +406,7 @@ public final class Flow {
 
             state = TraversalState.DISPATCHED;
             doExecute();
-            //EspressoIdlingResource.decrement();
+            decrementIdlingResource();
         }
 
         /**
@@ -424,5 +414,27 @@ public final class Flow {
          * #onTraversalCompleted()}.
          */
         abstract void doExecute();
+    }
+
+    // IDLING RESOURCE LOGIC
+    private static FlowIdlingResource flowIdlingResource = null;
+
+    public static void incrementIdlingResource() {
+        if(flowIdlingResource != null) {
+            flowIdlingResource.increment();
+        }
+    }
+
+    public static void decrementIdlingResource() {
+        if(flowIdlingResource != null) {
+            flowIdlingResource.decrement();
+        }
+    }
+    public static FlowIdlingResource getFlowIdlingResource() {
+        return flowIdlingResource;
+    }
+
+    public static void setFlowIdlingResource(FlowIdlingResource _flowIdlingResource) {
+        flowIdlingResource = _flowIdlingResource;
     }
 }

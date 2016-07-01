@@ -31,6 +31,9 @@ public abstract class FlowAnimation implements Serializable {
         @Nullable
         @Override
         public Animator createAnimation(View previousView, View newView, Direction direction) {
+            if(direction == Direction.REPLACE) {
+                return null;
+            }
             boolean backward = direction == Direction.BACKWARD;
             int fromTranslation = backward ? previousView.getWidth() : -previousView.getWidth();
             int toTranslation = backward ? -newView.getWidth() : newView.getWidth();
