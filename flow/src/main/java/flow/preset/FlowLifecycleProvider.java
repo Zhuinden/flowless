@@ -8,50 +8,43 @@ import android.view.View;
 /**
  * Created by Zhuinden on 2016.07.01..
  */
-public class FlowLifecycleProvider implements FlowContainerLifecycleListener {
-    @Override
+public class FlowLifecycleProvider {
     public void onActivityCreated(View view, Bundle savedInstanceState) {
         if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
             ((FlowLifecycles.CreateDestroyListener) view).onCreate(savedInstanceState);
         }
     }
-
-    @Override
+    
     public void onActivityStarted(View view) {
         if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
             ((FlowLifecycles.StartStopListener) view).onStart();
         }
     }
-
-    @Override
+    
     public void onActivityResumed(View view) {
         if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
             ((FlowLifecycles.ResumePauseListener) view).onResume();
         }
     }
-
-    @Override
+    
     public void onActivityPaused(View view) {
         if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
             ((FlowLifecycles.ResumePauseListener) view).onPause();
         }
     }
-
-    @Override
+    
     public void onActivityStopped(View view) {
         if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
             ((FlowLifecycles.StartStopListener) view).onStop();
         }
     }
 
-    @Override
     public void onActivitySaveInstanceState(View view, Bundle outState) {
         if(view != null && view instanceof FlowLifecycles.ViewStatePersistenceListener) {
             ((FlowLifecycles.ViewStatePersistenceListener) view).preSaveViewState();
         }
     }
 
-    @Override
     public void onActivityDestroyed(View view) {
         if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
             ((FlowLifecycles.CreateDestroyListener) view).onDestroy();
@@ -60,8 +53,7 @@ public class FlowLifecycleProvider implements FlowContainerLifecycleListener {
             ((FlowLifecycles.ViewLifecycleListener) view).onViewDestroyed(false);
         }
     }
-
-    @Override
+    
     @CheckResult
     public boolean onBackPressed(View view) {
         if(view != null && view instanceof FlowLifecycles.BackPressListener) {
