@@ -15,28 +15,28 @@
 package flow;
 
 final class Preconditions {
-  private Preconditions() {
-    throw new AssertionError();
-  }
-
-  /**
-   * @throws java.lang.IllegalArgumentException if condition is false.
-   */
-  static void checkArgument(boolean condition, String errorMessage) {
-    if (!condition) {
-      throw new IllegalArgumentException(errorMessage);
+    private Preconditions() {
+        throw new AssertionError();
     }
-  }
 
-  /**
-   * @param reference an object reference
-   * @return the non-null reference that was validated
-   * @throws NullPointerException if {@code reference} is null
-   */
-  static <T> T checkNotNull(T reference, String errorMessage, Object... args) {
-    if (reference == null) {
-      throw new NullPointerException(String.format(errorMessage, args));
+    /**
+     * @throws java.lang.IllegalArgumentException if condition is false.
+     */
+    static void checkArgument(boolean condition, String errorMessage) {
+        if(!condition) {
+            throw new IllegalArgumentException(errorMessage);
+        }
     }
-    return reference;
-  }
+
+    /**
+     * @param reference an object reference
+     * @return the non-null reference that was validated
+     * @throws NullPointerException if {@code reference} is null
+     */
+    static <T> T checkNotNull(T reference, String errorMessage, Object... args) {
+        if(reference == null) {
+            throw new NullPointerException(String.format(errorMessage, args));
+        }
+        return reference;
+    }
 }

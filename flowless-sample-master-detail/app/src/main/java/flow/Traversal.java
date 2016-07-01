@@ -21,30 +21,36 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 public final class Traversal {
-  /** May be null if this is a traversal into the start state. */
-  @Nullable public final History origin;
-  @NonNull public final History destination;
-  @NonNull public final Direction direction;
-  private final KeyManager keyManager;
+    /**
+     * May be null if this is a traversal into the start state.
+     */
+    @Nullable
+    public final History origin;
+    @NonNull
+    public final History destination;
+    @NonNull
+    public final Direction direction;
+    private final KeyManager keyManager;
 
-  Traversal(@Nullable History from, @NonNull History to, @NonNull Direction direction,
-      KeyManager keyManager) {
-    this.origin = from;
-    this.destination = to;
-    this.direction = direction;
-    this.keyManager = keyManager;
-  }
+    Traversal(@Nullable History from, @NonNull History to, @NonNull Direction direction, KeyManager keyManager) {
+        this.origin = from;
+        this.destination = to;
+        this.direction = direction;
+        this.keyManager = keyManager;
+    }
 
-  /**
-   * Creates a Context for the given key.
-   *
-   * Contexts can be created only for keys at the top of the origin and destination Histories.
-   */
-  @NonNull public Context createContext(@NonNull Object key, @NonNull Context baseContext) {
-    return new FlowContextWrapper(key, baseContext);
-  }
+    /**
+     * Creates a Context for the given key.
+     *
+     * Contexts can be created only for keys at the top of the origin and destination Histories.
+     */
+    @NonNull
+    public Context createContext(@NonNull Object key, @NonNull Context baseContext) {
+        return new FlowContextWrapper(key, baseContext);
+    }
 
-  @NonNull public State getState(@NonNull Object key) {
-    return keyManager.getState(key);
-  }
+    @NonNull
+    public State getState(@NonNull Object key) {
+        return keyManager.getState(key);
+    }
 }

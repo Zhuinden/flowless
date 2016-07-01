@@ -55,6 +55,6 @@ final class FlowContextWrapper
 
     public <T> T getKey() {
         //noinspection unchecked
-        return (T)key;
+        return (T) key;
     }
 }

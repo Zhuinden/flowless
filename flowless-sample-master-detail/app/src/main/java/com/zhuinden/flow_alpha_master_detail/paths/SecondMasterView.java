@@ -37,7 +37,7 @@ public class SecondMasterView extends LinearLayout {
         findViewById(R.id.second_master_button).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Flow.get(v).set(new SecondDetailKey());
+                Flow.get(v).set(SecondDetailKey.create());
             }
         });
     }

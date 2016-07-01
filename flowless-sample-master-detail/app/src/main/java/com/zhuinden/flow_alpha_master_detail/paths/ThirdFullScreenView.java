@@ -37,7 +37,7 @@ public class ThirdFullScreenView extends LinearLayout {
         findViewById(R.id.third_full_screen_button).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Flow.get(v).set(new FourthMasterKey());
+                Flow.get(v).set(FourthMasterKey.create());
             }
         });
     }

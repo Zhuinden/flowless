@@ -37,13 +37,13 @@ public class SecondDetailView extends LinearLayout {
         findViewById(R.id.second_detail_button_full_screen).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Flow.get(v).set(new ThirdFullScreenKey());
+                Flow.get(v).set(ThirdFullScreenKey.create());
             }
         });
         findViewById(R.id.second_detail_button_detail).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Flow.get(v).set(new SecondDetailSecondKey());
+                Flow.get(v).set(SecondDetailSecondKey.create());
             }
         });
     }

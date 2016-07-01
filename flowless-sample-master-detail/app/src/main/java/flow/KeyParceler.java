@@ -24,6 +24,10 @@ import android.support.annotation.NonNull;
  * {@link android.os.Parcelable}.
  */
 public interface KeyParceler {
-  @NonNull Parcelable toParcelable(@NonNull Object key);
-  @NonNull Object toKey(@NonNull Parcelable parcelable);
+    @NonNull
+    Parcelable toParcelable(@NonNull Object key);
+
+    @NonNull
+    Object toKey(@NonNull Parcelable parcelable);
 }
+

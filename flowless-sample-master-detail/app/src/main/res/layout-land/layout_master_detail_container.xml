@@ -3,14 +3,14 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <RelativeLayout
+    <com.zhuinden.flow_alpha_master_detail.SinglePaneContainer
         android:layout_width="180dp"
         android:layout_height="match_parent"
         android:id="@+id/master_container">
-    </RelativeLayout>
-    <RelativeLayout
+    </com.zhuinden.flow_alpha_master_detail.SinglePaneContainer>
+    <com.zhuinden.flow_alpha_master_detail.SinglePaneContainer
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/detail_container">
-    </RelativeLayout>
+    </com.zhuinden.flow_alpha_master_detail.SinglePaneContainer>
 </com.zhuinden.flow_alpha_master_detail.MasterDetailContainer>

@@ -41,7 +41,7 @@ public class FlowLifecycleProvider {
 
     public void onActivitySaveInstanceState(View view, Bundle outState) {
         if(view != null && view instanceof FlowLifecycles.ViewStatePersistenceListener) {
-            ((FlowLifecycles.ViewStatePersistenceListener) view).preSaveViewState();
+            ((FlowLifecycles.ViewStatePersistenceListener) view).preSaveViewState(outState);
         }
     }
 
@@ -71,6 +71,24 @@ public class FlowLifecycleProvider {
     public void onRequestPermissionsResult(View view, int requestCode, String[] permissions, int[] grantResults) {
         if(view != null && view instanceof FlowLifecycles.PermissionRequestListener) {
             ((FlowLifecycles.PermissionRequestListener) view).onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    public void onViewRestored(View view, boolean forcedWithBundler) {
+        if(view != null && view instanceof FlowLifecycles.ViewLifecycleListener) {
+            ((FlowLifecycles.ViewLifecycleListener)view).onViewRestored(forcedWithBundler);
+        }
+    }
+
+    public void onViewDestroyed(View view, boolean removedByFlow) {
+        if(view != null && view instanceof FlowLifecycles.ViewLifecycleListener) {
+            ((FlowLifecycles.ViewLifecycleListener)view).onViewDestroyed(removedByFlow);
+        }
+    }
+
+    public void preSaveViewState(View view, Bundle bundle) {
+        if(view != null && view instanceof FlowLifecycles.ViewLifecycleListener) {
+            ((FlowLifecycles.ViewStatePersistenceListener)view).preSaveViewState(bundle);
         }
     }
 }

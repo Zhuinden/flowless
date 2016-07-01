@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 /**
- * Created by Zhuinden on 2016.04.16..
+ * Created by Zhuinden on 2016.07.01..
  */
 public interface Bundleable {
     Bundle toBundle();

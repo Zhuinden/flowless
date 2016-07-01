@@ -19,12 +19,12 @@ package flow;
 import android.support.annotation.NonNull;
 
 public interface Dispatcher {
-  /**
-   * Called when the history is about to change.  Note that Flow does not consider the
-   * Traversal to be finished, and will not actually update the history, until the callback is
-   * triggered. Traversals cannot be canceled.
-   *
-   * @param callback Must be called to indicate completion of the traversal.
-   */
-  void dispatch(@NonNull Traversal traversal, @NonNull TraversalCallback callback);
+    /**
+     * Called when the history is about to change.  Note that Flow does not consider the
+     * Traversal to be finished, and will not actually update the history, until the callback is
+     * triggered. Traversals cannot be canceled.
+     *
+     * @param callback Must be called to indicate completion of the traversal.
+     */
+    void dispatch(@NonNull Traversal traversal, @NonNull TraversalCallback callback);
 }

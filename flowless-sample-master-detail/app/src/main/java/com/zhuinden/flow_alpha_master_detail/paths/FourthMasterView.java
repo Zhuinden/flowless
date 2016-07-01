@@ -37,7 +37,7 @@ public class FourthMasterView extends LinearLayout {
         findViewById(R.id.fourth_master_start_detail).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Flow.get(v).set(new FourthDetailKey());
+                Flow.get(v).set(FourthDetailKey.create());
             }
         });
     }

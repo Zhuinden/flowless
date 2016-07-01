@@ -38,7 +38,7 @@ public class FourthDetailView
         findViewById(R.id.fourth_detail_start_detail).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Flow.get(v).set(new FourthDetailSecondKey());
+                Flow.get(v).set(FourthDetailSecondKey.create());
             }
         });
     }

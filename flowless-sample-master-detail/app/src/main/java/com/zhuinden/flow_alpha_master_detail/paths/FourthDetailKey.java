@@ -1,52 +1,24 @@
 package com.zhuinden.flow_alpha_master_detail.paths;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.zhuinden.flow_alpha_master_detail.DetailKey;
+import com.google.auto.value.AutoValue;
 import com.zhuinden.flow_alpha_master_detail.IsDetail;
 import com.zhuinden.flow_alpha_master_detail.IsMaster;
 import com.zhuinden.flow_alpha_master_detail.R;
 
+import flow.preset.FlowAnimation;
+import flow.preset.LayoutPath;
+
 /**
  * Created by Zhuinden on 2016.04.16..
  */
-public class FourthDetailKey extends DetailKey
-        implements IsDetail, Parcelable {
-    public FourthDetailKey() {
-    }
-
-    protected FourthDetailKey(Parcel in) {
-    }
-
-    public static final Creator<FourthDetailKey> CREATOR = new Creator<FourthDetailKey>() {
-        @Override
-        public FourthDetailKey createFromParcel(Parcel in) {
-            return new FourthDetailKey(in);
-        }
-
-        @Override
-        public FourthDetailKey[] newArray(int size) {
-            return new FourthDetailKey[size];
-        }
-    };
-
+@AutoValue
+public abstract class FourthDetailKey implements LayoutPath, IsDetail {
     @Override
     public IsMaster getMaster() {
-        return new FourthMasterKey();
+        return FourthMasterKey.create();
     }
 
-    @Override
-    public int getLayout() {
-        return R.layout.path_fourth_detail;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public static FourthDetailKey create() {
+        return new AutoValue_FourthDetailKey(R.layout.path_fourth_detail, FlowAnimation.SEGUE);
     }
 }

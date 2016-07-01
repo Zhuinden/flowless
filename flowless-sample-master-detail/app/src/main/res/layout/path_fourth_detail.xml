@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhuinden.flow_alpha_master_detail.paths.FourthDetailView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center">
-    <Button android:id="@+id/fourth_detail_start_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Start fourth view second detail"
-            android:layout_margin="20dp"
+                                                              android:layout_width="match_parent"
+                                                              android:layout_height="match_parent"
+                                                              android:gravity="center"
+                                                              android:orientation="vertical">
+
+    <Button
+        android:id="@+id/fourth_detail_start_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Start fourth view second detail"
         />
 
 </com.zhuinden.flow_alpha_master_detail.paths.FourthDetailView>

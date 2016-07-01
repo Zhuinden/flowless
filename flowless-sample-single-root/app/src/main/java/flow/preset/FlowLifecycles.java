@@ -31,7 +31,7 @@ public interface FlowLifecycles {
     }
 
     public interface ViewStatePersistenceListener {
-        void preSaveViewState();
+        void preSaveViewState(@Nullable Bundle outState);
     }
 
     public interface ViewLifecycleListener {
