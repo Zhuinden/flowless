@@ -32,7 +32,7 @@ public class DispatcherUtils {
     public static boolean isPreviousKeySameAsNewKey(History origin, History destination) {
         return origin != null && origin.top() != null && origin.top().equals(destination.top());
     }
-    
+
     public static void persistViewToState(Traversal traversal, View view) {
         if(view != null) {
             if(view != null && view instanceof FlowLifecycles.ViewStatePersistenceListener) {

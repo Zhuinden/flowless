@@ -13,7 +13,8 @@ import flow.TraversalCallback;
 /**
  * Created by Zhuinden on 2016.07.01..
  */
-public abstract class BaseDispatcher implements Dispatcher, FlowLifecycles, FlowActivityCallbacks {
+public abstract class BaseDispatcher
+        implements Dispatcher, FlowLifecycles, FlowActivityCallbacks {
     public static class RootHolder {
         ViewGroup root;
 
@@ -37,7 +38,7 @@ public abstract class BaseDispatcher implements Dispatcher, FlowLifecycles, Flow
         this.rootHolder = createRootHolder();
         this.flowLifecycleProvider = new FlowLifecycleProvider();
 
-        application = (Application)baseContext.getApplicationContext();
+        application = (Application) baseContext.getApplicationContext();
     }
 
     protected RootHolder createRootHolder() {

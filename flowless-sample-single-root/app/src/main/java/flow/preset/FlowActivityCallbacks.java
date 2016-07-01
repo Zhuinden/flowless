@@ -7,6 +7,8 @@ import android.content.Intent;
  */
 public interface FlowActivityCallbacks {
     boolean onBackPressed();
+
     void onActivityResult(int requestCode, int resultCode, Intent data);
+
     void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
 }
