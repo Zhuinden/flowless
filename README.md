@@ -2,13 +2,11 @@
 
 _"Name-giving will be the foundation of our science."_ - Linnaeus
 
-_"The winds and waves are always on the side of the ablest navigators."_ - Gibbon
-
 _"Memory is the treasury and guardian of all things._" - Cicero
 
 _"It's better if you're good at one thing than if you're bad at many things just because you're trying too hard. Especially if you're a backstack library._" - Zhuinden
 
-**Flow(less) gives names to your Activity's UI states, navigates between them, and remembers where it's been; and that's all it does.**
+**Flow(less) gives names to your Activity's UI states, navigates between them, and remembers where it's been, but it doesn't try to do more.**
 
 This used to be a fork of Flow 1.0-alpha by Square, with the "resource management" aspects completely removed. 
 Now it provides more than that, both in terms of bug fixes and out-of-the-box features alike.
@@ -171,10 +169,18 @@ The Dispatcher has the following tasks when a new state is set:
 ### ~~Managing resources~~
 ~~Your app requires different resources when it's in different states; sometimes those resources are shared between states. Flow makes it easy to associate resources with keys so they're set up when needed and torn down (only) when they're not anymore.~~
 
+~~Flow provides the `Flow.Services` class to define services that you can share via your Context. In order to find a service, you must specify the String tag with which it was bound to the services using the `Services.Binder`. To create services for keys, you must specify the `ServiceFactory` when you're creating the Dispatcher. In order to share the resources between multiple keys, the keys must either implement `TreeKey` (parent-child relationship) or `MultiKey` (a set of possible keys that share the same state).~~
+
+~~ Please note that if you're showing multiple keys on the screen, you must specify them in some sort of relationship for the reference counting to work.~~
+
+Flowless does not support "managing resources", because the reference counting is not sufficiently customizable. If this is necessary, handle such logic within the container of the given key's view, or the Activity using `ActivityUtils` to find the activity for the given view.
+
 ### Surviving configuration changes and process death
 Android is a hostile environment. One of its greatest challenges is that your Activity or even your process can be destroyed and recreated under a variety of circumstances. Flow makes it easy to weather the storm, by automatically remembering your app's state and its history. 
 
-You [supply the serialization](https://github.com/Zhuinden/flowless/blob/master/flow/src/main/java/flow/KeyParceler.java) for your keys, and Flow does the rest. Flow  automatically saves and restores your History (including any state you've saved), taking care of all of the Android lifecycle events so you don't have to worry about them.
+You [supply the serialization](https://github.com/Zhuinden/flowless/blob/master/flow/src/main/java/flow/KeyParceler.java) for your keys, and Flow does the rest. The default parceler uses Parcelable objects. Flow automatically saves and restores your History (including any state you've saved), taking care of all of the Android lifecycle events so you don't have to worry about them.
+
+**Note:** If you use the `ContainerDispatcherRoot`, you must call `ForceBundler.saveToBundle(activity, view)` manually in the `preSaveViewState()` method of `ViewStatePersistenceListener` on the child you wish to persist.
 
 ## Pre-set dispatchers for common use-cases
 
@@ -182,7 +188,7 @@ Two use-cases are supported out of the box. Both of them provide (optional) life
 
 First is the `SingleRootDispatcher`, which works if your Activity has a *single root*, meaning you're changing the screens within a single ViewGroup within your Activity. 
 
-Second is the `ContainerRootDispatcher`. Its purpose is to delegate the `dispatch()` call and all other lifecycle method calls to your defined custom viewgroup. The Root provided to a container root dispatcher must implement `Dispatcher`. It must also delegate the lifecycle method call to its children. For easier access to all lifecycle methods, the `FlowContainerLifecycleListener` interface is introduced, and the `FlowLifecycleProvider` class tries to make delegation as simple as possible. Of course, delegation of the `FlowLifecycles` lifecycle methods are optional, and you can choose to delegate only what you actually need. An example is provided for this setup in the Master-Detail example.
+Second is the `ContainerRootDispatcher`. Its purpose is to delegate the `dispatch()` call and all other lifecycle method calls to your defined custom viewgroup. The Root provided to a container root dispatcher must implement `Dispatcher`. It must also delegate the lifecycle method call to its children. For easier access to all lifecycle methods, the `FlowContainerLifecycleListener` interface is introduced, and the `FlowLifecycleProvider` class tries to make delegation as simple as possible. Of course, delegation of the `FlowLifecycles` lifecycle methods are optional, and you can choose to delegate only what you actually need. An example is provided for this setup in the [Master-Detail example](https://github.com/Zhuinden/flowless/blob/master/flowless-sample-master-detail/app/src/main/java/com/zhuinden/flow_alpha_master_detail/MasterDetailContainer.java#L37).
 
 ## Example Custom View Group
 
