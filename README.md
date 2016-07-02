@@ -168,8 +168,10 @@ Flow also lets you rewrite history safely and easily.
 
 To modify the history, you ought to use the operators provided by History. Here is an example:
 
-    History history = Flow.get(this).getHistory();
-    Flow.get(this).setHistory(history.buildUpon().pop(2).push(SomeKey.create()).build(), Direction.BACKWARD);
+``` java
+History history = Flow.get(this).getHistory();
+Flow.get(this).setHistory(history.buildUpon().pop(2).push(SomeKey.create()).build(), Direction.BACKWARD);
+```
 
 See the [Flow](https://github.com/Zhuinden/flowless/blob/master/flowless-library/src/main/java/flowless/Flow.java) class for other convenient operators.
 
