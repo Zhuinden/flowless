@@ -2,34 +2,18 @@ package com.zhuinden.flow_alpha_master_detail;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.zhuinden.flow_alpha_master_detail.paths.FirstKey;
 
-import java.util.Iterator;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import flow.Bundleable;
-import flow.Dispatcher;
-import flow.Flow;
-import flow.ForceBundler;
-import flow.History;
-import flow.KeyParceler;
-import flow.State;
-import flow.Traversal;
-import flow.TraversalCallback;
-import flow.preset.ContainerRootDispatcher;
-import flow.preset.SingleRootDispatcher;
+import flowless.Flow;
+import flowless.preset.ContainerRootDispatcher;
 
 public class MainActivity
         extends AppCompatActivity {

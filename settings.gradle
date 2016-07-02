@@ -1,1 +1,1 @@
-include ':flow', ':flowless-sample-master-detail', ':flowless-sample-single-root', ':flow-sample-basic'
+include ':flowless-library', ':flowless-sample-master-detail', ':flowless-sample-single-root', ':flow-sample-basic'

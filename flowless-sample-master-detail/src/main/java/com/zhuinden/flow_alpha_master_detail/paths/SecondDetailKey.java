@@ -5,8 +5,8 @@ import com.zhuinden.flow_alpha_master_detail.IsDetail;
 import com.zhuinden.flow_alpha_master_detail.IsMaster;
 import com.zhuinden.flow_alpha_master_detail.R;
 
-import flow.preset.FlowAnimation;
-import flow.preset.LayoutPath;
+import flowless.preset.FlowAnimation;
+import flowless.preset.LayoutPath;
 
 /**
  * Created by Zhuinden on 2016.04.16..

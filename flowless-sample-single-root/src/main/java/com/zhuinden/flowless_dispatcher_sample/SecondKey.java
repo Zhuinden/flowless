@@ -2,8 +2,8 @@ package com.zhuinden.flowless_dispatcher_sample;
 
 import com.google.auto.value.AutoValue;
 
-import flow.preset.FlowAnimation;
-import flow.preset.LayoutPath;
+import flowless.preset.FlowAnimation;
+import flowless.preset.LayoutPath;
 
 /**
  * Created by Zhuinden on 2016.06.28..

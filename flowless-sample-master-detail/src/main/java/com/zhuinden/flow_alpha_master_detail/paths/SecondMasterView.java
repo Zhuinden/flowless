@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import com.zhuinden.flow_alpha_master_detail.R;
 
-import flow.Flow;
+import flowless.Flow;
 
 /**
  * Created by Zhuinden on 2016.04.16..

@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import flow.Flow;
-import flow.preset.SingleRootDispatcher;
+import flowless.Flow;
+import flowless.preset.SingleRootDispatcher;
 
 public class MainActivity
         extends AppCompatActivity {

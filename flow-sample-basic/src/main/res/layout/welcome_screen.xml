@@ -15,22 +15,24 @@
   ~ limitations under the License.
   -->
 
-<flow.sample.basic.WelcomeView
+<flowless.sample.basic.WelcomeView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
->
-  <android.support.design.widget.TextInputLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-  >
-    <EditText
-        android:id="@+id/welcome_screen_name"
+    >
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Hello, what's your name?"
-        />
-  </android.support.design.widget.TextInputLayout>
-</flow.sample.basic.WelcomeView>
+        >
+
+        <EditText
+            android:id="@+id/welcome_screen_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Hello, what's your name?"
+            />
+    </android.support.design.widget.TextInputLayout>
+</flowless.sample.basic.WelcomeView>
