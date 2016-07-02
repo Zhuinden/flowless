@@ -6,10 +6,11 @@ _"Memory is the treasury and guardian of all things._" - Cicero
 
 _"It's better if you're good at one thing than if you're bad at many things just because you're trying too hard. Especially if you're a backstack library._" - Zhuinden
 
-**Flow(less) gives names to your Activity's UI states, navigates between them, and remembers where it's been, but it doesn't try to do more.**
+**Flow(less) gives names to your Activity's UI states, navigates between them, and remembers where it's been.**
 
 This used to be a fork of Flow 1.0-alpha by Square, with the "resource management" aspects completely removed. 
-Now it provides more than that, both in terms of bug fixes and out-of-the-box features alike.
+Now it provides more than that, both in terms of bug fixes and out-of-the-box features alike. 
+Also, you can't file issues on forks, which makes it not palatable on the long run.
 
 ## Features
 
@@ -22,10 +23,30 @@ Remember the UI state, and its history, as you navigate and across configuration
 Manage all types of UIs-- complex master-detail views, multiple layers, and window-based dialogs are all simple to manage.
 
 
-## Using Flow
+## Using Flow(less)
 
-Currently **Flowless** is not set up to be added through Gradle, so you'd have to copy the sources.
-I'm working on that quite soon, now that the presets are complete. Soon!
+In order to use Flow(less), you need to add jitpack to your project root gradle:
+
+    buildscript {
+        repositories {
+            // ...
+            maven { url "https://jitpack.io" }
+        }
+        // ...
+    }
+    allprojects {
+        repositories {
+            // ...
+            maven { url "https://jitpack.io" }
+        }
+        // ...
+    }
+
+
+and add the compile dependency to your module level gradle.
+
+    compile 'com.github.Zhuinden:flowless:1.0-alpha'
+
 
 Then, install Flow into your Activity:
 
@@ -150,12 +171,12 @@ To modify the history, you ought to use the operators provided by History. Here 
     History history = Flow.get(this).getHistory();
     Flow.get(this).setHistory(history.buildUpon().pop(2).push(SomeKey.create()).build(), Direction.BACKWARD);
 
-See the [Flow](https://github.com/Zhuinden/flowless/blob/master/flow/src/main/java/flow/Flow.java) class for other convenient operators.
+See the [Flow](https://github.com/Zhuinden/flowless/blob/master/flowless-library/src/main/java/flowless/Flow.java) class for other convenient operators.
 
 As you navigate the app, Flow keeps track of where you've been. And Flow makes it easy to save view state (and any other state you wish) so that when your users go back to a place they've been before, it's just as they left it.
 
 ### Controlling UI
-Navigation only counts if it changes UI state. Because every app has different needs, Flow lets you plug in [your own logic](https://github.com/Zhuinden/flowless/blob/master/flow/src/main/java/flow/Dispatcher.java) for responding to navigation and updating your UI.
+Navigation only counts if it changes UI state. Because every app has different needs, Flow lets you plug in [your own logic](https://github.com/Zhuinden/flowless/blob/master/flowless-library/src/main/java/flowless/Dispatcher.java) for responding to navigation and updating your UI.
 
 The Dispatcher has the following tasks when a new state is set:
 - Inflate the new view with Flow's internal context using `LayoutInflater.from(context)`
@@ -178,7 +199,7 @@ Flowless does not support "managing resources", because the reference counting i
 ### Surviving configuration changes and process death
 Android is a hostile environment. One of its greatest challenges is that your Activity or even your process can be destroyed and recreated under a variety of circumstances. Flow makes it easy to weather the storm, by automatically remembering your app's state and its history. 
 
-You [supply the serialization](https://github.com/Zhuinden/flowless/blob/master/flow/src/main/java/flow/KeyParceler.java) for your keys, and Flow does the rest. The default parceler uses Parcelable objects. Flow automatically saves and restores your History (including any state you've saved), taking care of all of the Android lifecycle events so you don't have to worry about them.
+You [supply the serialization](https://github.com/Zhuinden/flowless/blob/master/flowless-library/src/main/java/flowless/KeyParceler.java) for your keys, and Flow does the rest. The default parceler uses Parcelable objects. Flow automatically saves and restores your History (including any state you've saved), taking care of all of the Android lifecycle events so you don't have to worry about them.
 
 **Note:** If you use the `ContainerDispatcherRoot`, you must call `ForceBundler.saveToBundle(activity, view)` manually in the `preSaveViewState()` method of `ViewStatePersistenceListener` on the child you wish to persist.
 
