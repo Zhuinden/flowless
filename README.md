@@ -146,6 +146,11 @@ Flow also lets you rewrite history safely and easily.
 
 `Flow#setHistory(history, direction)` -- Change history to whatever you want.
 
+To modify the history, you ought to use the operators provided by History. Here is an example:
+
+    History history = Flow.get(this).getHistory();
+    Flow.get(this).setHistory(history.buildUpon().pop(2).push(SomeKey.create()).build(), Direction.BACKWARD);
+
 See the [Flow](https://github.com/Zhuinden/flowless/blob/master/flow/src/main/java/flow/Flow.java) class for other convenient operators.
 
 As you navigate the app, Flow keeps track of where you've been. And Flow makes it easy to save view state (and any other state you wish) so that when your users go back to a place they've been before, it's just as they left it.
