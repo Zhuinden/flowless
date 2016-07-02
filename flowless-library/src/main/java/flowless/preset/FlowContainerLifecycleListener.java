@@ -8,7 +8,7 @@ public interface FlowContainerLifecycleListener
         FlowLifecycles.BackPressListener, //
         FlowLifecycles.CreateDestroyListener, //
         FlowLifecycles.StartStopListener, //
-        FlowLifecycles.ResumePauseListener, // 
+        FlowLifecycles.ResumePauseListener, //
         FlowLifecycles.ViewStatePersistenceListener, //
         FlowLifecycles.PermissionRequestListener,  //
         FlowLifecycles.ViewLifecycleListener {
