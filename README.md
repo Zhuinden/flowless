@@ -26,19 +26,62 @@ Manage all types of UIs-- complex master-detail views, multiple layers, and wind
 ## Using Flow
 
 Currently **Flowless** is not set up to be added through Gradle, so you'd have to copy the sources.
-I'm working on that... I think.
+I'm working on that quite soon, now that the presets are complete. Soon!
 
 Then, install Flow into your Activity:
 
 ```java
 public class MainActivity {
-  @Override protected void attachBaseContext(Context baseContext) {
-    baseContext = Flow.configure(baseContext, this) //
-                      .defaultKey(new DefaultKey()) //
-                      .dispatcher(new MainDispatcher(this)) //
-                      .install();
-    super.attachBaseContext(baseContext);
-  }
+    @BindView(R.id.main_root)
+    ViewGroup root;
+
+    SingleRootDispatcher flowDispatcher;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        flowDispatcher = new SingleRootDispatcher(newBase, this);
+        newBase = Flow.configure(newBase, this) //
+                .defaultKey(FirstKey.create()) //
+                .dispatcher(flowDispatcher) //
+                .install(); //
+        flowDispatcher.setBaseContext(newBase);
+        super.attachBaseContext(newBase);
+    }
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        flowDispatcher.getRootHolder().setRoot(root);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        flowDispatcher.onActivityCreated(this, savedInstanceState);
+    }
+
+    @Override
+    public void onBackPressed() {
+        boolean didGoBack = flowDispatcher.onBackPressed();
+        if(didGoBack) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        flowDispatcher.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        flowDispatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }
 ```
 
@@ -110,6 +153,15 @@ As you navigate the app, Flow keeps track of where you've been. And Flow makes i
 ### Controlling UI
 Navigation only counts if it changes UI state. Because every app has different needs, Flow lets you plug in [your own logic](https://github.com/Zhuinden/flowless/blob/master/flow/src/main/java/flow/Dispatcher.java) for responding to navigation and updating your UI.
 
+The Dispatcher has the following tasks when a new state is set:
+- Inflate the new view with Flow's internal context using `LayoutInflater.from(context)`
+- Persist the current view
+- Restore state to new view
+- Optionally animate the two views
+- Remove the current view
+- Add the new view
+- Signal to Flow that the traversal is complete
+
 ### ~~Managing resources~~
 ~~Your app requires different resources when it's in different states; sometimes those resources are shared between states. Flow makes it easy to associate resources with keys so they're set up when needed and torn down (only) when they're not anymore.~~
 
@@ -120,7 +172,90 @@ You [supply the serialization](https://github.com/Zhuinden/flowless/blob/master/
 
 ## Pre-set dispatchers for common use-cases
 
-Currently the only use-case supported out of the box by Flowless is that your Activity has a *single root*. The dispatcher provides optional lifecycle callbacks and the [sample shows the necessary configuration to make it all work](https://github.com/Zhuinden/flowless/blob/master/flowless-sample-single-root/app/src/main/java/com/zhuinden/flowless_dispatcher_sample/MainActivity.java).
+Two use-cases are supported out of the box. Both of them provide (optional) life-cycle hooks for easier usage within your custom viewgroups.
+
+First is the `SingleRootDispatcher`, which works if your Activity has a *single root*, meaning you're changing the screens within a single ViewGroup within your Activity. 
+
+Second is the `ContainerRootDispatcher`. Its purpose is to delegate the `dispatch()` call and all other lifecycle method calls to your defined custom viewgroup. The Root provided to a container root dispatcher must implement `Dispatcher`. It must also delegate the lifecycle method call to its children. For easier access to all lifecycle methods, the `FlowContainerLifecycleListener` interface is introduced, and the `FlowLifecycleProvider` class tries to make delegation as simple as possible. Of course, delegation of the `FlowLifecycles` lifecycle methods are optional, and you can choose to delegate only what you actually need. An example is provided for this setup in the Master-Detail example.
+
+## Example Custom View Group
+
+The most typical setup for a custom view group would look like so, using the `Bundleable` interface and listening to state restoration with `ViewLifecycleListener`.
+
+``` java
+public class FirstView
+        extends RelativeLayout
+        implements Bundleable, SingleRootDispatcher.ViewLifecycleListener {
+    private static final String TAG = "FirstView";
+
+    public FirstView(Context context) {
+        super(context);
+        init();
+    }
+
+    public FirstView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
+    public FirstView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    @TargetApi(21)
+    public FirstView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init();
+    }
+
+    FirstKey firstKey;
+
+    public void init() {
+        if(!isInEditMode()) {
+            firstKey = Flow.getKey(this);
+            Log.i(TAG, "init()");
+        }
+    }
+
+    @OnClick(R.id.first_button)
+    public void firstButtonClick(View view) {
+        Flow.get(view).set(SecondKey.create());
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        Log.i(TAG, "onFinishInflate()");
+        ButterKnife.bind(this);
+    }
+
+    @Override
+    public Bundle toBundle() {
+        Log.i(TAG, "toBundle()");
+        return new Bundle();
+    }
+
+    @Override
+    public void fromBundle(@Nullable Bundle bundle) {
+        Log.i(TAG, "fromBundle()");
+        if(bundle != null) {
+            Log.i(TAG, "fromBundle() with bundle");
+        }
+    }
+
+    @Override
+    public void onViewRestored(boolean forcedWithBundler) {
+        Log.i(TAG, "onViewRestored()");
+    }
+
+    @Override
+    public void onViewDestroyed(boolean removedByFlow) {
+        Log.i(TAG, "onViewDestroyed(" + removedByFlow + ")");
+    }
+}
+```
+
 
 ## License
 
