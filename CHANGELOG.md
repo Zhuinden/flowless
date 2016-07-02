@@ -4,9 +4,9 @@ Change Log
 Flowless Version 1.0-alpha *(2016-07-01)*
 --------------------------------
 * Updated `SingleRootDispatcher` sample
-* Added `ContainerRootDispatcher` preset and sample
+* Added `ContainerRootDispatcher` preset, updated master-detail sample
 * Simplified writing new Dispatchers by adding DispatcherUtil and FlowLifecycles (see `preset` for more details)
-* Rewrote traversal management in Flow to reduce possible risk of freeze up
+* Rewrote pending traversal management in Flow to reduce possible risk of freeze up
 
 Flowless Version 1.0-alpha *(2016-06-28)*
 --------------------------------
