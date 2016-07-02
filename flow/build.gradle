@@ -1,27 +1,25 @@
-import com.android.builder.core.BuilderConstants;
-
-buildscript {
-  dependencies {
-    classpath deps.android_gradle_plugin
-  }
-}
-
 apply plugin: 'com.android.library'
-android {
-  compileSdkVersion rootProject.ext.compileSdkVersion
-  buildToolsVersion rootProject.ext.buildToolsVersion
 
-  defaultConfig {
-    minSdkVersion rootProject.ext.minSdkVersion
-    versionName VERSION_NAME
-  }
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 dependencies {
-  compile 'com.android.support:support-annotations:23.1.1'
-  testCompile 'junit:junit:4.10'
-  testCompile 'org.assertj:assertj-core:1.7.1'
-  testCompile 'org.mockito:mockito-core:1.10.19'
-  testCompile 'org.robolectric:robolectric:3.0'
-  testCompile 'org.apache.maven:maven-ant-tasks:2.1.3'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:support-annotations:23.4.0'
 }
