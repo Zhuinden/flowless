@@ -247,7 +247,6 @@ public class FirstView
     public void init() {
         if(!isInEditMode()) {
             firstKey = Flow.getKey(this);
-            Log.i(TAG, "init()");
         }
     }
 
@@ -259,32 +258,32 @@ public class FirstView
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        Log.i(TAG, "onFinishInflate()");
         ButterKnife.bind(this);
     }
 
     @Override
     public Bundle toBundle() {
-        Log.i(TAG, "toBundle()");
-        return new Bundle();
+        Bundle bundle = new Bundle();
+        // persist state here
+        return bundle;
     }
 
     @Override
     public void fromBundle(@Nullable Bundle bundle) {
-        Log.i(TAG, "fromBundle()");
         if(bundle != null) {
-            Log.i(TAG, "fromBundle() with bundle");
+            // restore state here
         }
     }
 
     @Override
     public void onViewRestored(boolean forcedWithBundler) {
-        Log.i(TAG, "onViewRestored()");
+        // view was created and state has been restored (if exists)
     }
 
     @Override
     public void onViewDestroyed(boolean removedByFlow) {
-        Log.i(TAG, "onViewDestroyed(" + removedByFlow + ")");
+        // view is about to be destroyed, either by Activity death 
+        // or the Flow dispatcher has removed it
     }
 }
 ```
