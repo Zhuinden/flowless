@@ -290,6 +290,35 @@ public class FirstView
 }
 ```
 
+The view is created based on the key:
+
+``` java
+@AutoValue
+public abstract class FirstKey
+        implements LayoutPath {
+    public static FirstKey create() {
+        return new AutoValue_FirstKey(R.layout.path_first, FlowAnimation.NONE);
+    }
+}
+```
+
+And it's inflated based on the following XML:
+
+``` xml
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhuinden.flowless_dispatcher_sample.FirstView 
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+    <Button
+        android:id="@+id/first_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/go_to_second_view"/>
+</com.zhuinden.flowless_dispatcher_sample.FirstView>
+```
+
 
 ## License
 
