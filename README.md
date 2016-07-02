@@ -192,7 +192,7 @@ The Dispatcher has the following tasks when a new state is set:
 
 ~~Flow provides the `Flow.Services` class to define services that you can share via your Context. In order to find a service, you must specify the String tag with which it was bound to the services using the `Services.Binder`. To create services for keys, you must specify the `ServiceFactory` when you're creating the Dispatcher. In order to share the resources between multiple keys, the keys must either implement `TreeKey` (parent-child relationship) or `MultiKey` (a set of possible keys that share the same state).~~
 
-~~ Please note that if you're showing multiple keys on the screen, you must specify them in some sort of relationship for the reference counting to work.~~
+~~Please note that if you're showing multiple keys on the screen, you must specify them in some sort of relationship for the reference counting to work.~~
 
 Flowless does not support "managing resources", because the reference counting is not sufficiently customizable. If this is necessary, handle such logic within the container of the given key's view, or the Activity using `ActivityUtils` to find the activity for the given view.
 
