@@ -120,7 +120,7 @@ public enum TabKey {
   PROFILE
 }
 
-public final class HomeKey extends flow.ClassKey {
+public final class HomeKey extends flowless.ClassKey {
 }
 
 public final class ArticleKey {
