@@ -100,6 +100,7 @@ public class MasterDetailContainer
             addView(newView, 0);
         } else {
             if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
+                DispatcherUtils.persistViewToState(traversal, getChildAt(0));
                 removeViewAt(0);
             }
             masterContainer.setVisibility(VISIBLE);
