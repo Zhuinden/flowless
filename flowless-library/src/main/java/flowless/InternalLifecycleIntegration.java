@@ -207,22 +207,6 @@ public final class InternalLifecycleIntegration
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(dispatcher instanceof FlowLifecycles.PermissionRequestListener) {
-            ((FlowLifecycles.PermissionRequestListener) dispatcher).onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(dispatcher instanceof FlowLifecycles.ActivityResultListener) {
-            ((FlowLifecycles.ActivityResultListener) dispatcher).onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if(dispatcher instanceof FlowLifecycles.ViewStatePersistenceListener) {

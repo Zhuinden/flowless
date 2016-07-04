@@ -82,6 +82,18 @@ public class MainActivity {
             super.onBackPressed();
         }
     }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        flowDispatcher.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        flowDispatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }
 ```
 
