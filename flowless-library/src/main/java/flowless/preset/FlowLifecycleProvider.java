@@ -17,25 +17,25 @@ public class FlowLifecycleProvider {
     }
 
     public void onStart(View view) {
-        if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
+        if(view != null && view instanceof FlowLifecycles.StartStopListener) {
             ((FlowLifecycles.StartStopListener) view).onStart();
         }
     }
 
     public void onResume(View view) {
-        if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
+        if(view != null && view instanceof FlowLifecycles.ResumePauseListener) {
             ((FlowLifecycles.ResumePauseListener) view).onResume();
         }
     }
 
     public void onPause(View view) {
-        if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
+        if(view != null && view instanceof FlowLifecycles.ResumePauseListener) {
             ((FlowLifecycles.ResumePauseListener) view).onPause();
         }
     }
 
     public void onStop(View view) {
-        if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
+        if(view != null && view instanceof FlowLifecycles.StartStopListener) {
             ((FlowLifecycles.StartStopListener) view).onStop();
         }
     }
@@ -76,7 +76,7 @@ public class FlowLifecycleProvider {
     }
 
     public void preSaveViewState(View view, Bundle bundle) {
-        if(view != null && view instanceof FlowLifecycles.ViewLifecycleListener) {
+        if(view != null && view instanceof FlowLifecycles.ViewStatePersistenceListener) {
             ((FlowLifecycles.ViewStatePersistenceListener) view).preSaveViewState(bundle);
         }
     }

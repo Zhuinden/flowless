@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-Flowless Version 1.0-alpha5 *(2016-07-04)*
+Flowless Version 1.0-alpha1.1 *(2016-07-04)*
 --------------------------------
 * BREAKING CHANGE: Renamed `LayoutPath` to `LayoutKey`
 * BREAKING CHANGE: Due to dispatchers no longer being bound to `Application.ActivityCallbacks`, `preSaveViewState()` must be called manually from the activity
