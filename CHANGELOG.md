@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-Flowless Version 1.0-alpha3 *(2016-07-04)*
+Flowless Version 1.0-alpha4 *(2016-07-04)*
 --------------------------------
 * BREAKING CHANGE: Renamed `LayoutPath` to `LayoutKey`
 * `onCreate` callback now relies on `InternalLifecycleIntegration`'s `onActivityCreated()` callback (Activity no longer has to do this manually)
