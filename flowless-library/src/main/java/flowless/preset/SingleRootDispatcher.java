@@ -90,7 +90,7 @@ public class SingleRootDispatcher
     @Override
     public void preSaveViewState(@Nullable Bundle outState) {
         if(hasActiveView()) {
-            flowLifecycleProvider.onSaveInstanceState(rootHolder.root.getChildAt(0), outState);
+            flowLifecycleProvider.preSaveViewState(rootHolder.root.getChildAt(0), outState);
 
             // Important: Single Root Dispatcher can handle its child's state directly, but Container Root Dispatcher cannot.
             ForceBundler.saveToBundle(activity, rootHolder.root.getChildAt(0));

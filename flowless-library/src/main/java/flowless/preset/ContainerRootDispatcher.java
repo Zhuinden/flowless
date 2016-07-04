@@ -89,7 +89,7 @@ public class ContainerRootDispatcher
     @Override
     public void preSaveViewState(@Nullable Bundle outState) {
         if(hasActiveView()) {
-            flowLifecycleProvider.onSaveInstanceState(rootHolder.root, outState);
+            flowLifecycleProvider.preSaveViewState(rootHolder.root, outState);
             // you must call the ForceBundler manually within the Dispatcher Container
         }
     }

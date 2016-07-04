@@ -40,12 +40,6 @@ public class FlowLifecycleProvider {
         }
     }
 
-    public void onSaveInstanceState(View view, @Nullable Bundle outState) {
-        if(view != null && view instanceof FlowLifecycles.ViewStatePersistenceListener) {
-            ((FlowLifecycles.ViewStatePersistenceListener) view).preSaveViewState(outState);
-        }
-    }
-
     public void onDestroy(View view) {
         if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
             ((FlowLifecycles.CreateDestroyListener) view).onDestroy();
