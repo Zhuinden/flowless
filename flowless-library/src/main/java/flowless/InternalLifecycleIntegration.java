@@ -27,6 +27,8 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import flowless.preset.FlowLifecycles;
+
 import static flowless.Preconditions.checkArgument;
 import static flowless.Preconditions.checkNotNull;
 
@@ -153,6 +155,17 @@ public final class InternalLifecycleIntegration
             flow = new Flow(keyManager, history);
         }
         flow.setDispatcher(dispatcher, true);
+        if(dispatcher instanceof FlowLifecycles.CreateDestroyListener) {
+            ((FlowLifecycles.CreateDestroyListener) dispatcher).onCreate(savedInstanceState);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(dispatcher instanceof FlowLifecycles.StartStopListener) {
+            ((FlowLifecycles.StartStopListener) dispatcher).onStart();
+        }
     }
 
     @Override
@@ -161,11 +174,16 @@ public final class InternalLifecycleIntegration
         if(!flow.hasDispatcher()) {
             flow.setDispatcher(dispatcher, false);
         }
-
+        if(dispatcher instanceof FlowLifecycles.ResumePauseListener) {
+            ((FlowLifecycles.ResumePauseListener) dispatcher).onResume();
+        }
     }
 
     @Override
     public void onPause() {
+        if(dispatcher instanceof FlowLifecycles.ResumePauseListener) {
+            ((FlowLifecycles.ResumePauseListener) dispatcher).onPause();
+        }
         if(flow.hasDispatcher()) {
             flow.removeDispatcher(dispatcher);
         }
@@ -173,13 +191,43 @@ public final class InternalLifecycleIntegration
     }
 
     @Override
+    public void onStop() {
+        if(dispatcher instanceof FlowLifecycles.StartStopListener) {
+            ((FlowLifecycles.StartStopListener) dispatcher).onStop();
+        }
+        super.onStop();
+    }
+
+    @Override
     public void onDestroy() {
+        if(dispatcher instanceof FlowLifecycles.CreateDestroyListener) {
+            ((FlowLifecycles.CreateDestroyListener) dispatcher).onDestroy();
+        }
         super.onDestroy();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(dispatcher instanceof FlowLifecycles.PermissionRequestListener) {
+            ((FlowLifecycles.PermissionRequestListener) dispatcher).onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(dispatcher instanceof FlowLifecycles.ActivityResultListener) {
+            ((FlowLifecycles.ActivityResultListener) dispatcher).onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        if(dispatcher instanceof FlowLifecycles.ViewStatePersistenceListener) {
+            ((FlowLifecycles.ViewStatePersistenceListener) dispatcher).preSaveViewState(outState);
+        }
         checkArgument(outState != null, "outState may not be null");
         if(parceler == null) {
             return;

@@ -45,7 +45,7 @@ In order to use Flow(less), you need to add jitpack to your project root gradle:
 
 and add the compile dependency to your module level gradle.
 
-    compile 'com.github.Zhuinden:flowless:1.0-alpha'
+    compile 'com.github.Zhuinden:flowless:1.0-alpha2'
 
 
 Then, install Flow into your Activity:
@@ -59,7 +59,7 @@ public class MainActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        flowDispatcher = new SingleRootDispatcher(newBase, this);
+        flowDispatcher = new SingleRootDispatcher(this);
         newBase = Flow.configure(newBase, this) //
                 .defaultKey(FirstKey.create()) //
                 .dispatcher(flowDispatcher) //
@@ -77,30 +77,10 @@ public class MainActivity {
     }
 
     @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        flowDispatcher.onActivityCreated(this, savedInstanceState);
-    }
-
-    @Override
     public void onBackPressed() {
-        boolean didGoBack = flowDispatcher.onBackPressed();
-        if(didGoBack) {
-            return;
+        if(!flowDispatcher.onBackPressed()) {
+            super.onBackPressed();
         }
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        flowDispatcher.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        flowDispatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
 ```

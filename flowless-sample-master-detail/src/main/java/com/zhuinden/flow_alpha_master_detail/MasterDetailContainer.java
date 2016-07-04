@@ -182,7 +182,7 @@ public class MasterDetailContainer
             detailContainer.onCreate(bundle);
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onActivityCreated(getChildAt(0), bundle);
+            flowLifecycleProvider.onCreate(getChildAt(0), bundle);
         }
     }
 
@@ -195,7 +195,7 @@ public class MasterDetailContainer
             detailContainer.onDestroy();
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onActivityDestroyed(getChildAt(0));
+            flowLifecycleProvider.onDestroy(getChildAt(0));
         }
     }
 
@@ -221,7 +221,7 @@ public class MasterDetailContainer
             detailContainer.onResume();
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onActivityResumed(getChildAt(0));
+            flowLifecycleProvider.onResume(getChildAt(0));
         }
     }
 
@@ -234,7 +234,7 @@ public class MasterDetailContainer
             detailContainer.onPause();
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onActivityPaused(getChildAt(0));
+            flowLifecycleProvider.onPause(getChildAt(0));
         }
     }
 
@@ -247,7 +247,7 @@ public class MasterDetailContainer
             detailContainer.onStart();
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onActivityStarted(getChildAt(0));
+            flowLifecycleProvider.onStart(getChildAt(0));
         }
     }
 
@@ -260,7 +260,7 @@ public class MasterDetailContainer
             detailContainer.onStop();
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onActivityStopped(getChildAt(0));
+            flowLifecycleProvider.onStop(getChildAt(0));
         }
     }
 

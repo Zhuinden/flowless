@@ -10,43 +10,43 @@ import android.view.View;
  * Created by Zhuinden on 2016.07.01..
  */
 public class FlowLifecycleProvider {
-    public void onActivityCreated(View view, Bundle savedInstanceState) {
+    public void onCreate(View view, Bundle savedInstanceState) {
         if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
             ((FlowLifecycles.CreateDestroyListener) view).onCreate(savedInstanceState);
         }
     }
 
-    public void onActivityStarted(View view) {
+    public void onStart(View view) {
         if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
             ((FlowLifecycles.StartStopListener) view).onStart();
         }
     }
 
-    public void onActivityResumed(View view) {
+    public void onResume(View view) {
         if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
             ((FlowLifecycles.ResumePauseListener) view).onResume();
         }
     }
 
-    public void onActivityPaused(View view) {
+    public void onPause(View view) {
         if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
             ((FlowLifecycles.ResumePauseListener) view).onPause();
         }
     }
 
-    public void onActivityStopped(View view) {
+    public void onStop(View view) {
         if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
             ((FlowLifecycles.StartStopListener) view).onStop();
         }
     }
 
-    public void onActivitySaveInstanceState(View view, @Nullable Bundle outState) {
+    public void onSaveInstanceState(View view, @Nullable Bundle outState) {
         if(view != null && view instanceof FlowLifecycles.ViewStatePersistenceListener) {
             ((FlowLifecycles.ViewStatePersistenceListener) view).preSaveViewState(outState);
         }
     }
 
-    public void onActivityDestroyed(View view) {
+    public void onDestroy(View view) {
         if(view != null && view instanceof FlowLifecycles.CreateDestroyListener) {
             ((FlowLifecycles.CreateDestroyListener) view).onDestroy();
         }

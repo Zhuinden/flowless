@@ -1,12 +1,11 @@
 package flowless.preset;
 
 import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 
 import flowless.Dispatcher;
@@ -19,10 +18,9 @@ import flowless.TraversalCallback;
  */
 public class ContainerRootDispatcher
         extends BaseDispatcher
-        implements Application.ActivityLifecycleCallbacks {
-    public ContainerRootDispatcher(Context baseContext, Activity activity) {
-        super(baseContext, activity);
-        application.registerActivityLifecycleCallbacks(this);
+        implements FlowContainerLifecycleListener {
+    public ContainerRootDispatcher(Activity activity) {
+        super(activity);
     }
 
     private boolean hasActiveView() {
@@ -30,70 +28,69 @@ public class ContainerRootDispatcher
     }
 
     @Override
-    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        if(activity == this.activity) {
-            if(hasActiveView()) {
-                flowLifecycleProvider.onActivityCreated(rootHolder.root, savedInstanceState);
-            }
+    public void onCreate(Bundle bundle) {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onCreate(rootHolder.root, bundle);
         }
     }
 
     @Override
-    public void onActivityStarted(Activity activity) {
-        if(activity == this.activity) {
-            if(hasActiveView()) {
-                flowLifecycleProvider.onActivityStarted(rootHolder.root);
-            }
+    public void onDestroy() {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onDestroy(rootHolder.root);
+        }
+        if(hasActiveView()) {
+            rootHolder.root = null;
         }
     }
 
     @Override
-    public void onActivityResumed(Activity activity) {
-        if(activity == this.activity) {
-            if(hasActiveView()) {
-                flowLifecycleProvider.onActivityResumed(rootHolder.root);
-            }
+    public void onResume() {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onResume(rootHolder.root);
         }
     }
 
     @Override
-    public void onActivityPaused(Activity activity) {
-        if(activity == this.activity) {
-            if(hasActiveView()) {
-                flowLifecycleProvider.onActivityPaused(rootHolder.root);
-            }
+    public void onPause() {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onPause(rootHolder.root);
         }
     }
 
     @Override
-    public void onActivityStopped(Activity activity) {
-        if(activity == this.activity) {
-            if(hasActiveView()) {
-                flowLifecycleProvider.onActivityStopped(rootHolder.root);
-            }
+    public void onStart() {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onStart(rootHolder.root);
         }
     }
 
     @Override
-    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-        if(activity == this.activity) {
-            if(rootHolder != null && rootHolder.root != null && rootHolder.root instanceof ViewStatePersistenceListener) {
-                flowLifecycleProvider.onActivitySaveInstanceState(rootHolder.root, outState);
-                // you must call the ForceBundler manually within the Dispatcher Container
-            }
+    public void onStop() {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onStop(rootHolder.root);
         }
     }
 
     @Override
-    public void onActivityDestroyed(Activity activity) {
-        if(activity == this.activity) {
-            if(hasActiveView()) {
-                flowLifecycleProvider.onActivityDestroyed(rootHolder.root);
-            }
-            if(hasActiveView()) {
-                rootHolder.root = null;
-            }
-            application.unregisterActivityLifecycleCallbacks(this);
+    public void onViewRestored(boolean forcedWithBundler) {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onViewRestored(rootHolder.root, forcedWithBundler);
+        }
+    }
+
+    @Override
+    public void onViewDestroyed(boolean removedByFlow) {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onViewDestroyed(rootHolder.root, removedByFlow);
+        }
+    }
+
+    @Override
+    public void preSaveViewState(@Nullable Bundle outState) {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onSaveInstanceState(rootHolder.root, outState);
+            // you must call the ForceBundler manually within the Dispatcher Container
         }
     }
 

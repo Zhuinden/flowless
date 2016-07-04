@@ -14,7 +14,7 @@ import flowless.TraversalCallback;
  * Created by Zhuinden on 2016.07.01..
  */
 public abstract class BaseDispatcher
-        implements Dispatcher, FlowLifecycles, FlowActivityCallbacks {
+        implements Dispatcher, FlowLifecycles {
     public static class RootHolder {
         ViewGroup root;
 
@@ -31,14 +31,11 @@ public abstract class BaseDispatcher
     protected final FlowLifecycleProvider flowLifecycleProvider;
 
     protected final Activity activity;
-    protected final Application application;
 
-    public BaseDispatcher(Context baseContext, Activity activity) {
+    public BaseDispatcher(Activity activity) {
         this.activity = activity;
         this.rootHolder = createRootHolder();
         this.flowLifecycleProvider = new FlowLifecycleProvider();
-
-        application = (Application) baseContext.getApplicationContext();
     }
 
     protected RootHolder createRootHolder() {

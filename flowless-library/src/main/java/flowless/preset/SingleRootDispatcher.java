@@ -3,12 +3,11 @@ package flowless.preset;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,78 +23,77 @@ import flowless.ViewUtils;
  */
 public class SingleRootDispatcher
         extends BaseDispatcher
-        implements Application.ActivityLifecycleCallbacks {
+        implements FlowContainerLifecycleListener {
     private boolean hasActiveView() {
         return rootHolder != null && rootHolder.root != null && rootHolder.root.getChildCount() > 0;
     }
 
     @Override
-    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        if(activity == this.activity) {
-            if(hasActiveView()) {
-                flowLifecycleProvider.onActivityCreated(rootHolder.root.getChildAt(0), savedInstanceState);
-            }
+    public void onCreate(Bundle bundle) {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onCreate(rootHolder.root.getChildAt(0), bundle);
         }
     }
 
     @Override
-    public void onActivityStarted(Activity activity) {
-        if(activity == this.activity) {
-            if(hasActiveView()) {
-                flowLifecycleProvider.onActivityStarted(rootHolder.root.getChildAt(0));
-            }
+    public void onDestroy() {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onDestroy(rootHolder.root.getChildAt(0));
+        }
+        if(rootHolder != null && rootHolder.root != null) {
+            rootHolder.root = null;
         }
     }
 
     @Override
-    public void onActivityResumed(Activity activity) {
-        if(activity == this.activity) {
-            if(hasActiveView()) {
-                flowLifecycleProvider.onActivityResumed(rootHolder.root.getChildAt(0));
-            }
+    public void onResume() {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onResume(rootHolder.root.getChildAt(0));
         }
     }
 
     @Override
-    public void onActivityPaused(Activity activity) {
-        if(activity == this.activity) {
-            if(hasActiveView()) {
-                flowLifecycleProvider.onActivityPaused(rootHolder.root.getChildAt(0));
-            }
+    public void onPause() {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onPause(rootHolder.root.getChildAt(0));
         }
     }
 
     @Override
-    public void onActivityStopped(Activity activity) {
-        if(activity == this.activity) {
-            if(hasActiveView()) {
-                flowLifecycleProvider.onActivityStopped(rootHolder.root.getChildAt(0));
-            }
+    public void onStart() {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onStart(rootHolder.root.getChildAt(0));
         }
     }
 
     @Override
-    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-        if(activity == this.activity) {
-            if(hasActiveView()) {
-                flowLifecycleProvider.onActivitySaveInstanceState(rootHolder.root.getChildAt(0), outState);
-
-                // Important: Single Root Dispatcher can handle its child's state directly, but Container Root Dispatcher cannot.
-                ForceBundler.saveToBundle(activity, rootHolder.root.getChildAt(0));
-            }
+    public void onStop() {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onStop(rootHolder.root.getChildAt(0));
         }
     }
 
     @Override
-    public void onActivityDestroyed(Activity activity) {
-        if(activity == this.activity) {
-            if(hasActiveView()) {
-                flowLifecycleProvider.onActivityDestroyed(rootHolder.root.getChildAt(0));
-            }
-            if(rootHolder != null && rootHolder.root != null) {
-                rootHolder.root = null;
-            }
-            application.unregisterActivityLifecycleCallbacks(this);
+    public void onViewRestored(boolean forcedWithBundler) {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onViewRestored(rootHolder.root.getChildAt(0), forcedWithBundler);
+        }
+    }
+
+    @Override
+    public void onViewDestroyed(boolean removedByFlow) {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onViewDestroyed(rootHolder.root.getChildAt(0), removedByFlow);
+        }
+    }
+
+    @Override
+    public void preSaveViewState(@Nullable Bundle outState) {
+        if(hasActiveView()) {
+            flowLifecycleProvider.onSaveInstanceState(rootHolder.root.getChildAt(0), outState);
+
+            // Important: Single Root Dispatcher can handle its child's state directly, but Container Root Dispatcher cannot.
+            ForceBundler.saveToBundle(activity, rootHolder.root.getChildAt(0));
         }
     }
 
@@ -127,9 +125,8 @@ public class SingleRootDispatcher
         }
     }
 
-    public SingleRootDispatcher(Context baseContext, Activity activity) {
-        super(baseContext, activity);
-        application.registerActivityLifecycleCallbacks(this);
+    public SingleRootDispatcher(Activity activity) {
+        super(activity);
     }
 
     @Override
