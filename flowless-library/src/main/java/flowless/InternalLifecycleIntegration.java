@@ -208,9 +208,6 @@ public final class InternalLifecycleIntegration
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        if(dispatcher instanceof FlowLifecycles.ViewStatePersistenceListener) {
-            ((FlowLifecycles.ViewStatePersistenceListener) dispatcher).preSaveViewState(outState);
-        }
         super.onSaveInstanceState(outState);
         checkArgument(outState != null, "outState may not be null");
         if(parceler == null) {

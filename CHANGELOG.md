@@ -1,9 +1,10 @@
 Change Log
 ==========
 
-Flowless Version 1.0-alpha4 *(2016-07-04)*
+Flowless Version 1.0-alpha5 *(2016-07-04)*
 --------------------------------
 * BREAKING CHANGE: Renamed `LayoutPath` to `LayoutKey`
+* BREAKING CHANGE: Due to dispatchers no longer being bound to `Application.ActivityCallbacks`, `preSaveViewState()` must be called manually from the activity
 * `onCreate` callback now relies on `InternalLifecycleIntegration`'s `onActivityCreated()` callback (Activity no longer has to do this manually)
 * Dispatchers rely on the InternalLifecycleIntegration's callback events instead of being an `Application.ActivityCallbacks` (simplifies delegation in `SinglePaneContainer`)
 * Removed `FlowActivityCallbacks`, it was the same as `FlowLifecycles.BackPressListener` and the like and shouldn't have existed in the first place

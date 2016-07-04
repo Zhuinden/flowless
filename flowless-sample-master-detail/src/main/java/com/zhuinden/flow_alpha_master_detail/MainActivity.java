@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import flowless.Flow;
 import flowless.preset.ContainerRootDispatcher;
+import flowless.preset.FlowLifecycles;
 
 public class MainActivity
         extends AppCompatActivity {
@@ -48,6 +49,12 @@ public class MainActivity
             return;
         }
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        flowDispatcher.preSaveViewState(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

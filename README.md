@@ -45,7 +45,7 @@ In order to use Flow(less), you need to add jitpack to your project root gradle:
 
 and add the compile dependency to your module level gradle.
 
-    compile 'com.github.Zhuinden:flowless:1.0-alpha4'
+    compile 'com.github.Zhuinden:flowless:1.0-alpha5'
 
 
 Then, install Flow into your Activity:
@@ -82,6 +82,13 @@ public class MainActivity {
             super.onBackPressed();
         }
     }
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        flowDispatcher.preSaveViewState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

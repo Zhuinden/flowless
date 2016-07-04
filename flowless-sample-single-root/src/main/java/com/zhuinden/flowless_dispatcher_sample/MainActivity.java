@@ -49,6 +49,12 @@ public class MainActivity
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        flowDispatcher.preSaveViewState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         flowDispatcher.onActivityResult(requestCode, resultCode, data);
