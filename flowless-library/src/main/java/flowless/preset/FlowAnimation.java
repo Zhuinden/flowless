@@ -3,6 +3,7 @@ package flowless.preset;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
@@ -18,7 +19,7 @@ public abstract class FlowAnimation
     public static FlowAnimation NONE = new FlowAnimation() {
         @Nullable
         @Override
-        public Animator createAnimation(View previousView, View newView, Direction direction) {
+        public Animator createAnimation(@Nullable View previousView, @NonNull View newView, Direction direction) {
             return null;
         }
 
@@ -31,8 +32,8 @@ public abstract class FlowAnimation
     public static FlowAnimation SEGUE = new FlowAnimation() {
         @Nullable
         @Override
-        public Animator createAnimation(View previousView, View newView, Direction direction) {
-            if(direction == Direction.REPLACE) {
+        public Animator createAnimation(@Nullable View previousView, @NonNull View newView, Direction direction) {
+            if(direction == Direction.REPLACE || previousView == null) {
                 return null;
             }
             boolean backward = direction == Direction.BACKWARD;
@@ -54,7 +55,7 @@ public abstract class FlowAnimation
     };
 
     @Nullable
-    public abstract Animator createAnimation(View previousView, View newView, Direction direction);
+    public abstract Animator createAnimation(@Nullable View previousView, @NonNull View newView, Direction direction);
 
     public abstract boolean showChildOnTopWhenAdded(Direction direction);
 
