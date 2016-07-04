@@ -125,8 +125,7 @@ But if you want to be really cool, you can use [Auto-Parcel](https://github.com/
 
 ``` java
 @AutoValue
-public abstract class CalendarEventKey
-        implements LayoutPath, Parcelable {
+public abstract class CalendarEventKey implements LayoutKey {
     abstract long eventId();
 
     public static CalendarEventKey create(long eventId) {
@@ -275,7 +274,7 @@ The view is created based on the key:
 ``` java
 @AutoValue
 public abstract class FirstKey
-        implements LayoutPath {
+        implements LayoutKey {
     public static FirstKey create() {
         return new AutoValue_FirstKey(R.layout.path_first, FlowAnimation.NONE);
     }
