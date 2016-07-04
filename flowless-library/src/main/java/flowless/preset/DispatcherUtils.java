@@ -21,11 +21,11 @@ public class DispatcherUtils {
     private DispatcherUtils() {
     }
 
-    public static Context createContextForKey(Traversal traversal, LayoutPath newKey, Context baseContext) {
+    public static Context createContextForKey(Traversal traversal, LayoutKey newKey, Context baseContext) {
         return traversal.createContext(newKey, baseContext);
     }
 
-    public static LayoutPath selectAnimatedKey(Direction direction, LayoutPath previousKey, LayoutPath newKey) {
+    public static LayoutKey selectAnimatedKey(Direction direction, LayoutKey previousKey, LayoutKey newKey) {
         return direction == Direction.BACKWARD ? (previousKey != null ? previousKey : newKey) : newKey;
     }
 
@@ -67,7 +67,7 @@ public class DispatcherUtils {
         }
     }
 
-    public static void addViewToGroupForKey(Direction direction, View view, ViewGroup root, LayoutPath animatedKey) {
+    public static void addViewToGroupForKey(Direction direction, View view, ViewGroup root, LayoutKey animatedKey) {
         if(animatedKey.animation() != null && !animatedKey.animation().showChildOnTopWhenAdded(direction)) {
             root.addView(view, 0);
         } else {
@@ -84,26 +84,26 @@ public class DispatcherUtils {
         }
     }
 
-    public static LayoutPath getNewKey(Traversal traversal) {
+    public static LayoutKey getNewKey(Traversal traversal) {
         return traversal.destination.top();
     }
 
-    public static LayoutPath getPreviousKey(Traversal traversal) {
-        LayoutPath previousKey = null;
+    public static LayoutKey getPreviousKey(Traversal traversal) {
+        LayoutKey previousKey = null;
         if(traversal.origin != null) {
             previousKey = traversal.origin.top();
         }
         return previousKey;
     }
 
-    public static View createViewFromKey(Traversal traversal, LayoutPath newKey, ViewGroup root, Context baseContext) {
+    public static View createViewFromKey(Traversal traversal, LayoutKey newKey, ViewGroup root, Context baseContext) {
         Context internalContext = DispatcherUtils.createContextForKey(traversal, newKey, baseContext);
         LayoutInflater layoutInflater = LayoutInflater.from(internalContext);
         final View newView = layoutInflater.inflate(newKey.layout(), root, false);
         return newView;
     }
 
-    public static Animator createAnimatorForViews(LayoutPath animatedKey, View previousView, View newView, Direction direction) {
+    public static Animator createAnimatorForViews(LayoutKey animatedKey, View previousView, View newView, Direction direction) {
         if(animatedKey.animation() != null) {
             return animatedKey.animation().createAnimation(previousView, newView, direction);
         }

@@ -136,8 +136,8 @@ public class SingleRootDispatcher
             DispatcherUtils.finishTraversal(callback);
             return;
         }
-        final LayoutPath newKey = DispatcherUtils.getNewKey(traversal);
-        final LayoutPath previousKey = DispatcherUtils.getPreviousKey(traversal);
+        final LayoutKey newKey = DispatcherUtils.getNewKey(traversal);
+        final LayoutKey previousKey = DispatcherUtils.getPreviousKey(traversal);
 
         final Direction direction = traversal.direction;
 
@@ -147,7 +147,7 @@ public class SingleRootDispatcher
         final View newView = DispatcherUtils.createViewFromKey(traversal, newKey, root, baseContext);
         DispatcherUtils.restoreViewFromState(traversal, newView);
 
-        final LayoutPath animatedKey = DispatcherUtils.selectAnimatedKey(direction, previousKey, newKey);
+        final LayoutKey animatedKey = DispatcherUtils.selectAnimatedKey(direction, previousKey, newKey);
         DispatcherUtils.addViewToGroupForKey(direction, newView, root, animatedKey);
         ViewUtils.waitForMeasure(newView, new ViewUtils.OnMeasuredCallback() {
             @Override

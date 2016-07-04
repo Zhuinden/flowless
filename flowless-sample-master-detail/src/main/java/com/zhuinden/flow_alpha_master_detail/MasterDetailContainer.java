@@ -21,7 +21,7 @@ import flowless.TraversalCallback;
 import flowless.preset.DispatcherUtils;
 import flowless.preset.FlowContainerLifecycleListener;
 import flowless.preset.FlowLifecycleProvider;
-import flowless.preset.LayoutPath;
+import flowless.preset.LayoutKey;
 
 /**
  * Created by Zhuinden on 2016.04.16..
@@ -83,8 +83,8 @@ public class MasterDetailContainer
             return;
         }
 
-        final LayoutPath newKey = DispatcherUtils.getNewKey(traversal);
-        final LayoutPath previousKey = DispatcherUtils.getPreviousKey(traversal);
+        final LayoutKey newKey = DispatcherUtils.getNewKey(traversal);
+        final LayoutKey previousKey = DispatcherUtils.getPreviousKey(traversal);
 
         final View newView = DispatcherUtils.createViewFromKey(traversal, newKey, this, ((ContextWrapper)getContext()).getBaseContext());
         DispatcherUtils.restoreViewFromState(traversal, newView);
@@ -110,7 +110,7 @@ public class MasterDetailContainer
                 detailContainer.removeAllViews();
                 detailContainer.addView(newView);
                 if(masterContainer.getChildCount() <= 0) {
-                    final View restoredMasterView = DispatcherUtils.createViewFromKey(traversal, (LayoutPath)(((IsDetail) newKey).getMaster()), masterContainer, ((ContextWrapper)getContext()).getBaseContext());
+                    final View restoredMasterView = DispatcherUtils.createViewFromKey(traversal, (LayoutKey)(((IsDetail) newKey).getMaster()), masterContainer, ((ContextWrapper)getContext()).getBaseContext());
                     DispatcherUtils.restoreViewFromState(traversal, restoredMasterView);
                     masterContainer.addView(restoredMasterView);
                 }

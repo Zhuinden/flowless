@@ -1,7 +1,5 @@
 package com.zhuinden.flow_alpha_master_detail;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -10,21 +8,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import flowless.ActivityUtils;
-import flowless.Direction;
 import flowless.Dispatcher;
-import flowless.ForceBundler;
 import flowless.Traversal;
 import flowless.TraversalCallback;
-import flowless.ViewUtils;
-import flowless.preset.DispatcherUtils;
 import flowless.preset.FlowContainerLifecycleListener;
-import flowless.preset.FlowLifecycleProvider;
-import flowless.preset.LayoutPath;
 import flowless.preset.SingleRootDispatcher;
 
 /**

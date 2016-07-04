@@ -6,13 +6,13 @@ import com.zhuinden.flow_alpha_master_detail.IsMaster;
 import com.zhuinden.flow_alpha_master_detail.R;
 
 import flowless.preset.FlowAnimation;
-import flowless.preset.LayoutPath;
+import flowless.preset.LayoutKey;
 
 /**
  * Created by Zhuinden on 2016.04.16..
  */
 @AutoValue
-public abstract class FourthDetailSecondKey implements LayoutPath, IsDetail {
+public abstract class FourthDetailSecondKey implements LayoutKey, IsDetail {
     @Override
     public IsMaster getMaster() {
         return FourthMasterKey.create();
