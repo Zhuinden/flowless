@@ -137,7 +137,7 @@ public final class Flow {
     void setDispatcher(@NonNull Dispatcher dispatcher, boolean created) {
         this.dispatcher = checkNotNull(dispatcher, "dispatcher");
 
-        if(pendingTraversal == null && created) {
+        if((pendingTraversal == null && created) || (pendingTraversal != null && pendingTraversal.state == TraversalState.DISPATCHED && pendingTraversal.next == null)) {
             // initialization should occur for current state if views are created or re-created
             move(new PendingTraversal() {
                 @Override
