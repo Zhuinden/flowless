@@ -129,6 +129,10 @@ public final class Flow {
         return history;
     }
 
+    void setDispatcher(@NonNull Dispatcher dispatcher) {
+        setDispatcher(dispatcher, true);
+    }
+
     /**
      * Set the dispatcher, may receive an immediate call to {@link Dispatcher#dispatch}. If a {@link
      * Traversal Traversal} is currently in progress with a previous Dispatcher, that Traversal will
@@ -136,8 +140,8 @@ public final class Flow {
      */
     void setDispatcher(@NonNull Dispatcher dispatcher, boolean created) {
         this.dispatcher = checkNotNull(dispatcher, "dispatcher");
-
-        if((pendingTraversal == null && created) || (pendingTraversal != null && pendingTraversal.state == TraversalState.DISPATCHED && pendingTraversal.next == null)) {
+        if((pendingTraversal == null && created) // first create
+                || (pendingTraversal != null && pendingTraversal.nextHistory == null && pendingTraversal.state == TraversalState.DISPATCHED && pendingTraversal.next == null)) { // pending bootstrap for handling mid-flight
             // initialization should occur for current state if views are created or re-created
             move(new PendingTraversal() {
                 @Override

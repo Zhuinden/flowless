@@ -53,7 +53,7 @@ public class ReentranceTest {
             }
         };
         flow = new Flow(keyManager, History.single(new Catalog()));
-        flow.setDispatcher(dispatcher, true);
+        flow.setDispatcher(dispatcher);
         flow.set(new Detail());
         verifyHistory(lastStack, new Error(), new Loading(), new Detail(), new Catalog());
     }
@@ -83,7 +83,7 @@ public class ReentranceTest {
             }
         };
         flow = new Flow(keyManager, History.single(new Catalog()));
-        flow.setDispatcher(dispatcher, true);
+        flow.setDispatcher(dispatcher);
         verifyHistory(lastStack, new Catalog());
         flow.set(new Detail());
         verifyHistory(lastStack, new Detail(), new Catalog());
@@ -103,7 +103,7 @@ public class ReentranceTest {
                 }
                 callback.onTraversalCompleted();
             }
-        }, true);
+        });
         this.flow = flow;
         flow.set(new Detail());
         verifyHistory(lastStack, new Error(), new Loading(), new Detail());
@@ -123,7 +123,7 @@ public class ReentranceTest {
             }
         };
         flow = new Flow(keyManager, History.single(new Catalog()));
-        flow.setDispatcher(dispatcher, true);
+        flow.setDispatcher(dispatcher);
         lastCallback.onTraversalCompleted();
 
         flow.set(new Detail());
@@ -143,7 +143,7 @@ public class ReentranceTest {
                 lastStack = traversal.destination;
                 lastCallback = callback;
             }
-        }, true);
+        });
 
         lastCallback.onTraversalCompleted();
         try {
@@ -162,7 +162,7 @@ public class ReentranceTest {
                 lastStack = traversal.destination;
                 callback.onTraversalCompleted();
             }
-        }, true);
+        });
 
         verifyHistory(lastStack, new Catalog());
     }
@@ -178,7 +178,7 @@ public class ReentranceTest {
                 lastStack = traversal.destination;
                 callback.onTraversalCompleted();
             }
-        }, true);
+        });
 
         verifyHistory(lastStack, new Detail(), new Catalog());
         assertThat(dispatchCount.intValue()).isEqualTo(1);
@@ -194,7 +194,7 @@ public class ReentranceTest {
             @Override public void dispatch(@NonNull Traversal traversal, @NonNull TraversalCallback callback) {
                 lastCallback = callback;
             }
-        }, true);
+        });
 
         lastCallback.onTraversalCompleted();
         verifyHistory(flow.getHistory(), new Loading(), new Catalog());
@@ -212,7 +212,7 @@ public class ReentranceTest {
                 flow.removeDispatcher(this);
                 callback.onTraversalCompleted();
             }
-        }, true);
+        });
 
         verifyHistory(flow.getHistory(), new Catalog());
 
@@ -220,7 +220,7 @@ public class ReentranceTest {
             @Override public void dispatch(@NonNull Traversal traversal, @NonNull TraversalCallback callback) {
                 callback.onTraversalCompleted();
             }
-        }, true);
+        });
 
         verifyHistory(flow.getHistory(), new Loading(), new Catalog());
     }
@@ -231,13 +231,13 @@ public class ReentranceTest {
             @Override public void dispatch(@NonNull Traversal traversal, @NonNull TraversalCallback callback) {
                 lastCallback = callback;
             }
-        }, true);
+        });
         flow.setDispatcher(new Dispatcher() {
             @Override public void dispatch(@NonNull Traversal traversal, @NonNull TraversalCallback callback) {
                 lastStack = traversal.destination;
                 callback.onTraversalCompleted();
             }
-        }, true);
+        });
 
         assertThat(lastStack).isNull();
         lastCallback.onTraversalCompleted();
@@ -252,14 +252,14 @@ public class ReentranceTest {
                 flow.set(new Detail());
                 lastCallback = callback;
             }
-        }, true);
+        });
         flow.setDispatcher(new Dispatcher() {
             @Override public void dispatch(@NonNull Traversal traversal, @NonNull TraversalCallback callback) {
                 secondDispatcherCount.incrementAndGet();
                 lastStack = traversal.destination;
                 callback.onTraversalCompleted();
             }
-        }, true);
+        });
 
         assertThat(lastStack).isNull();
         lastCallback.onTraversalCompleted();
@@ -277,7 +277,7 @@ public class ReentranceTest {
                 flow.removeDispatcher(this);
                 flow.set(new Loading());
             }
-        }, true);
+        });
 
         verifyHistory(flow.getHistory(), new Catalog());
 
@@ -286,7 +286,7 @@ public class ReentranceTest {
                 secondDispatcherCount.incrementAndGet();
                 callback.onTraversalCompleted();
             }
-        }, true);
+        });
 
         assertThat(secondDispatcherCount.get()).isZero();
         lastCallback.onTraversalCompleted();
