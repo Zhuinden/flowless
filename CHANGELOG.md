@@ -2,6 +2,7 @@ Change Log
 ==========
 
 Flowless Version 1.0-alpha1.2 *(2016-07-22)*
+--------------------------------
 * Re-added tests
 * Fixed possible freeze-up due to failing `dispatcherSetInMidFlightWaitsForBootstrap()` test`
 
