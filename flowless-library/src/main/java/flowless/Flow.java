@@ -133,6 +133,15 @@ public final class Flow {
         setDispatcher(dispatcher, true);
     }
 
+    private PendingTraversal createBootstrapTraversal() {
+        return new PendingTraversal() {
+            @Override
+            void doExecute() {
+                bootstrap(history);
+            }
+        };
+    }
+
     /**
      * Set the dispatcher, may receive an immediate call to {@link Dispatcher#dispatch}. If a {@link
      * Traversal Traversal} is currently in progress with a previous Dispatcher, that Traversal will
@@ -141,22 +150,27 @@ public final class Flow {
     void setDispatcher(@NonNull Dispatcher dispatcher, boolean created) {
         this.dispatcher = checkNotNull(dispatcher, "dispatcher");
         if((pendingTraversal == null && created) // first create
-                || (pendingTraversal != null && pendingTraversal.nextHistory == null && pendingTraversal.state == TraversalState.DISPATCHED && pendingTraversal.next == null)) { // pending bootstrap for handling mid-flight
-            // clear pending bootstrap traversal
+                || (pendingTraversal != null && pendingTraversal.state == TraversalState.DISPATCHED)) {
+            // the activity was re-created midflight and the traversal was lost. Initiate bootstrap and continue where we left off.
             if(created && pendingTraversal != null) {
+                PendingTraversal currentTraversal = pendingTraversal;
+                currentTraversal.state = TraversalState.ENQUEUED;
+                PendingTraversal bootstrapTraversal = createBootstrapTraversal();
+                bootstrapTraversal.next = currentTraversal;
                 pendingTraversal = null;
-            }
-            // initialization should occur for current state if views are created or re-created
-            move(new PendingTraversal() {
-                @Override
-                void doExecute() {
-                    bootstrap(history);
+                move(bootstrapTraversal);
+            } else {
+                // initialization should occur for current state if views are created or re-created
+                if(created) {
+                    move(createBootstrapTraversal());
+                } else if(pendingTraversal.next == null) { // execute outstanding callback
+                    pendingTraversal.next = createBootstrapTraversal();
                 }
-            });
-        } else if(pendingTraversal == null) { // no-op if the view still exists and nothing to be done
-            return;
+            }
+        } else if(pendingTraversal == null) { // no-op if the view still exists
+            // Nothing to be done.
         } else if(pendingTraversal.state == TraversalState.DISPATCHED) { // a traversal is in progress
-            // do nothing, pending traversal will finish
+            // This cannot actually happen anymore.
         } else if(pendingTraversal.state == TraversalState.ENQUEUED) {
             // a traversal was enqueued while we had no dispatcher, run it now.
             pendingTraversal.execute();

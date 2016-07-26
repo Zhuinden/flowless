@@ -104,6 +104,9 @@ public class DispatcherUtils {
     }
 
     public static Animator createAnimatorForViews(LayoutKey animatedKey, View previousView, View newView, Direction direction) {
+        if(previousView == null) {
+            return null;
+        }
         if(animatedKey.animation() != null) {
             return animatedKey.animation().createAnimation(previousView, newView, direction);
         }

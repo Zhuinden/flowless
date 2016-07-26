@@ -19,7 +19,7 @@ public abstract class FlowAnimation
     public static FlowAnimation NONE = new FlowAnimation() {
         @Nullable
         @Override
-        public Animator createAnimation(@Nullable View previousView, @NonNull View newView, Direction direction) {
+        public Animator createAnimation(@NonNull View previousView, @NonNull View newView, Direction direction) {
             return null;
         }
 
@@ -32,8 +32,8 @@ public abstract class FlowAnimation
     public static FlowAnimation SEGUE = new FlowAnimation() {
         @Nullable
         @Override
-        public Animator createAnimation(@Nullable View previousView, @NonNull View newView, Direction direction) {
-            if(direction == Direction.REPLACE || previousView == null) {
+        public Animator createAnimation(@NonNull View previousView, @NonNull View newView, Direction direction) {
+            if(direction == Direction.REPLACE) {
                 return null;
             }
             boolean backward = direction == Direction.BACKWARD;
@@ -55,7 +55,7 @@ public abstract class FlowAnimation
     };
 
     @Nullable
-    public abstract Animator createAnimation(@Nullable View previousView, @NonNull View newView, Direction direction);
+    public abstract Animator createAnimation(@NonNull View previousView, @NonNull View newView, Direction direction);
 
     public abstract boolean showChildOnTopWhenAdded(Direction direction);
 
