@@ -1,10 +1,9 @@
 Change Log
 ==========
 
-Flowless Version 1.0-alpha1.4 *(2016-07-26)*
+Flowless Version 1.0-alpha1.5 *(2016-07-26)*
 --------------------------------------------
-* Modified `dispatcherSetInMidFlightWaitsForBootstrap()` test
-* Added additional clear for possible frozen bootstrap pending traversal
+* Animations no longer called if `previousView == null`
 
 Flowless Version 1.0-alpha1.2 *(2016-07-22)*
 --------------------------------

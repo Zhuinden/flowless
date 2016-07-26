@@ -231,13 +231,13 @@ public class ReentranceTest {
             @Override public void dispatch(@NonNull Traversal traversal, @NonNull TraversalCallback callback) {
                 lastCallback = callback;
             }
-        }, true);
+        });
         flow.setDispatcher(new Dispatcher() {
             @Override public void dispatch(@NonNull Traversal traversal, @NonNull TraversalCallback callback) {
                 lastStack = traversal.destination;
                 callback.onTraversalCompleted();
             }
-        }, false);
+        });
 
         assertThat(lastStack).isNull();
         lastCallback.onTraversalCompleted();
@@ -259,7 +259,7 @@ public class ReentranceTest {
                 lastStack = traversal.destination;
                 callback.onTraversalCompleted();
             }
-        }, false);
+        });
 
         assertThat(lastStack).isNull();
         lastCallback.onTraversalCompleted();
@@ -286,7 +286,7 @@ public class ReentranceTest {
                 secondDispatcherCount.incrementAndGet();
                 callback.onTraversalCompleted();
             }
-        }, false);
+        });
 
         assertThat(secondDispatcherCount.get()).isZero();
         lastCallback.onTraversalCompleted();
