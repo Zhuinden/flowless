@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha1.3 *(2016-07-26)*
+--------------------------------------------
+* Modified `dispatcherSetInMidFlightWaitsForBootstrap()` test
+* Added additional clear for possible frozen bootstrap pending traversal
+
 Flowless Version 1.0-alpha1.2 *(2016-07-22)*
 --------------------------------
 * Re-added tests

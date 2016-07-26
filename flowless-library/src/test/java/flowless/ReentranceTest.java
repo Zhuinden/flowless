@@ -237,7 +237,7 @@ public class ReentranceTest {
                 lastStack = traversal.destination;
                 callback.onTraversalCompleted();
             }
-        });
+        }, false);
 
         assertThat(lastStack).isNull();
         lastCallback.onTraversalCompleted();
