@@ -199,11 +199,14 @@ public final class InternalLifecycleIntegration
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroyView() {
         if(dispatcher instanceof FlowLifecycles.CreateDestroyListener) {
             ((FlowLifecycles.CreateDestroyListener) dispatcher).onDestroy();
         }
-        super.onDestroy();
+        if(flow != null) {
+            flow.executePendingTraversal();
+        }
+        super.onDestroyView();
     }
 
     @Override

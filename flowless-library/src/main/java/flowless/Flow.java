@@ -129,6 +129,14 @@ public final class Flow {
         return history;
     }
 
+    void executePendingTraversal() {
+        if(pendingTraversal != null && pendingTraversal.state == TraversalState.DISPATCHED) {
+            PendingTraversal tempTraversal = pendingTraversal;
+            pendingTraversal.onTraversalCompleted();
+            tempTraversal.didForceExecute = true;
+        }
+    }
+
     void setDispatcher(@NonNull Dispatcher dispatcher) {
         setDispatcher(dispatcher, true);
     }
@@ -346,6 +354,8 @@ public final class Flow {
     private abstract class PendingTraversal
             implements TraversalCallback {
 
+        boolean didForceExecute;
+
         TraversalState state = TraversalState.ENQUEUED;
         PendingTraversal next;
         History nextHistory;
@@ -360,6 +370,9 @@ public final class Flow {
 
         @Override
         public void onTraversalCompleted() {
+            if(didForceExecute) {
+                return;
+            }
             incrementIdlingResource();
             if(state != TraversalState.DISPATCHED) {
                 throw new IllegalStateException(state == TraversalState.FINISHED ? "onComplete already called for this transition" : "transition not yet dispatched!");

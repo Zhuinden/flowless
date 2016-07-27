@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha1.6 *(2016-07-27)*
+--------------------------------------------
+* `onDestroy()` callback called from `onDestroyView()` of `InternalLifecycleIntegration` (was not called previously)
+* Flow's `PendingTraversal` is now forced to execute if the Activity is destroyed (this prevents the `state == DISPATCHED` freeze) 
+
 Flowless Version 1.0-alpha1.5 *(2016-07-26)*
 --------------------------------------------
 * Animations no longer called if `previousView == null`
