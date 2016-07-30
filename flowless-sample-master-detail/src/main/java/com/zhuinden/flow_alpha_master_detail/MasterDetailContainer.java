@@ -100,8 +100,10 @@ public class MasterDetailContainer
             addView(newView, 0);
         } else {
             if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-                DispatcherUtils.persistViewToState(traversal, getChildAt(0));
-                removeViewAt(0);
+                View view = getChildAt(0);
+                DispatcherUtils.persistViewToState(traversal, view);
+                DispatcherUtils.notifyViewForFlowRemoval(view);
+                DispatcherUtils.removeViewFromGroup(view, this);
             }
             masterContainer.setVisibility(VISIBLE);
             detailContainer.setVisibility(VISIBLE);
@@ -128,12 +130,14 @@ public class MasterDetailContainer
     private void persistDetail(@NonNull Traversal traversal) {
         if(detailContainer.getChildCount() > 0) {
             DispatcherUtils.persistViewToState(traversal, detailContainer.getChildAt(0));
+            DispatcherUtils.notifyViewForFlowRemoval(detailContainer.getChildAt(0));
         }
     }
 
     private void persistMaster(@NonNull Traversal traversal) {
         if(masterContainer.getChildCount() > 0) {
             DispatcherUtils.persistViewToState(traversal, masterContainer.getChildAt(0));
+            DispatcherUtils.notifyViewForFlowRemoval(masterContainer.getChildAt(0));
         }
     }
 

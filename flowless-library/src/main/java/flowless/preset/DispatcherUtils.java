@@ -78,9 +78,6 @@ public class DispatcherUtils {
     public static void removeViewFromGroup(View previousView, ViewGroup root) {
         if(previousView != null) {
             root.removeView(previousView);
-            if(previousView instanceof FlowLifecycles.ViewLifecycleListener) {
-                ((FlowLifecycles.ViewLifecycleListener) previousView).onViewDestroyed(true);
-            }
         }
     }
 
@@ -115,5 +112,11 @@ public class DispatcherUtils {
 
     public static void finishTraversal(TraversalCallback callback) {
         callback.onTraversalCompleted();
+    }
+
+    public static void notifyViewForFlowRemoval(View previousView) {
+        if(previousView != null && previousView instanceof FlowLifecycles.ViewLifecycleListener) {
+            ((FlowLifecycles.ViewLifecycleListener) previousView).onViewDestroyed(true);
+        }
     }
 }

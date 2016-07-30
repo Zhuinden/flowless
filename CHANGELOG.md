@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha1.7 *(2016-07-31)*
+--------------------------------------------
+* Added hook `configure()` and `onTraversalCompleted()` to dispatcher
+* Removed by Flow is called before waiting for measure
+
 Flowless Version 1.0-alpha1.6 *(2016-07-27)*
 --------------------------------------------
 * `onDestroy()` callback called from `onDestroyView()` of `InternalLifecycleIntegration` (was not called previously)

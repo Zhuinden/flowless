@@ -134,6 +134,7 @@ public class SingleRootDispatcher
         final ViewGroup root = rootHolder.root;
         if(DispatcherUtils.isPreviousKeySameAsNewKey(traversal.origin, traversal.destination)) { //short circuit on same key
             DispatcherUtils.finishTraversal(callback);
+            onTraversalCompleted();
             return;
         }
         final LayoutKey newKey = DispatcherUtils.getNewKey(traversal);
@@ -149,6 +150,10 @@ public class SingleRootDispatcher
 
         final LayoutKey animatedKey = DispatcherUtils.selectAnimatedKey(direction, previousKey, newKey);
         DispatcherUtils.addViewToGroupForKey(direction, newView, root, animatedKey);
+        DispatcherUtils.notifyViewForFlowRemoval(previousView);
+
+        configure(previousKey, newKey);
+
         ViewUtils.waitForMeasure(newView, new ViewUtils.OnMeasuredCallback() {
             @Override
             public void onMeasured(View view, int width, int height) {
@@ -168,8 +173,16 @@ public class SingleRootDispatcher
         });
     }
 
+    protected void configure(LayoutKey previousKey, LayoutKey newKey) {
+
+    }
+
     private void finishTransition(View previousView, ViewGroup root, @NonNull TraversalCallback callback) {
         DispatcherUtils.removeViewFromGroup(previousView, root);
         DispatcherUtils.finishTraversal(callback);
+        onTraversalCompleted();
+    }
+
+    protected void onTraversalCompleted() {
     }
 }
