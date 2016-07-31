@@ -1,7 +1,12 @@
 Change Log
 ==========
 
-Flowless Version 1.0-alpha1.7 *(2016-07-31)*
+
+Flowless Version 1.0-alpha1.8 *(2016-07-31)*
+--------------------------------------------
+* Added `InternalContextThemeWrapper` to allow using Design Support Library
+
+Flowless Version 1.0-alpha1.7 *(2016-07-30)*
 --------------------------------------------
 * Added hook `configure()` and `onTraversalCompleted()` to dispatcher
 * Removed by Flow is called before waiting for measure
