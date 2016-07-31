@@ -2,7 +2,7 @@ Change Log
 ==========
 
 
-Flowless Version 1.0-alpha1.8 *(2016-07-31)*
+Flowless Version 1.0-alpha1.9 *(2016-07-31)*
 --------------------------------------------
 * Added `InternalContextThemeWrapper` to allow using Design Support Library
 

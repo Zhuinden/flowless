@@ -2,6 +2,7 @@ package flowless;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.ContextThemeWrapper;
 
 /**
@@ -18,6 +19,11 @@ final class InternalContextThemeWrapper
     InternalContextThemeWrapper(Context baseContext, Activity activity, int themeResource) {
         super(baseContext, themeResource);
         this.activity = activity;
+    }
+
+    @Override
+    public Resources.Theme getTheme() {
+        return activity.getTheme();
     }
 
     @Override
