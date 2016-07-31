@@ -55,7 +55,7 @@ public final class Flow {
 
     @NonNull
     public static Flow get(@NonNull Context context) {
-        Flow flow = InternalContextWrapper.getFlow(context);
+        Flow flow = InternalContext.Methods.getFlow(context);
         if(null == flow) {
             throw new IllegalStateException("Context was not wrapped with flow. " + "Make sure attachBaseContext was overridden in your main activity");
         }

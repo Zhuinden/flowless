@@ -174,7 +174,6 @@ public class SingleRootDispatcher
     }
 
     protected void configure(LayoutKey previousKey, LayoutKey newKey) {
-
     }
 
     private void finishTransition(View previousView, ViewGroup root, @NonNull TraversalCallback callback) {

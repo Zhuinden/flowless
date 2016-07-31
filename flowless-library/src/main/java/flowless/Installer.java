@@ -21,6 +21,10 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.ContextThemeWrapper;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public final class Installer {
 
@@ -75,6 +79,38 @@ public final class Installer {
         final Application app = (Application) baseContext.getApplicationContext();
         final KeyManager keyManager = new KeyManager();
         InternalLifecycleIntegration.install(app, activity, parceler, defaultHistory, dispatcher, keyManager);
-        return new InternalContextWrapper(baseContext, activity);
+
+        int themeResource = -1;
+        obtainThemeResourceV1(activity);
+        if(themeResource == -1) {
+            themeResource = obtainThemeResourceV2(activity);
+        }
+        if(themeResource >= 0) {
+            return new InternalContextThemeWrapper(baseContext, activity, themeResource);
+        } else {
+            return new InternalContextWrapper(baseContext, activity);
+        }
+    }
+
+    private int obtainThemeResourceV1(Activity activity) {
+        try {
+            Class<?> wrapper = Context.class;
+            Method method = wrapper.getDeclaredMethod("getThemeResId");
+            method.setAccessible(true);
+            return (Integer) method.invoke(activity);
+        } catch(Throwable e) {
+        }
+        return -1;
+    }
+
+    private int obtainThemeResourceV2(Activity activity) {
+        try {
+            Class<?> wrapper = ContextThemeWrapper.class;
+            Field field = wrapper.getDeclaredField("mThemeResource");
+            field.setAccessible(true);
+            return (Integer) field.get(activity);
+        } catch(Throwable e) {
+        }
+        return -1;
     }
 }
