@@ -4,20 +4,20 @@ apply plugin: 'com.github.dcendents.android-maven'
 group='com.github.Zhuinden'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 1
-        versionName "1.0-alpha1.7"
+        versionName "1.0-alpha1.11"
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-annotations:23.4.0'
+    compile 'com.android.support:support-annotations:24.1.1'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.assertj:assertj-core:1.7.1'

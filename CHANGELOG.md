@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha1.11 *(2016-08-04)*
+---------------------------------------------
+* Removed `InternalContextThemeWrapper` because it wasn't needed
+* Added delegation of `Activity` and `ContextThemeWrapper` methods to the inner Activity 
 
 Flowless Version 1.0-alpha1.9 *(2016-07-31)*
 --------------------------------------------
