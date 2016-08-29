@@ -62,6 +62,20 @@ public final class Flow {
         return flow;
     }
 
+    @NonNull
+    public static ServiceProvider services(@NonNull View view) {
+        return services(view.getContext());
+    }
+
+    @NonNull
+    public static ServiceProvider services(@NonNull Context context) {
+        ServiceProvider serviceProvider = InternalContext.Methods.getServiceProvider(context);
+        if(null == serviceProvider) {
+            throw new IllegalStateException("Context was not wrapped with flow. " + "Make sure attachBaseContext was overridden in your main activity");
+        }
+        return serviceProvider;
+    }
+
     /**
      * @return null if context has no Flow key embedded.
      */

@@ -74,7 +74,8 @@ public final class Installer {
         final History defaultHistory = History.single(defState);
         final Application app = (Application) baseContext.getApplicationContext();
         final KeyManager keyManager = new KeyManager();
-        InternalLifecycleIntegration.install(app, activity, parceler, defaultHistory, dispatcher, keyManager);
+        final ServiceProvider serviceProvider = new ServiceProvider();
+        InternalLifecycleIntegration.install(app, activity, parceler, defaultHistory, dispatcher, serviceProvider, keyManager);
 
         return new InternalContextWrapper(baseContext, activity);
     }

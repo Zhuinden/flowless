@@ -10,6 +10,7 @@ interface InternalContext {
     static final String FLOW_SERVICE = "flow.InternalContextWrapper.FLOW_SERVICE";
     static final String CONTEXT_MANAGER_SERVICE = "flow.InternalContextWrapper.CONTEXT_MANAGER_SERVICE";
     static final String ACTIVITY = "flow.InternalContextWrapper.ACTIVITY_SERVICE";
+    static final String SERVICE_PROVIDER = "flow.InternalContextWrapper.SERVICE_PROVIDER";
 
     class Methods {
         static Flow getFlow(Context context) {
@@ -28,6 +29,12 @@ interface InternalContext {
             //noinspection ResourceType
             Activity activity = (Activity) context.getSystemService(ACTIVITY);
             return activity;
+        }
+
+        static ServiceProvider getServiceProvider(Context context) {
+            //noinspection ResourceType
+            ServiceProvider serviceProvider = (ServiceProvider) context.getSystemService(SERVICE_PROVIDER);
+            return serviceProvider;
         }
     }
 }

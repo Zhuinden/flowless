@@ -45,7 +45,7 @@ public final class InternalLifecycleIntegration
         return (InternalLifecycleIntegration) activity.getFragmentManager().findFragmentByTag(TAG);
     }
 
-    static void install(final Application app, final Activity activity, @Nullable final KeyParceler parceler, final History defaultHistory, final Dispatcher dispatcher, final KeyManager keyManager) {
+    static void install(final Application app, final Activity activity, @Nullable final KeyParceler parceler, final History defaultHistory, final Dispatcher dispatcher, final ServiceProvider serviceProvider, final KeyManager keyManager) {
         app.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity a, Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public final class InternalLifecycleIntegration
                         fragment.defaultHistory = defaultHistory;
                         fragment.parceler = parceler;
                         fragment.keyManager = keyManager;
+                        fragment.serviceProvider = serviceProvider;
                     }
                     // We always replace the dispatcher because it frequently references the Activity.
                     fragment.dispatcher = dispatcher;
@@ -101,6 +102,7 @@ public final class InternalLifecycleIntegration
 
     Flow flow;
     KeyManager keyManager;
+    ServiceProvider serviceProvider;
     @Nullable
     KeyParceler parceler;
     History defaultHistory;

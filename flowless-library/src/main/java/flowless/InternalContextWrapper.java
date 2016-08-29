@@ -31,6 +31,7 @@ final class InternalContextWrapper
     private final Activity activity;
     private Flow flow;
     private KeyManager keyManager;
+    private ServiceProvider serviceProvider;
 
     InternalContextWrapper(Context baseContext, Activity activity) {
         super(baseContext);
@@ -49,6 +50,11 @@ final class InternalContextWrapper
                 keyManager = InternalLifecycleIntegration.find(activity).keyManager;
             }
             return keyManager;
+        } else if(SERVICE_PROVIDER.equals(name)) {
+            if(serviceProvider == null) {
+                serviceProvider = InternalLifecycleIntegration.find(activity).serviceProvider;
+            }
+            return serviceProvider;
         } else if(ACTIVITY.equals(name)) {
             return activity;
         } else {
