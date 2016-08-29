@@ -194,7 +194,11 @@ The Dispatcher has the following tasks when a new state is set:
 
 ~~Please note that if you're showing multiple keys on the screen, you must specify them in some sort of relationship for the reference counting to work.~~
 
-Flowless does not support "managing resources", because the reference counting is not sufficiently customizable. If this is necessary, handle such logic within the container of the given key's view, or the Activity using `ActivityUtils` to find the activity for the given view.
+~~Flowless does not support "managing resources", because the reference counting is not sufficiently customizable. If this is necessary, handle such logic within the container of the given key's view, or the Activity using `ActivityUtils` to find the activity for the given view.~~
+
+You can manage resources shared through your context manually using the `ServiceProvider`, which you can obtain through `Flow.services(Context)` or `Flow.services(View)`.
+
+This way, you can bind services you need when you initialize your View in its constructor (before `onFinishInflate()` is called), while also sharing them to additional views that belong to the same Context.
 
 ### Surviving configuration changes and process death
 Android is a hostile environment. One of its greatest challenges is that your Activity or even your process can be destroyed and recreated under a variety of circumstances. Flow makes it easy to weather the storm, by automatically remembering your app's state and its history. 

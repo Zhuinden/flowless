@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha1.12 *(2016-08-29)*
+---------------------------------------------
+* After realizing the power of `Context.getSystemService()`, added `ServiceProvider`
+
 Flowless Version 1.0-alpha1.11 *(2016-08-04)*
 ---------------------------------------------
 * Removed `InternalContextThemeWrapper` because it wasn't needed
