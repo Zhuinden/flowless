@@ -1,7 +1,7 @@
 package flowless;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.view.View;
 
 import java.util.HashMap;
@@ -55,17 +55,17 @@ public class ServiceProvider {
         return this;
     }
 
-    @Nullable
+    @NonNull
     public <T> T getService(View view, String tag) {
         return getService(Flow.getKey(view), tag);
     }
 
-    @Nullable
+    @NonNull
     public <T> T getService(Context context, String tag) {
         return getService(Flow.getKey(context), tag);
     }
 
-    @Nullable
+    @NonNull
     public <T> T getService(Object key, String tag) {
         if(!services.containsKey(key)) {
             throw new NoServiceException(key, tag);

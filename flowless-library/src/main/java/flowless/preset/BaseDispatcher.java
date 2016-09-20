@@ -1,7 +1,6 @@
 package flowless.preset;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
@@ -28,7 +27,7 @@ public abstract class BaseDispatcher
 
     protected Context baseContext;
     protected final RootHolder rootHolder;
-    protected final FlowLifecycleProvider flowLifecycleProvider;
+    protected FlowLifecycleProvider flowLifecycleProvider;
 
     protected final Activity activity;
 
