@@ -1,13 +1,13 @@
 Change Log
 ==========
 
-Flowless Version 1.0-alpha1.14 *(2016-11-20)*
+Flowless Version 1.0-alpha1.13 *(2016-11-20)*
 ---------------------------------------------
 * BREAKING CHANGE: `DispatcherUtils.persistViewToState()` is now two methods: `persistViewToStateAndNotifyRemoval()` and `persistViewToStateWithoutNotifyRemoval()`  
 * Added `ServiceProvider.hasService()`, `getService()` now works as documented and should be used with `hasService()`
 * `RootHolder` now has `getRoot()` method (without which making it public didn't make much sense)
 
-Flowless Version 1.0-alpha1.13 *(2016-08-29)*
+Flowless Version 1.0-alpha1.12 *(2016-08-29)*
 ---------------------------------------------
 * After realizing the power of `Context.getSystemService()`, added `ServiceProvider`
 
