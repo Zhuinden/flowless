@@ -325,33 +325,33 @@ This way, you can bind services you need when you initialize your View in its co
 Here is a rather barebones implementation that creates services for elements that are currently within the history of keys.
 
 ``` java
-        ServiceProvider serviceProvider = Flow.services(newContext);
-        
-        // destroyNotIn()
-        Iterator<Object> aElements = traversal.origin != null ? traversal.origin.reverseIterator() : Collections.emptyList().iterator();
-        Iterator<Object> bElements = traversal.destination.reverseIterator();
-        while(aElements.hasNext() && bElements.hasNext()) {
-            BaseKey aElement = (BaseKey) aElements.next();
-            BaseKey bElement = (BaseKey) bElements.next();
-            if(!aElement.equals(bElement)) {
-                serviceProvider.unbindServices(aElement);  // returns map of bound services
-                break;
-            }
-        }
-        while(aElements.hasNext()) {
-            BaseKey aElement = (BaseKey) aElements.next();
-            serviceProvider.unbindServices(aElements.next()); // returns map of bound services
-        }
-        // end destroyNotIn
+ServiceProvider serviceProvider = Flow.services(newContext);
 
-        // create service for keys
-        for(Object destination : traversal.destination) {
-            try { // will be changed to `.hasService(key, tag)`
-                serviceProvider.getService(destination, DaggerService.TAG);
-            } catch(ServiceProvider.NoServiceException e) { 
-                serviceProvider.bindService(destination, DaggerService.TAG, ((BaseKey) destination).createComponent());
-            }
-        }
+// destroyNotIn()
+Iterator<Object> aElements = traversal.origin != null ? traversal.origin.reverseIterator() : Collections.emptyList().iterator();
+Iterator<Object> bElements = traversal.destination.reverseIterator();
+while(aElements.hasNext() && bElements.hasNext()) {
+    BaseKey aElement = (BaseKey) aElements.next();
+    BaseKey bElement = (BaseKey) bElements.next();
+    if(!aElement.equals(bElement)) {
+        serviceProvider.unbindServices(aElement);  // returns map of bound services
+        break;
+    }
+}
+while(aElements.hasNext()) {
+    BaseKey aElement = (BaseKey) aElements.next();
+    serviceProvider.unbindServices(aElements.next()); // returns map of bound services
+}
+// end destroyNotIn
+
+// create service for keys
+for(Object destination : traversal.destination) {
+    try { // will be changed to `.hasService(key, tag)`
+        serviceProvider.getService(destination, DaggerService.TAG);
+    } catch(ServiceProvider.NoServiceException e) { 
+        serviceProvider.bindService(destination, DaggerService.TAG, ((BaseKey) destination).createComponent());
+    }
+}
 ```
 
 Which can now share the following service:
