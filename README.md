@@ -187,7 +187,7 @@ The Dispatcher has the following tasks when a new state is set:
 - Add the new view
 - Signal to Flow that the traversal is complete
 
-### ~~Managing resources~~
+### Managing resources (optional)
 ~~Your app requires different resources when it's in different states; sometimes those resources are shared between states. Flow makes it easy to associate resources with keys so they're set up when needed and torn down (only) when they're not anymore.~~
 
 ~~Flow provides the `Flow.Services` class to define services that you can share via your Context. In order to find a service, you must specify the String tag with which it was bound to the services using the `Services.Binder`. To create services for keys, you must specify the `ServiceFactory` when you're creating the Dispatcher. In order to share the resources between multiple keys, the keys must either implement `TreeKey` (parent-child relationship) or `MultiKey` (a set of possible keys that share the same state).~~
@@ -198,7 +198,53 @@ The Dispatcher has the following tasks when a new state is set:
 
 You can manage resources shared through your context manually using the `ServiceProvider`, which you can obtain through `Flow.services(Context)` or `Flow.services(View)`.
 
-This way, you can bind services you need when you initialize your View in its constructor (before `onFinishInflate()` is called), while also sharing them to additional views that belong to the same Context.
+This way, you can bind services you need when you initialize your View in its constructor (before `onFinishInflate()` is called) or before it's inflated in the Dispatcher itself, while also sharing them to additional views that belong to the same Context.
+
+Here is a rather barebones implementation that creates services for elements that are currently within the history of keys.
+
+``` java
+        ServiceProvider serviceProvider = Flow.services(newContext);
+        
+        // destroyNotIn()
+        Iterator<Object> aElements = traversal.origin != null ? traversal.origin.reverseIterator() : Collections.emptyList().iterator();
+        Iterator<Object> bElements = traversal.destination.reverseIterator();
+        while(aElements.hasNext() && bElements.hasNext()) {
+            BaseKey aElement = (BaseKey) aElements.next();
+            BaseKey bElement = (BaseKey) bElements.next();
+            if(!aElement.equals(bElement)) {
+                serviceProvider.unbindServices(aElement);  // returns map of bound services
+                break;
+            }
+        }
+        while(aElements.hasNext()) {
+            BaseKey aElement = (BaseKey) aElements.next();
+            serviceProvider.unbindServices(aElements.next()); // returns map of bound services
+        }
+        // end destroyNotIn
+
+        // create service for keys
+        for(Object destination : traversal.destination) {
+            try { // will be changed to `.hasService(key, tag)`
+                serviceProvider.getService(destination, DaggerService.TAG);
+            } catch(ServiceProvider.NoServiceException e) { 
+                serviceProvider.bindService(destination, DaggerService.TAG, ((BaseKey) destination).createComponent());
+            }
+        }
+```
+
+Which can now share the following service:
+
+``` java
+public class DaggerService {
+    public static final String TAG = "DaggerService";
+
+    @SuppressWarnings("unchecked")
+    public static <T> T getComponent(Context context) {
+        //noinspection ResourceType
+        return (T) Flow.services(context).getService(Flow.getKey(context), TAG);
+    }
+}
+```
 
 ### Surviving configuration changes and process death
 Android is a hostile environment. One of its greatest challenges is that your Activity or even your process can be destroyed and recreated under a variety of circumstances. Flow makes it easy to weather the storm, by automatically remembering your app's state and its history. 
