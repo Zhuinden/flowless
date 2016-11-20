@@ -55,6 +55,22 @@ public class ServiceProvider {
         return this;
     }
 
+    public boolean hasService(View view, String tag) {
+        return hasService(Flow.getKey(view), tag);
+    }
+
+    public boolean hasService(Context context, String tag) {
+        return hasService(Flow.getKey(context), tag);
+    }
+
+    public boolean hasService(Object key, String tag) {
+        if(!services.containsKey(key)) {
+            return false;
+        }
+        Map<String, Object> serviceMap = services.get(key);
+        return serviceMap.containsKey(tag);
+    }
+
     @NonNull
     public <T> T getService(View view, String tag) {
         return getService(Flow.getKey(view), tag);

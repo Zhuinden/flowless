@@ -143,14 +143,13 @@ public class SingleRootDispatcher
         final Direction direction = traversal.direction;
 
         final View previousView = root.getChildAt(0);
-        DispatcherUtils.persistViewToState(traversal, previousView);
+        DispatcherUtils.persistViewToStateAndNotifyRemoval(traversal, previousView);
 
         final View newView = DispatcherUtils.createViewFromKey(traversal, newKey, root, baseContext);
         DispatcherUtils.restoreViewFromState(traversal, newView);
 
         final LayoutKey animatedKey = DispatcherUtils.selectAnimatedKey(direction, previousKey, newKey);
         DispatcherUtils.addViewToGroupForKey(direction, newView, root, animatedKey);
-        DispatcherUtils.notifyViewForFlowRemoval(previousView);
 
         configure(previousKey, newKey);
 

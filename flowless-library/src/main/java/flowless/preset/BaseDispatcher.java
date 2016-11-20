@@ -15,9 +15,13 @@ import flowless.TraversalCallback;
 public abstract class BaseDispatcher
         implements Dispatcher, FlowLifecycles {
     public static class RootHolder {
-        ViewGroup root;
+        protected ViewGroup root;
 
         public RootHolder() {
+        }
+
+        public ViewGroup getRoot() {
+            return root;
         }
 
         public void setRoot(ViewGroup root) {

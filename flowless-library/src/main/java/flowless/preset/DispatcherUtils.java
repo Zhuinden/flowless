@@ -33,7 +33,7 @@ public class DispatcherUtils {
         return origin != null && origin.top() != null && origin.top().equals(destination.top());
     }
 
-    public static void persistViewToState(Traversal traversal, View view) {
+    private static void persistViewToState(Traversal traversal, View view) {
         if(view != null) {
             if(view != null && view instanceof FlowLifecycles.ViewStatePersistenceListener) {
                 ((FlowLifecycles.ViewStatePersistenceListener) view).preSaveViewState(null);
@@ -48,6 +48,15 @@ public class DispatcherUtils {
                 }
             }
         }
+    }
+
+    public static void persistViewToStateWithoutNotifyRemoval(Traversal traversal, View view) {
+        persistViewToState(traversal, view);
+    }
+
+    public static void persistViewToStateAndNotifyRemoval(Traversal traversal, View view) {
+        persistViewToState(traversal, view);
+        notifyViewForFlowRemoval(view);
     }
 
     public static void restoreViewFromState(Traversal traversal, View view) {

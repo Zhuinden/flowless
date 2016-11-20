@@ -346,9 +346,7 @@ while(aElements.hasNext()) {
 
 // create service for keys
 for(Object destination : traversal.destination) {
-    try { // will be changed to `.hasService(key, tag)`
-        serviceProvider.getService(destination, DaggerService.TAG);
-    } catch(ServiceProvider.NoServiceException e) { 
+    if(!serviceProvider.hasService(destination, DaggerService.TAG) {
         serviceProvider.bindService(destination, DaggerService.TAG, ((BaseKey) destination).createComponent());
     }
 }
@@ -364,6 +362,17 @@ public class DaggerService {
     public static <T> T getComponent(Context context) {
         //noinspection ResourceType
         return (T) Flow.services(context).getService(Flow.getKey(context), TAG);
+    }
+}
+```
+
+And can be obtained like so:
+
+``` java
+private void init(Context context) {
+    if(!isInEditMode()) {
+        LoginComponent loginComponent = DaggerService.getComponent(context);
+        loginComponent.inject(this);
     }
 }
 ```
