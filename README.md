@@ -18,7 +18,7 @@ Navigate between UI states. Support the back button easily without confusing you
 
 Remember the UI state, and its history, as you navigate and across configuration changes and process death.
 
-~~Manage resources with set-up/tear-down hooks invoked for each UI state. UI states can easily share resources, and they'll be disposed when no longer needed.~~
+Manage resources. UI states can create and share resources, and you can dispose of them when no longer needed.
 
 Manage all types of UIs-- complex master-detail views, multiple layers, and window-based dialogs are all simple to manage.
 
@@ -318,14 +318,6 @@ And it's inflated based on the following XML:
 
 
 ### Managing resources (optional)
-~~Your app requires different resources when it's in different states; sometimes those resources are shared between states. Flow makes it easy to associate resources with keys so they're set up when needed and torn down (only) when they're not anymore.~~
-
-~~Flow provides the `Flow.Services` class to define services that you can share via your Context. In order to find a service, you must specify the String tag with which it was bound to the services using the `Services.Binder`. To create services for keys, you must specify the `ServiceFactory` when you're creating the Dispatcher. In order to share the resources between multiple keys, the keys must either implement `TreeKey` (parent-child relationship) or `MultiKey` (a set of possible keys that share the same state).~~
-
-~~Please note that if you're showing multiple keys on the screen, you must specify them in some sort of relationship for the reference counting to work.~~
-
-~~Flowless does not support "managing resources", because the reference counting is not sufficiently customizable. If this is necessary, handle such logic within the container of the given key's view, or the Activity using `ActivityUtils` to find the activity for the given view.~~
-
 You can manage resources shared through your context manually using the `ServiceProvider`, which you can obtain through `Flow.services(Context)` or `Flow.services(View)`.
 
 This way, you can bind services you need when you initialize your View in its constructor (before `onFinishInflate()` is called) or before it's inflated in the Dispatcher itself, while also sharing them to additional views that belong to the same Context.
