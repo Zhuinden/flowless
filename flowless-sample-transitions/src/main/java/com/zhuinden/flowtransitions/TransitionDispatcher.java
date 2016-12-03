@@ -30,7 +30,7 @@ import flowless.preset.SingleRootDispatcher;
  * Created by Zhuinden on 2016.12.02..
  */
 
-public class TransitionDispatcher extends SingleRootDispatcher implements FlowContainerLifecycleListener {
+public class TransitionDispatcher extends SingleRootDispatcher {
     public TransitionDispatcher(Activity activity) {
         super(activity);
     }
