@@ -21,16 +21,20 @@ public class DispatcherUtils {
     private DispatcherUtils() {
     }
 
-    public static Context createContextForKey(Traversal traversal, LayoutKey newKey, Context baseContext) {
-        return traversal.createContext(newKey, baseContext);
-    }
-
-    public static LayoutKey selectAnimatedKey(Direction direction, LayoutKey previousKey, LayoutKey newKey) {
-        return direction == Direction.BACKWARD ? (previousKey != null ? previousKey : newKey) : newKey;
-    }
-
     public static boolean isPreviousKeySameAsNewKey(History origin, History destination) {
         return origin != null && origin.top() != null && origin.top().equals(destination.top());
+    }
+
+    public static <T> T getNewKey(Traversal traversal) {
+        return traversal.destination.top();
+    }
+
+    public static <T> T getPreviousKey(Traversal traversal) {
+        T previousKey = null;
+        if(traversal.origin != null) {
+            previousKey = traversal.origin.top();
+        }
+        return previousKey;
     }
 
     private static void persistViewToState(Traversal traversal, View view) {
@@ -74,53 +78,6 @@ public class DispatcherUtils {
                 ((FlowLifecycles.ViewLifecycleListener) view).onViewRestored(false);
             }
         }
-    }
-
-    public static void addViewToGroupForKey(Direction direction, View view, ViewGroup root, LayoutKey animatedKey) {
-        if(animatedKey.animation() != null && !animatedKey.animation().showChildOnTopWhenAdded(direction)) {
-            root.addView(view, 0);
-        } else {
-            root.addView(view);
-        }
-    }
-
-    public static void removeViewFromGroup(View previousView, ViewGroup root) {
-        if(previousView != null) {
-            root.removeView(previousView);
-        }
-    }
-
-    public static LayoutKey getNewKey(Traversal traversal) {
-        return traversal.destination.top();
-    }
-
-    public static LayoutKey getPreviousKey(Traversal traversal) {
-        LayoutKey previousKey = null;
-        if(traversal.origin != null) {
-            previousKey = traversal.origin.top();
-        }
-        return previousKey;
-    }
-
-    public static View createViewFromKey(Traversal traversal, LayoutKey newKey, ViewGroup root, Context baseContext) {
-        Context internalContext = DispatcherUtils.createContextForKey(traversal, newKey, baseContext);
-        LayoutInflater layoutInflater = LayoutInflater.from(internalContext);
-        final View newView = layoutInflater.inflate(newKey.layout(), root, false);
-        return newView;
-    }
-
-    public static Animator createAnimatorForViews(LayoutKey animatedKey, View previousView, View newView, Direction direction) {
-        if(previousView == null) {
-            return null;
-        }
-        if(animatedKey.animation() != null) {
-            return animatedKey.animation().createAnimation(previousView, newView, direction);
-        }
-        return null;
-    }
-
-    public static void finishTraversal(TraversalCallback callback) {
-        callback.onTraversalCompleted();
     }
 
     public static void notifyViewForFlowRemoval(View previousView) {

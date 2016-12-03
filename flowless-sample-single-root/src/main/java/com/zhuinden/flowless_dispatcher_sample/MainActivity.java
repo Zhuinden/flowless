@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ViewGroup;
 
+import com.zhuinden.flowless_dispatcher_sample.extracted.ExampleDispatcher;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import flowless.Flow;
@@ -22,7 +24,7 @@ public class MainActivity
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        flowDispatcher = new SingleRootDispatcher(this);
+        flowDispatcher = new ExampleDispatcher(this);
         newBase = Flow.configure(newBase, this) //
                 .defaultKey(FirstKey.create()) //
                 .dispatcher(flowDispatcher) //

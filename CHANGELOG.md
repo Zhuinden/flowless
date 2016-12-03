@@ -1,6 +1,18 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha1.14 *(2016-12-03)*
+---------------------------------------------
+* **API QUAKE!**
+* BREAKING CHANGE: `SingleRootDispatcher` is now **abstract**, the `dispatch()` method *must be implemented by the user!* Its previous implementation and supporting elements were moved to `ExampleDispatcher` in the samples. (This change is to support annotations for metadata, and transition animations)
+  * Moved following to samples: `DispatcherUtils.addViewToGroupForKey()`, `DispatcherUtils.createAnimatorForViews()`, `DispatcherUtils.selectAnimatedKey()` to remove forced `AnimatorSet` and `FlowAnimation` usage (to support transitions)
+  * Moved following to samples: `DispatcherUtils.createViewFromKey()` to remove forced dependency on `LayoutKey` interface (to support using annotations)
+  * Removed `DispatcherUtils.removeFromViewGroup()` and `DispatcherUtils.finishTraversal()` (because it cluttered the API even though it's just a null check / single-line method call)
+  * Moved following to samples: `LayoutKey` (to support annotation-based layout specification)
+  * Moved following to samples: `FlowAnimation` (to support transitions)
+* BREAKING(?) CHANGE: `FlowLifecycleProvider` is now a utility class (static methods) because it doesn't make much sense to redefine any of its behavior
+* **Enhancement:** added new sample `flowless-sample-transitions`
+
 Flowless Version 1.0-alpha1.13 *(2016-11-20)*
 ---------------------------------------------
 * BREAKING CHANGE: `DispatcherUtils.persistViewToState()` is now two methods: `persistViewToStateAndNotifyRemoval()` and `persistViewToStateWithoutNotifyRemoval()`  

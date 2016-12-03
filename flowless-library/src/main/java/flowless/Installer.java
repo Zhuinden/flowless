@@ -59,7 +59,6 @@ public final class Installer {
         if(InternalLifecycleIntegration.find(activity) != null) {
             throw new IllegalStateException("Flow is already installed in this Activity.");
         }
-        Dispatcher dispatcher = this.dispatcher;
         if(dispatcher == null) {
             throw new IllegalStateException("Dispatcher must be defined, but is missing.");
         }

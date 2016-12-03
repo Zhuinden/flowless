@@ -11,6 +11,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.zhuinden.flow_alpha_master_detail.extracted.LayoutKey;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import flowless.ActivityUtils;
@@ -21,7 +23,6 @@ import flowless.TraversalCallback;
 import flowless.preset.DispatcherUtils;
 import flowless.preset.FlowContainerLifecycleListener;
 import flowless.preset.FlowLifecycleProvider;
-import flowless.preset.LayoutKey;
 
 /**
  * Created by Zhuinden on 2016.04.16..
@@ -50,10 +51,7 @@ public class MasterDetailContainer
         init();
     }
 
-    FlowLifecycleProvider flowLifecycleProvider;
-
     private void init() {
-        flowLifecycleProvider = new FlowLifecycleProvider();
     }
 
     @BindView(R.id.master_container)
@@ -79,14 +77,14 @@ public class MasterDetailContainer
     @Override
     public void dispatch(@NonNull Traversal traversal, @NonNull TraversalCallback callback) {
         if(DispatcherUtils.isPreviousKeySameAsNewKey(traversal.origin, traversal.destination)) { //short circuit on same key
-            DispatcherUtils.finishTraversal(callback);
+            callback.onTraversalCompleted();
             return;
         }
 
         final LayoutKey newKey = DispatcherUtils.getNewKey(traversal);
         final LayoutKey previousKey = DispatcherUtils.getPreviousKey(traversal);
 
-        final View newView = DispatcherUtils.createViewFromKey(traversal, newKey, this, ((ContextWrapper)getContext()).getBaseContext());
+        final View newView = com.zhuinden.flow_alpha_master_detail.extracted.DispatcherUtils.createViewFromKey(traversal, newKey, this, ((ContextWrapper)getContext()).getBaseContext());
         DispatcherUtils.restoreViewFromState(traversal, newView);
 
         // TODO: animations
@@ -102,7 +100,7 @@ public class MasterDetailContainer
             if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
                 View view = getChildAt(0);
                 DispatcherUtils.persistViewToStateAndNotifyRemoval(traversal, view);
-                DispatcherUtils.removeViewFromGroup(view, this);
+                com.zhuinden.flow_alpha_master_detail.extracted.DispatcherUtils.removeViewFromGroup(view, this);
             }
             masterContainer.setVisibility(VISIBLE);
             detailContainer.setVisibility(VISIBLE);
@@ -111,7 +109,7 @@ public class MasterDetailContainer
                 detailContainer.removeAllViews();
                 detailContainer.addView(newView);
                 if(masterContainer.getChildCount() <= 0) {
-                    final View restoredMasterView = DispatcherUtils.createViewFromKey(traversal, (LayoutKey)(((IsDetail) newKey).getMaster()), masterContainer, ((ContextWrapper)getContext()).getBaseContext());
+                    final View restoredMasterView = com.zhuinden.flow_alpha_master_detail.extracted.DispatcherUtils.createViewFromKey(traversal, (LayoutKey)(((IsDetail) newKey).getMaster()), masterContainer, ((ContextWrapper)getContext()).getBaseContext());
                     DispatcherUtils.restoreViewFromState(traversal, restoredMasterView);
                     masterContainer.addView(restoredMasterView);
                 }
@@ -123,7 +121,7 @@ public class MasterDetailContainer
                 masterContainer.addView(newView);
             }
         }
-        DispatcherUtils.finishTraversal(callback);
+        callback.onTraversalCompleted();
     }
 
     private void persistDetail(@NonNull Traversal traversal) {
@@ -147,7 +145,7 @@ public class MasterDetailContainer
             detailContainer.onActivityResult(requestCode, resultCode, data);
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onActivityResult(getChildAt(0), requestCode, resultCode, data);
+            FlowLifecycleProvider.onActivityResult(getChildAt(0), requestCode, resultCode, data);
         }
     }
 
@@ -169,7 +167,7 @@ public class MasterDetailContainer
         }
 
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            didHandle = flowLifecycleProvider.onBackPressed(getChildAt(0));
+            didHandle = FlowLifecycleProvider.onBackPressed(getChildAt(0));
         }
         return didHandle;
     }
@@ -183,7 +181,7 @@ public class MasterDetailContainer
             detailContainer.onCreate(bundle);
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onCreate(getChildAt(0), bundle);
+            FlowLifecycleProvider.onCreate(getChildAt(0), bundle);
         }
     }
 
@@ -196,7 +194,7 @@ public class MasterDetailContainer
             detailContainer.onDestroy();
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onDestroy(getChildAt(0));
+            FlowLifecycleProvider.onDestroy(getChildAt(0));
         }
     }
 
@@ -209,7 +207,7 @@ public class MasterDetailContainer
             detailContainer.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onRequestPermissionsResult(getChildAt(0), requestCode, permissions, grantResults);
+            FlowLifecycleProvider.onRequestPermissionsResult(getChildAt(0), requestCode, permissions, grantResults);
         }
     }
 
@@ -222,7 +220,7 @@ public class MasterDetailContainer
             detailContainer.onResume();
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onResume(getChildAt(0));
+            FlowLifecycleProvider.onResume(getChildAt(0));
         }
     }
 
@@ -235,7 +233,7 @@ public class MasterDetailContainer
             detailContainer.onPause();
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onPause(getChildAt(0));
+            FlowLifecycleProvider.onPause(getChildAt(0));
         }
     }
 
@@ -248,7 +246,7 @@ public class MasterDetailContainer
             detailContainer.onStart();
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onStart(getChildAt(0));
+            FlowLifecycleProvider.onStart(getChildAt(0));
         }
     }
 
@@ -261,7 +259,7 @@ public class MasterDetailContainer
             detailContainer.onStop();
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onStop(getChildAt(0));
+            FlowLifecycleProvider.onStop(getChildAt(0));
         }
     }
 
@@ -274,7 +272,7 @@ public class MasterDetailContainer
             detailContainer.onViewRestored(forcedWithBundler);
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onViewRestored(getChildAt(0), forcedWithBundler);
+            FlowLifecycleProvider.onViewRestored(getChildAt(0), forcedWithBundler);
         }
     }
 
@@ -287,7 +285,7 @@ public class MasterDetailContainer
             detailContainer.onViewDestroyed(removedByFlow);
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.onViewDestroyed(getChildAt(0), removedByFlow);
+            FlowLifecycleProvider.onViewDestroyed(getChildAt(0), removedByFlow);
         }
     }
 
@@ -300,7 +298,7 @@ public class MasterDetailContainer
             detailContainer.preSaveViewState(outState);
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            flowLifecycleProvider.preSaveViewState(getChildAt(0), outState);
+            FlowLifecycleProvider.preSaveViewState(getChildAt(0), outState);
             ForceBundler.saveToBundle(ActivityUtils.getActivity(getContext()), getChildAt(0));
         }
     }

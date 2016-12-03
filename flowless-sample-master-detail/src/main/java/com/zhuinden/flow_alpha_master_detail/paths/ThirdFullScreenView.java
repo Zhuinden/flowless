@@ -13,7 +13,8 @@ import flowless.Flow;
 /**
  * Created by Zhuinden on 2016.04.16..
  */
-public class ThirdFullScreenView extends LinearLayout {
+public class ThirdFullScreenView
+        extends LinearLayout {
     public ThirdFullScreenView(Context context) {
         super(context);
     }

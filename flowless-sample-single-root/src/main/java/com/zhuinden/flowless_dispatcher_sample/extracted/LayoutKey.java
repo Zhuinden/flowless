@@ -1,4 +1,4 @@
-package flowless.preset;
+package com.zhuinden.flowless_dispatcher_sample.extracted;
 
 import android.os.Parcelable;
 import android.support.annotation.LayoutRes;

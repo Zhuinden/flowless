@@ -8,8 +8,8 @@ _"It's better if you're good at one thing than if you're bad at many things just
 
 **Flow(less) gives names to your Activity's UI states, navigates between them, and remembers where it's been.**
 
-This used to be a fork of Flow 1.0-alpha by Square, with the "resource management" aspects completely removed. 
-Now it provides more than that, both in terms of bug fixes and out-of-the-box features alike. 
+This used to be a fork of Flow 1.0-alpha by Square, with the "resource management" aspect removed.
+Now it provides more than that, both in terms of bug fixes and some additional features (specifically the dispatcher lifecycle integration) alike.
 Also, you can't file issues on forks, which makes it not palatable on the long run.
 
 ## Features
@@ -45,7 +45,7 @@ In order to use Flow(less), you need to add jitpack to your project root gradle:
 
 and add the compile dependency to your module level gradle.
 
-    compile 'com.github.Zhuinden:flowless:1.0-alpha1.13'
+    compile 'com.github.Zhuinden:flowless:1.0-alpha1.14'
 
 
 Then, install Flow into your Activity:
@@ -55,11 +55,11 @@ public class MainActivity {
     @BindView(R.id.main_root)
     ViewGroup root;
 
-    SingleRootDispatcher flowDispatcher;
+    ExampleDispatcher flowDispatcher; // extends SingleRootDispatcher
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        flowDispatcher = new SingleRootDispatcher(this);
+        flowDispatcher = new ExampleDispatcher(this);
         newBase = Flow.configure(newBase, this) //
                 .defaultKey(FirstKey.create()) //
                 .dispatcher(flowDispatcher) //
@@ -143,6 +143,13 @@ public final class ArticleKey {
 But if you want to be really cool, you can use [Auto-Parcel](https://github.com/frankiesardo/auto-parcel) to generate Parcelable immutable objects to define your keys.
 
 ``` java
+public interface LayoutKey
+        extends Parcelable {
+    @LayoutRes int layout();
+
+    FlowAnimation animation();
+}
+
 @AutoValue
 public abstract class CalendarEventKey implements LayoutKey {
     abstract long eventId();
@@ -179,26 +186,27 @@ As you navigate the app, Flow keeps track of where you've been. And Flow makes i
 Navigation only counts if it changes UI state. Because every app has different needs, Flow lets you plug in [your own logic](https://github.com/Zhuinden/flowless/blob/master/flowless-library/src/main/java/flowless/Dispatcher.java) for responding to navigation and updating your UI.
 
 The Dispatcher has the following tasks when a new state is set:
-- Inflate the new view with Flow's internal context using `LayoutInflater.from(context)`
-- Persist the current view
-- Restore state to new view
-- Optionally animate the two views
+- Check for short-circuit if new state is same as the old (`DispatcherUtils.isPreviousKeySameAsNewKey()`), and if true, callback and return
+- Inflate the new view with Flow's internal context using `LayoutInflater.from(traversal.createContext(...))`
+- Persist the current view (`DispatcherUtils.persistViewToStateAndNotifyRemoval()`)
+- Restore state to new view (`DispatcherUtils.restoreViewFromState()`)
+- Optionally animate the two views (with `TransitionManager` or `AnimatorSet`)
 - Remove the current view
 - Add the new view
-- Signal to Flow that the traversal is complete
+- Signal to Flow that the traversal is complete (`callback.onTraversalCompleted()`)
 
 ### Surviving configuration changes and process death
 Android is a hostile environment. One of its greatest challenges is that your Activity or even your process can be destroyed and recreated under a variety of circumstances. Flow makes it easy to weather the storm, by automatically remembering your app's state and its history. 
 
 You [supply the serialization](https://github.com/Zhuinden/flowless/blob/master/flowless-library/src/main/java/flowless/KeyParceler.java) for your keys, and Flow does the rest. The default parceler uses Parcelable objects. Flow automatically saves and restores your History (including any state you've saved), taking care of all of the Android lifecycle events so you don't have to worry about them.
 
-**Note:** If you use the `ContainerDispatcherRoot`, you must call `ForceBundler.saveToBundle(activity, view)` manually in the `preSaveViewState()` method of `ViewStatePersistenceListener` on the child you wish to persist.
+**Note:** If you use the `ContainerDispatcherRoot`, you must call `ForceBundler.saveToBundle(activity, view)` manually in the `preSaveViewState()` method on the child you wish to persist in your container, because this cannot be handled automatically.
 
 ## Pre-set dispatchers for common use-cases
 
 Two use-cases are supported out of the box. Both of them provide (optional) life-cycle hooks for easier usage within your custom viewgroups.
 
-First is the `SingleRootDispatcher`, which works if your Activity has a *single root*, meaning you're changing the screens within a single ViewGroup within your Activity. 
+First is the `SingleRootDispatcher`, which works if your Activity has a *single root*, meaning you're changing the screens within a single ViewGroup within your Activity. This base class provides the default event delegation to the view inside your root. The `dispatch()` method has to be implemented by the user.
 
 Second is the `ContainerRootDispatcher`. Its purpose is to delegate the `dispatch()` call and all other lifecycle method calls to your defined custom viewgroup. The Root provided to a container root dispatcher must implement `Dispatcher`. It must also delegate the lifecycle method call to its children. For easier access to all lifecycle methods, the `FlowContainerLifecycleListener` interface is introduced, and the `FlowLifecycleProvider` class tries to make delegation as simple as possible. Of course, delegation of the `FlowLifecycles` lifecycle methods are optional, and you can choose to delegate only what you actually need. An example is provided for this setup in the [Master-Detail example](https://github.com/Zhuinden/flowless/blob/master/flowless-sample-master-detail/src/main/java/com/zhuinden/flow_alpha_master_detail/MasterDetailContainer.java#L37).
 
@@ -209,7 +217,7 @@ The most typical setup for a custom view group would look like so, using the `Bu
 ``` java
 public class FirstView
         extends RelativeLayout
-        implements Bundleable, SingleRootDispatcher.ViewLifecycleListener {
+        implements Bundleable, FlowLifecycles.ViewLifecycleListener {
     private static final String TAG = "FirstView";
 
     public FirstView(Context context) {

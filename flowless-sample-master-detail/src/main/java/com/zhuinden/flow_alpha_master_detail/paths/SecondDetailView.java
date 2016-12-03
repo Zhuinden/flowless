@@ -13,7 +13,8 @@ import flowless.Flow;
 /**
  * Created by Zhuinden on 2016.04.16..
  */
-public class SecondDetailView extends LinearLayout {
+public class SecondDetailView
+        extends LinearLayout {
     public SecondDetailView(Context context) {
         super(context);
     }

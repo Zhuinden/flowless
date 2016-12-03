@@ -30,14 +30,14 @@ public class ContainerRootDispatcher
     @Override
     public void onCreate(Bundle bundle) {
         if(hasActiveView()) {
-            flowLifecycleProvider.onCreate(rootHolder.root, bundle);
+            FlowLifecycleProvider.onCreate(rootHolder.root, bundle);
         }
     }
 
     @Override
     public void onDestroy() {
         if(hasActiveView()) {
-            flowLifecycleProvider.onDestroy(rootHolder.root);
+            FlowLifecycleProvider.onDestroy(rootHolder.root);
         }
         if(hasActiveView()) {
             rootHolder.root = null;
@@ -47,49 +47,49 @@ public class ContainerRootDispatcher
     @Override
     public void onResume() {
         if(hasActiveView()) {
-            flowLifecycleProvider.onResume(rootHolder.root);
+            FlowLifecycleProvider.onResume(rootHolder.root);
         }
     }
 
     @Override
     public void onPause() {
         if(hasActiveView()) {
-            flowLifecycleProvider.onPause(rootHolder.root);
+            FlowLifecycleProvider.onPause(rootHolder.root);
         }
     }
 
     @Override
     public void onStart() {
         if(hasActiveView()) {
-            flowLifecycleProvider.onStart(rootHolder.root);
+            FlowLifecycleProvider.onStart(rootHolder.root);
         }
     }
 
     @Override
     public void onStop() {
         if(hasActiveView()) {
-            flowLifecycleProvider.onStop(rootHolder.root);
+            FlowLifecycleProvider.onStop(rootHolder.root);
         }
     }
 
     @Override
     public void onViewRestored(boolean forcedWithBundler) {
         if(hasActiveView()) {
-            flowLifecycleProvider.onViewRestored(rootHolder.root, forcedWithBundler);
+            FlowLifecycleProvider.onViewRestored(rootHolder.root, forcedWithBundler);
         }
     }
 
     @Override
     public void onViewDestroyed(boolean removedByFlow) {
         if(hasActiveView()) {
-            flowLifecycleProvider.onViewDestroyed(rootHolder.root, removedByFlow);
+            FlowLifecycleProvider.onViewDestroyed(rootHolder.root, removedByFlow);
         }
     }
 
     @Override
     public void preSaveViewState(@Nullable Bundle outState) {
         if(hasActiveView()) {
-            flowLifecycleProvider.preSaveViewState(rootHolder.root, outState);
+            FlowLifecycleProvider.preSaveViewState(rootHolder.root, outState);
             // you must call the ForceBundler manually within the Dispatcher Container
         }
     }
@@ -99,7 +99,7 @@ public class ContainerRootDispatcher
     public boolean onBackPressed() {
         boolean childHandledEvent = false;
         if(hasActiveView()) {
-            childHandledEvent = flowLifecycleProvider.onBackPressed(rootHolder.root);
+            childHandledEvent = FlowLifecycleProvider.onBackPressed(rootHolder.root);
             if(childHandledEvent) {
                 return true;
             }
@@ -111,14 +111,14 @@ public class ContainerRootDispatcher
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(hasActiveView()) {
-            flowLifecycleProvider.onActivityResult(rootHolder.root, requestCode, resultCode, data);
+            FlowLifecycleProvider.onActivityResult(rootHolder.root, requestCode, resultCode, data);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if(hasActiveView()) {
-            flowLifecycleProvider.onRequestPermissionsResult(rootHolder.root, requestCode, permissions, grantResults);
+            FlowLifecycleProvider.onRequestPermissionsResult(rootHolder.root, requestCode, permissions, grantResults);
         }
     }
 

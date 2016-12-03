@@ -1,4 +1,5 @@
-package flowless.preset;
+package com.zhuinden.flowless_viewpager_example.extracted;
+
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;

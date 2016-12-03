@@ -8,7 +8,8 @@ import android.widget.LinearLayout;
 /**
  * Created by Zhuinden on 2016.04.16..
  */
-public class SecondDetailThirdView extends LinearLayout {
+public class SecondDetailThirdView
+        extends LinearLayout {
     public SecondDetailThirdView(Context context) {
         super(context);
     }

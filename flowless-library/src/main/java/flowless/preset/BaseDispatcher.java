@@ -31,14 +31,12 @@ public abstract class BaseDispatcher
 
     protected Context baseContext;
     protected final RootHolder rootHolder;
-    protected FlowLifecycleProvider flowLifecycleProvider;
 
     protected final Activity activity;
 
     public BaseDispatcher(Activity activity) {
-        this.activity = activity;
+        this.activity = activity; // required by ForceBundler
         this.rootHolder = createRootHolder();
-        this.flowLifecycleProvider = new FlowLifecycleProvider();
     }
 
     protected RootHolder createRootHolder() {

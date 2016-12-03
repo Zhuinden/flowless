@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhuinden.flowtransitions.SceneMainView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/scene_root"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/main_hello_world"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Hello World!"/>
+
+    <Button
+        android:id="@+id/main_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/press_me"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+</com.zhuinden.flowtransitions.SceneMainView>

@@ -13,7 +13,8 @@ import flowless.Flow;
 /**
  * Created by Zhuinden on 2016.04.16..
  */
-public class FirstView extends LinearLayout {
+public class FirstView
+        extends LinearLayout {
     public FirstView(Context context) {
         super(context);
     }
