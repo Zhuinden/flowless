@@ -1,1 +1,1 @@
-include ':flowless-library', ':flowless-sample-master-detail', ':flowless-sample-single-root', ':flowless-sample-transitions', ':flow-sample-basic', ':flowless-viewpager-example'
+include ':flowless-library', ':flowless-sample-master-detail', ':flowless-sample-single-root', ':flowless-sample-transitions', ':flow-sample-basic', ':flow-sample-orientation-lock', ':flowless-viewpager-example'
