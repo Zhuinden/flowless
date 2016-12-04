@@ -35,7 +35,7 @@ public interface FlowLifecycles {
     }
 
     public interface ViewLifecycleListener {
-        void onViewRestored(boolean forcedWithBundler);
+        void onViewRestored();
 
         void onViewDestroyed(boolean removedByFlow);
     }

@@ -3,7 +3,6 @@ package flowless.preset;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.CheckResult;
-import android.support.annotation.Nullable;
 import android.view.View;
 
 /**
@@ -79,9 +78,9 @@ public class FlowLifecycleProvider {
         }
     }
 
-    public static void onViewRestored(View view, boolean forcedWithBundler) {
+    public static void onViewRestored(View view) {
         if(view != null && view instanceof FlowLifecycles.ViewLifecycleListener) {
-            ((FlowLifecycles.ViewLifecycleListener) view).onViewRestored(forcedWithBundler);
+            ((FlowLifecycles.ViewLifecycleListener) view).onViewRestored();
         }
     }
 

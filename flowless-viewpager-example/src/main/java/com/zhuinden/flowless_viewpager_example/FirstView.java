@@ -71,7 +71,7 @@ public class FirstView extends LinearLayout implements FlowLifecycles.ViewLifecy
     }
 
     @Override
-    public void onViewRestored(boolean forcedWithBundler) {
+    public void onViewRestored() {
         Log.i(TAG, "View restored in [" + TAG + "]");
     }
 

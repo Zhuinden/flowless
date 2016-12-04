@@ -33,7 +33,7 @@ public class PagerViewFour extends RelativeLayout implements FlowLifecycles.View
 
 
     @Override
-    public void onViewRestored(boolean forcedWithBundler) {
+    public void onViewRestored() {
         Log.i(TAG, "View restored in [" + TAG + "]");
     }
 

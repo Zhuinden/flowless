@@ -32,7 +32,7 @@ public class PagerViewThree extends RelativeLayout implements FlowLifecycles.Vie
     }
 
     @Override
-    public void onViewRestored(boolean forcedWithBundler) {
+    public void onViewRestored() {
         Log.i(TAG, "View restored in [" + TAG + "]");
     }
 

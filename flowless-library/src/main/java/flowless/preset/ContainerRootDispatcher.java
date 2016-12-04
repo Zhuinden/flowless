@@ -73,9 +73,9 @@ public class ContainerRootDispatcher
     }
 
     @Override
-    public void onViewRestored(boolean forcedWithBundler) {
+    public void onViewRestored() {
         if(hasActiveView()) {
-            FlowLifecycleProvider.onViewRestored(rootHolder.root, forcedWithBundler);
+            FlowLifecycleProvider.onViewRestored(rootHolder.root);
         }
     }
 

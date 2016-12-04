@@ -1,18 +1,12 @@
 package flowless.preset;
 
-import android.animation.Animator;
-import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import flowless.Bundleable;
-import flowless.Direction;
 import flowless.Flow;
 import flowless.History;
 import flowless.State;
 import flowless.Traversal;
-import flowless.TraversalCallback;
 
 /**
  * Created by Zhuinden on 2016.07.01..
@@ -75,7 +69,7 @@ public class DispatcherUtils {
                 }
             }
             if(view instanceof FlowLifecycles.ViewLifecycleListener) {
-                ((FlowLifecycles.ViewLifecycleListener) view).onViewRestored(false);
+                ((FlowLifecycles.ViewLifecycleListener) view).onViewRestored();
             }
         }
     }

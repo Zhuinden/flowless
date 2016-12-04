@@ -105,8 +105,8 @@ public class SinglePaneContainer
     }
 
     @Override
-    public void onViewRestored(boolean forcedWithBundler) {
-        singleRootDispatcher.onViewRestored(forcedWithBundler);
+    public void onViewRestored() {
+        singleRootDispatcher.onViewRestored();
     }
 
     @Override

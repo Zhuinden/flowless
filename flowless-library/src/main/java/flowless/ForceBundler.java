@@ -40,7 +40,7 @@ public class ForceBundler {
                     }
                 }
                 if(view instanceof FlowLifecycles.ViewLifecycleListener) {
-                    ((FlowLifecycles.ViewLifecycleListener) view).onViewRestored(true);
+                    ((FlowLifecycles.ViewLifecycleListener) view).onViewRestored();
                 }
             }
         }

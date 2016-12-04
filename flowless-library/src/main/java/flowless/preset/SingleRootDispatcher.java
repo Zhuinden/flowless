@@ -1,22 +1,13 @@
 package flowless.preset;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.CheckResult;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.View;
-import android.view.ViewGroup;
 
-import flowless.Direction;
 import flowless.Flow;
 import flowless.ForceBundler;
-import flowless.Traversal;
-import flowless.TraversalCallback;
-import flowless.ViewUtils;
 
 /**
  * Created by Zhuinden on 2016.06.27..
@@ -74,9 +65,9 @@ public abstract class SingleRootDispatcher
     }
 
     @Override
-    public void onViewRestored(boolean forcedWithBundler) {
+    public void onViewRestored() {
         if(hasActiveView()) {
-            FlowLifecycleProvider.onViewRestored(rootHolder.root.getChildAt(0), forcedWithBundler);
+            FlowLifecycleProvider.onViewRestored(rootHolder.root.getChildAt(0));
         }
     }
 

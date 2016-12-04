@@ -66,14 +66,6 @@ public class MasterDetailContainer
         ButterKnife.bind(this);
     }
 
-    public SinglePaneContainer getMasterContainer() {
-        return masterContainer;
-    }
-
-    public SinglePaneContainer getDetailContainer() {
-        return detailContainer;
-    }
-
     @Override
     public void dispatch(@NonNull Traversal traversal, @NonNull TraversalCallback callback) {
         if(DispatcherUtils.isPreviousKeySameAsNewKey(traversal.origin, traversal.destination)) { //short circuit on same key
@@ -264,15 +256,15 @@ public class MasterDetailContainer
     }
 
     @Override
-    public void onViewRestored(boolean forcedWithBundler) {
+    public void onViewRestored() {
         if(masterContainer.getChildCount() > 0) {
-            masterContainer.onViewRestored(forcedWithBundler);
+            masterContainer.onViewRestored();
         }
         if(detailContainer.getChildCount() > 0) {
-            detailContainer.onViewRestored(forcedWithBundler);
+            detailContainer.onViewRestored();
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            FlowLifecycleProvider.onViewRestored(getChildAt(0), forcedWithBundler);
+            FlowLifecycleProvider.onViewRestored(getChildAt(0));
         }
     }
 

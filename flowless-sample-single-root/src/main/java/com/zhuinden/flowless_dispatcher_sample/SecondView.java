@@ -74,7 +74,7 @@ public class SecondView
     }
 
     @Override
-    public void onViewRestored(boolean forcedWithBundler) {
+    public void onViewRestored() {
         Log.i(TAG, "onViewRestored()");
     }
 

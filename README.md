@@ -45,7 +45,7 @@ In order to use Flow(less), you need to add jitpack to your project root gradle:
 
 and add the compile dependency to your module level gradle.
 
-    compile 'com.github.Zhuinden:flowless:1.0-alpha1.14'
+    compile 'com.github.Zhuinden:flowless:1.0-alpha1.15'
 
 
 Then, install Flow into your Activity:
@@ -275,8 +275,8 @@ public class FirstView
     }
 
     @Override
-    public void onViewRestored(boolean forcedWithBundler) {
-        // view was created and state has been restored (if exists)
+    public void onViewRestored() {
+        // view was created and state has been restored
     }
 
     @Override

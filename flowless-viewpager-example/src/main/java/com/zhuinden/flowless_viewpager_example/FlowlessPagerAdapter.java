@@ -2,13 +2,10 @@ package com.zhuinden.flowless_viewpager_example;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.List;
 
 import flowless.Bundleable;
 import flowless.preset.FlowLifecycles;
@@ -34,7 +31,7 @@ public abstract class FlowlessPagerAdapter
             }
         }
         if(view instanceof FlowLifecycles.ViewLifecycleListener) {
-            ((FlowLifecycles.ViewLifecycleListener) view).onViewRestored(false);
+            ((FlowLifecycles.ViewLifecycleListener) view).onViewRestored();
         }
         container.addView(view);
         views[position] = view;

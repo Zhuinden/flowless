@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha1.15 *(2016-12-04)*
+---------------------------------------------
+* BREAKING CHANGE: `FlowLifecycleListener.onViewRestored()` no longer receives `forcedWithBundler` boolean, it never really had a purpose.
+
 Flowless Version 1.0-alpha1.14 *(2016-12-03)*
 ---------------------------------------------
 * **API QUAKE!**
