@@ -2,7 +2,7 @@ package flowless.preset;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 
 /**
  * Created by Zhuinden on 2016.07.01..
@@ -30,14 +30,18 @@ public interface FlowLifecycles {
         void onPause();
     }
 
-    public interface ViewStatePersistenceListener {
-        void preSaveViewState(@Nullable Bundle outState);
-    }
-
     public interface ViewLifecycleListener {
         void onViewRestored();
 
         void onViewDestroyed(boolean removedByFlow);
+    }
+
+    public interface PreSaveViewStateListener {
+        void preSaveViewState();
+    }
+
+    public interface ViewStatePersistenceListener {
+        void onSaveInstanceState(@NonNull Bundle outState);
     }
 
     public interface ActivityResultListener {

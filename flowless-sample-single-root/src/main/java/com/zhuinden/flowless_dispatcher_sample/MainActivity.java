@@ -2,9 +2,9 @@ package com.zhuinden.flowless_dispatcher_sample;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.ViewGroup;
 
 import com.zhuinden.flowless_dispatcher_sample.extracted.ExampleDispatcher;
@@ -52,7 +52,7 @@ public class MainActivity
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        flowDispatcher.preSaveViewState(outState);
+        flowDispatcher.preSaveViewState();
         super.onSaveInstanceState(outState);
     }
 

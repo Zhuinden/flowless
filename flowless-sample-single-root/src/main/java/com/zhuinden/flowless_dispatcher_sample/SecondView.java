@@ -62,14 +62,16 @@ public class SecondView
     @Override
     public Bundle toBundle() {
         Log.i(TAG, "toBundle()");
-        return new Bundle();
+        Bundle bundle = new Bundle();
+        bundle.putString("blah", "BLEHHH");
+        return bundle;
     }
 
     @Override
     public void fromBundle(@Nullable Bundle bundle) {
         Log.i(TAG, "fromBundle()");
         if(bundle != null) {
-            Log.i(TAG, "fromBundle() with bundle");
+            Log.i(TAG, "fromBundle() with bundle: [" + bundle.getString("blah") + "]");
         }
     }
 

@@ -2,9 +2,9 @@ package com.zhuinden.flow_alpha_master_detail;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.ViewGroup;
 
 import com.zhuinden.flow_alpha_master_detail.paths.FirstKey;
@@ -13,7 +13,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import flowless.Flow;
 import flowless.preset.ContainerRootDispatcher;
-import flowless.preset.FlowLifecycles;
 
 public class MainActivity
         extends AppCompatActivity {
@@ -53,7 +52,7 @@ public class MainActivity
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        flowDispatcher.preSaveViewState(outState);
+        flowDispatcher.preSaveViewState();
         super.onSaveInstanceState(outState);
     }
 

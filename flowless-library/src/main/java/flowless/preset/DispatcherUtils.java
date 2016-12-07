@@ -33,8 +33,8 @@ public class DispatcherUtils {
 
     private static void persistViewToState(Traversal traversal, View view) {
         if(view != null) {
-            if(view != null && view instanceof FlowLifecycles.ViewStatePersistenceListener) {
-                ((FlowLifecycles.ViewStatePersistenceListener) view).preSaveViewState(null);
+            if(view != null && view instanceof FlowLifecycles.PreSaveViewStateListener) {
+                ((FlowLifecycles.PreSaveViewStateListener) view).preSaveViewState();
             }
             if(Flow.getKey(view.getContext()) != null) {
                 State outgoingState = traversal.getState(Flow.getKey(view.getContext()));

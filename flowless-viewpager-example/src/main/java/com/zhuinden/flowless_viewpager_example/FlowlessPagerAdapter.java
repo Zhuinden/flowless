@@ -81,7 +81,7 @@ public abstract class FlowlessPagerAdapter
 
     private void saveStateForView(View view, Bundle savedState) {
         if(view instanceof FlowLifecycles.ViewStatePersistenceListener) {
-            ((FlowLifecycles.ViewStatePersistenceListener) view).preSaveViewState(savedState);
+            ((FlowLifecycles.ViewStatePersistenceListener) view).onSaveInstanceState(savedState);
         }
         SparseArray<Parcelable> viewState = new SparseArray<>();
         view.saveHierarchyState(viewState);

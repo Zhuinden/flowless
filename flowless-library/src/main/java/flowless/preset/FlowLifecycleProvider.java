@@ -72,9 +72,15 @@ public class FlowLifecycleProvider {
         }
     }
 
-    public static void preSaveViewState(View view, Bundle bundle) {
+    public static void preSaveViewState(View view) {
+        if(view != null && view instanceof FlowLifecycles.PreSaveViewStateListener) {
+            ((FlowLifecycles.PreSaveViewStateListener) view).preSaveViewState();
+        }
+    }
+
+    public static void onSaveInstanceState(View view, Bundle bundle) {
         if(view != null && view instanceof FlowLifecycles.ViewStatePersistenceListener) {
-            ((FlowLifecycles.ViewStatePersistenceListener) view).preSaveViewState(bundle);
+            ((FlowLifecycles.ViewStatePersistenceListener) view).onSaveInstanceState(bundle);
         }
     }
 

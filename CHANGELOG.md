@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha1.16 *(2016-12-07)*
+---------------------------------------------
+* BREAKING CHANGE: `FlowLifecycles.ViewStatePersistenceListener`'s `preSaveViewState()` is now detached into two interfaces with following methods: `preSaveViewState()` and `onSaveInstanceState()`.
+  * delegation of `preSaveViewState()` is manual, but `onSaveInstanceState()` is automatic. This enables `Bundleable` to work even without calling `preSaveViewState()`.
+
 Flowless Version 1.0-alpha1.15 *(2016-12-04)*
 ---------------------------------------------
 * BREAKING CHANGE: `FlowLifecycleListener.onViewRestored()` no longer receives `forcedWithBundler` boolean, it never really had a purpose.

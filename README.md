@@ -85,7 +85,7 @@ public class MainActivity {
     
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        flowDispatcher.preSaveViewState(outState);
+        flowDispatcher.preSaveViewState(); // optional
         super.onSaveInstanceState(outState);
     }
 

@@ -10,6 +10,7 @@ public interface FlowContainerLifecycleListener
         FlowLifecycles.StartStopListener, //
         FlowLifecycles.ResumePauseListener, //
         FlowLifecycles.ViewStatePersistenceListener, //
+        FlowLifecycles.PreSaveViewStateListener, //
         FlowLifecycles.PermissionRequestListener,  //
         FlowLifecycles.ViewLifecycleListener {
 }

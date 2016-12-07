@@ -6,7 +6,6 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
@@ -115,7 +114,12 @@ public class SinglePaneContainer
     }
 
     @Override
-    public void preSaveViewState(@Nullable Bundle outState) {
-        singleRootDispatcher.preSaveViewState(outState);
+    public void preSaveViewState() {
+        singleRootDispatcher.preSaveViewState();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        singleRootDispatcher.onSaveInstanceState(outState);
     }
 }

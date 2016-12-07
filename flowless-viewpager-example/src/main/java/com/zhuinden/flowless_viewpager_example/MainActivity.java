@@ -2,9 +2,9 @@ package com.zhuinden.flowless_viewpager_example;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.ViewGroup;
 
 import com.zhuinden.flowless_viewpager_example.extracted.ExampleDispatcher;
@@ -49,10 +49,9 @@ public class MainActivity
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        flowDispatcher.preSaveViewState(outState);
+        flowDispatcher.preSaveViewState();
         super.onSaveInstanceState(outState);
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

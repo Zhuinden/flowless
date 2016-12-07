@@ -282,16 +282,29 @@ public class MasterDetailContainer
     }
 
     @Override
-    public void preSaveViewState(@Nullable Bundle outState) {
+    public void onSaveInstanceState(@Nullable Bundle outState) {
         if(masterContainer.getChildCount() > 0) {
-            masterContainer.preSaveViewState(outState);
+            masterContainer.onSaveInstanceState(outState);
         }
         if(detailContainer.getChildCount() > 0) {
-            detailContainer.preSaveViewState(outState);
+            detailContainer.onSaveInstanceState(outState);
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
-            FlowLifecycleProvider.preSaveViewState(getChildAt(0), outState);
+            FlowLifecycleProvider.onSaveInstanceState(getChildAt(0), outState);
             ForceBundler.saveToBundle(ActivityUtils.getActivity(getContext()), getChildAt(0));
+        }
+    }
+
+    @Override
+    public void preSaveViewState() {
+        if(masterContainer.getChildCount() > 0) {
+            masterContainer.preSaveViewState();
+        }
+        if(detailContainer.getChildCount() > 0) {
+            detailContainer.preSaveViewState();
+        }
+        if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
+            FlowLifecycleProvider.preSaveViewState(getChildAt(0));
         }
     }
 }
