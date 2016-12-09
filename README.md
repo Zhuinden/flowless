@@ -55,7 +55,7 @@ public class MainActivity {
     @BindView(R.id.main_root)
     ViewGroup root;
 
-    ExampleDispatcher flowDispatcher; // extends SingleRootDispatcher
+    TransitionDispatcher flowDispatcher; // extends SingleRootDispatcher
 
     @Override
     protected void attachBaseContext(Context newBase) {

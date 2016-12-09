@@ -80,8 +80,8 @@ public abstract class FlowlessPagerAdapter
     }
 
     private void saveStateForView(View view, Bundle savedState) {
-        if(view instanceof FlowLifecycles.ViewStatePersistenceListener) {
-            ((FlowLifecycles.ViewStatePersistenceListener) view).onSaveInstanceState(savedState);
+        if(view instanceof FlowLifecycles.PreSaveViewStateListener) {
+            ((FlowLifecycles.PreSaveViewStateListener) view).preSaveViewState();
         }
         SparseArray<Parcelable> viewState = new SparseArray<>();
         view.saveHierarchyState(viewState);
@@ -94,6 +94,7 @@ public abstract class FlowlessPagerAdapter
     @Override
     public void restoreState(Parcelable state, ClassLoader loader) {
         Bundle pagerState = (Bundle)state;
+        pagerState.setClassLoader(loader); // added to fix BadParcelException on process death
         for(int i = 0; i < getCount(); i++) {
             Bundle viewState = pagerState.getBundle("viewState_" + i);
             if(viewState != null) {
