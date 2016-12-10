@@ -156,6 +156,7 @@ public final class InternalLifecycleIntegration
             History history = selectHistory(intent, savedHistory, defaultHistory, parceler, keyManager);
             flow = new Flow(keyManager, history);
         }
+        Flow.get(getActivity().getBaseContext()); // force existence of Flow in InternalContextWrapper
         flow.setDispatcher(dispatcher, true);
         if(dispatcher instanceof FlowLifecycles.CreateDestroyListener) {
             ((FlowLifecycles.CreateDestroyListener) dispatcher).onCreate(savedInstanceState);
