@@ -40,7 +40,11 @@ final class InternalContextWrapper
 
     private Flow findFlow() {
         if(flow == null) {
-            flow = InternalLifecycleIntegration.find(activity).flow;
+            InternalLifecycleIntegration internalLifecycleIntegration = InternalLifecycleIntegration.find(activity);
+            if(internalLifecycleIntegration == null) {
+                return null;
+            }
+            flow = internalLifecycleIntegration.flow;
         }
         return flow;
     }
@@ -51,12 +55,18 @@ final class InternalContextWrapper
             return findFlow();
         } else if(CONTEXT_MANAGER_SERVICE.equals(name)) {
             Flow flow = findFlow();
+            if(flow == null) {
+                return null;
+            }
             if(keyManager == null) {
                 keyManager = flow.keyManager;
             }
             return keyManager;
         } else if(SERVICE_PROVIDER.equals(name)) {
             Flow flow = findFlow();
+            if(flow == null) {
+                return null;
+            }
             if(serviceProvider == null) {
                 serviceProvider = flow.serviceProvider;
             }
