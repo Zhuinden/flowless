@@ -154,7 +154,7 @@ public final class InternalLifecycleIntegration
                 savedHistory = builder.build();
             }
             History history = selectHistory(intent, savedHistory, defaultHistory, parceler, keyManager);
-            flow = new Flow(keyManager, history);
+            flow = new Flow(keyManager, serviceProvider, history);
         }
         Flow.get(getActivity().getBaseContext()); // force existence of Flow in InternalContextWrapper
         flow.setDispatcher(dispatcher, true);

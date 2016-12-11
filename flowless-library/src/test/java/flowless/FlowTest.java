@@ -17,12 +17,14 @@ package flowless;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import java.util.Arrays;
-import java.util.Iterator;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+
+import java.util.Arrays;
+import java.util.Iterator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -43,6 +45,8 @@ public class FlowTest {
     final TestKey charlie = new TestKey("Charlie");
     final TestKey delta = new TestKey("Delta");
 
+    @Mock
+    ServiceProvider serviceProvider;
     @Mock KeyManager keyManager;
     History lastStack;
     Direction lastDirection;
@@ -62,7 +66,7 @@ public class FlowTest {
 
     @Test public void oneTwoThree() {
         History history = History.single(new Uno());
-        Flow flow = new Flow(keyManager, history);
+        Flow flow = new Flow(keyManager, serviceProvider, history);
         flow.setDispatcher(new FlowDispatcher());
 
         flow.set(new Dos());
@@ -88,7 +92,7 @@ public class FlowTest {
         final History firstHistory = History.single(new Uno());
 
         class Ourrobouros implements Dispatcher {
-            Flow flow = new Flow(keyManager, firstHistory);
+            Flow flow = new Flow(keyManager, serviceProvider, firstHistory);
 
             {
                 flow.setDispatcher(this);
@@ -114,7 +118,7 @@ public class FlowTest {
                 History.emptyBuilder().pushAll(Arrays.<Object>asList(able, baker, charlie)).build();
         assertThat(history.size()).isEqualTo(3);
 
-        Flow flow = new Flow(keyManager, history);
+        Flow flow = new Flow(keyManager, serviceProvider, history);
         flow.setDispatcher(new FlowDispatcher());
 
         assertThat(flow.goBack()).isTrue();
@@ -128,7 +132,7 @@ public class FlowTest {
 
     @Test public void setHistoryWorks() {
         History history = History.emptyBuilder().pushAll(Arrays.<Object>asList(able, baker)).build();
-        Flow flow = new Flow(keyManager, history);
+        Flow flow = new Flow(keyManager, serviceProvider, history);
         FlowDispatcher dispatcher = new FlowDispatcher();
         flow.setDispatcher(dispatcher);
 
@@ -145,7 +149,7 @@ public class FlowTest {
     @Test public void setObjectGoesBack() {
         History history =
                 History.emptyBuilder().pushAll(Arrays.<Object>asList(able, baker, charlie, delta)).build();
-        Flow flow = new Flow(keyManager, history);
+        Flow flow = new Flow(keyManager, serviceProvider, history);
         flow.setDispatcher(new FlowDispatcher());
 
         assertThat(history.size()).isEqualTo(4);
@@ -168,7 +172,7 @@ public class FlowTest {
 
     @Test public void setObjectToMissingObjectPushes() {
         History history = History.emptyBuilder().pushAll(Arrays.<Object>asList(able, baker)).build();
-        Flow flow = new Flow(keyManager, history);
+        Flow flow = new Flow(keyManager, serviceProvider, history);
         flow.setDispatcher(new FlowDispatcher());
         assertThat(history.size()).isEqualTo(2);
 
@@ -189,7 +193,7 @@ public class FlowTest {
 
     @Test public void setObjectKeepsOriginal() {
         History history = History.emptyBuilder().pushAll(Arrays.<Object>asList(able, baker)).build();
-        Flow flow = new Flow(keyManager, history);
+        Flow flow = new Flow(keyManager, serviceProvider, history);
         flow.setDispatcher(new FlowDispatcher());
         assertThat(history.size()).isEqualTo(2);
 
@@ -204,7 +208,7 @@ public class FlowTest {
     @Test public void replaceHistoryResultsInLengthOneHistory() {
         History history =
                 History.emptyBuilder().pushAll(Arrays.<Object>asList(able, baker, charlie)).build();
-        Flow flow = new Flow(keyManager, history);
+        Flow flow = new Flow(keyManager, serviceProvider, history);
         flow.setDispatcher(new FlowDispatcher());
         assertThat(history.size()).isEqualTo(3);
 
@@ -219,7 +223,7 @@ public class FlowTest {
     @Test public void replaceTopDoesNotAlterHistoryLength() {
         History history =
                 History.emptyBuilder().pushAll(Arrays.<Object>asList(able, baker, charlie)).build();
-        Flow flow = new Flow(keyManager, history);
+        Flow flow = new Flow(keyManager, serviceProvider, history);
         flow.setDispatcher(new FlowDispatcher());
         assertThat(history.size()).isEqualTo(3);
 
@@ -238,7 +242,7 @@ public class FlowTest {
         TestKey delta = new TestKey("Delta");
         History history =
                 History.emptyBuilder().pushAll(Arrays.<Object>asList(able, baker, charlie, delta)).build();
-        Flow flow = new Flow(keyManager, history);
+        Flow flow = new Flow(keyManager, serviceProvider, history);
         flow.setDispatcher(new FlowDispatcher());
         assertThat(history.size()).isEqualTo(4);
 
@@ -285,7 +289,7 @@ public class FlowTest {
                 .pushAll(Arrays.<Object>asList(new Picky("Able"), new Picky("Baker"), new Picky("Charlie"),
                         new Picky("Delta")))
                 .build();
-        Flow flow = new Flow(keyManager, history);
+        Flow flow = new Flow(keyManager, serviceProvider, history);
         flow.setDispatcher(new FlowDispatcher());
 
         assertThat(history.size()).isEqualTo(4);

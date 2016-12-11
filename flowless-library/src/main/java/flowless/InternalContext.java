@@ -19,22 +19,10 @@ interface InternalContext {
             return systemService;
         }
 
-        static KeyManager getKeyManager(Context context) {
-            //noinspection ResourceType
-            @SuppressWarnings("WrongConstant") final KeyManager service = (KeyManager) context.getSystemService(CONTEXT_MANAGER_SERVICE);
-            return service;
-        }
-
         static Activity getActivity(Context context) {
             //noinspection ResourceType
             Activity activity = (Activity) context.getSystemService(ACTIVITY);
             return activity;
-        }
-
-        static ServiceProvider getServiceProvider(Context context) {
-            //noinspection ResourceType
-            ServiceProvider serviceProvider = (ServiceProvider) context.getSystemService(SERVICE_PROVIDER);
-            return serviceProvider;
         }
     }
 }

@@ -63,16 +63,7 @@ public final class Flow {
     }
 
     @NonNull
-    public static ServiceProvider services(@NonNull View view) {
-        return services(view.getContext());
-    }
-
-    @NonNull
-    public static ServiceProvider services(@NonNull Context context) {
-        ServiceProvider serviceProvider = InternalContext.Methods.getServiceProvider(context);
-        if(null == serviceProvider) {
-            throw new IllegalStateException("Context was not wrapped with flow. " + "Make sure attachBaseContext was overridden in your main activity");
-        }
+    public ServiceProvider getServices() {
         return serviceProvider;
     }
 
@@ -131,10 +122,12 @@ public final class Flow {
     private History history;
     private Dispatcher dispatcher;
     private PendingTraversal pendingTraversal;
-    private final KeyManager keyManager;
+    final KeyManager keyManager;
+    final ServiceProvider serviceProvider;
 
-    Flow(KeyManager keyManager, History history) {
+    Flow(KeyManager keyManager, ServiceProvider serviceProvider, History history) {
         this.keyManager = keyManager;
+        this.serviceProvider = serviceProvider;
         this.history = history;
     }
 

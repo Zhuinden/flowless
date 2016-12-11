@@ -38,21 +38,27 @@ final class InternalContextWrapper
         this.activity = activity;
     }
 
+    private Flow findFlow() {
+        if(flow == null) {
+            flow = InternalLifecycleIntegration.find(activity).flow;
+        }
+        return flow;
+    }
+
     @Override
     public Object getSystemService(String name) {
         if(FLOW_SERVICE.equals(name)) {
-            if(flow == null) {
-                flow = InternalLifecycleIntegration.find(activity).flow;
-            }
-            return flow;
+            return findFlow();
         } else if(CONTEXT_MANAGER_SERVICE.equals(name)) {
+            Flow flow = findFlow();
             if(keyManager == null) {
-                keyManager = InternalLifecycleIntegration.find(activity).keyManager;
+                keyManager = flow.keyManager;
             }
             return keyManager;
         } else if(SERVICE_PROVIDER.equals(name)) {
+            Flow flow = findFlow();
             if(serviceProvider == null) {
-                serviceProvider = InternalLifecycleIntegration.find(activity).serviceProvider;
+                serviceProvider = flow.serviceProvider;
             }
             return serviceProvider;
         } else if(ACTIVITY.equals(name)) {
