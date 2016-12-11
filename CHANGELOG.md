@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha1.17 *(2016-12-11)*
+---------------------------------------------
+* BREAKING CHANGE: `Flow.services(Context)` and `Flow.services(View)` are now `flow.getServices()`
+* Fix: InternalContextWrapper should no longer throw NPE if InternalLifecycleIntegration is detached or not yet attached (returns null instead)
+* Enhancement: null checks for ServiceProvider
+
 Flowless Version 1.0-alpha1.16 *(2016-12-07)*
 ---------------------------------------------
 * BREAKING CHANGE: `FlowLifecycles.ViewStatePersistenceListener`'s `preSaveViewState()` is now detached into two interfaces with following methods: `preSaveViewState()` and `onSaveInstanceState()`.

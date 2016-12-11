@@ -45,7 +45,7 @@ In order to use Flow(less), you need to add jitpack to your project root gradle:
 
 and add the compile dependency to your module level gradle.
 
-    compile 'com.github.Zhuinden:flowless:1.0-alpha1.16'
+    compile 'com.github.Zhuinden:flowless:1.0-alpha1.17'
 
 
 Then, install Flow into your Activity:
@@ -318,14 +318,14 @@ And it's inflated based on the following XML:
 
 
 ### Managing resources (optional)
-You can manage resources shared through your context manually using the `ServiceProvider`, which you can obtain through `Flow.services(Context)` or `Flow.services(View)`.
+You can manage resources shared through your context manually using the `ServiceProvider`, which you can obtain through `flow.getServices()`.
 
 This way, you can bind services you need when you initialize your View in its constructor (before `onFinishInflate()` is called) or before it's inflated in the Dispatcher itself, while also sharing them to additional views that belong to the same Context.
 
 Here is a rather barebones implementation that creates services for elements that are currently within the history of keys.
 
 ``` java
-ServiceProvider serviceProvider = Flow.services(newContext);
+ServiceProvider serviceProvider = Flow.get(newContext).getServices();
 
 // destroyNotIn()
 Iterator<Object> aElements = traversal.origin != null ? traversal.origin.reverseIterator() : Collections.emptyList().iterator();
@@ -361,7 +361,7 @@ public class DaggerService {
     @SuppressWarnings("unchecked")
     public static <T> T getComponent(Context context) {
         //noinspection ResourceType
-        return (T) Flow.services(context).getService(Flow.getKey(context), TAG);
+        return (T) Flow.get(context).getServices().getService(Flow.getKey(context), TAG);
     }
 }
 ```
