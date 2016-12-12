@@ -18,11 +18,11 @@ public class ActivityUtils {
             if(context instanceof FlowContextWrapper) {
                 FlowContextWrapper flowContextWrapper = (FlowContextWrapper) context;
                 Context baseContext = flowContextWrapper.getBaseContext();
-                if(baseContext instanceof InternalContext) {
-                    return InternalContext.Methods.getActivity(baseContext);
+                if(baseContext instanceof InternalContextWrapper) {
+                    return InternalContextWrapper.getActivity(baseContext);
                 }
-            } else if(context instanceof InternalContext) {
-                return InternalContext.Methods.getActivity(context);
+            } else if(context instanceof InternalContextWrapper) {
+                return InternalContextWrapper.getActivity(context);
             } else {
                 Context baseContext = ((ContextWrapper) context).getBaseContext();
                 if(baseContext instanceof Activity) {
