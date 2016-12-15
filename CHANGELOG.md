@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha1.18 *(2016-12-15)*
+---------------------------------------------
+* Added `Installer.globalKeys()` to register global keys, that can have state bound to them which never gets cleared
+
 Flowless Version 1.0-alpha1.17 *(2016-12-11)*
 ---------------------------------------------
 * BREAKING CHANGE: `Flow.services(Context)` and `Flow.services(View)` are now `flow.getServices()`

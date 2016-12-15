@@ -16,15 +16,25 @@
 
 package flowless;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 class KeyManager {
     private final Map<Object, State> states = new LinkedHashMap<>();
+    private final Set<Object> globalKeys;
 
-    KeyManager() {
+    KeyManager(Object... globalKeys) {
+        if(globalKeys == null || globalKeys.length == 0) {
+            this.globalKeys = Collections.emptySet();
+        } else {
+            this.globalKeys = new LinkedHashSet<>(Arrays.asList(globalKeys));
+        }
     }
 
     boolean hasState(Object key) {
@@ -44,11 +54,11 @@ class KeyManager {
         return state;
     }
 
-    void clearStatesExcept(List<Object> keep) {
+    void clearNonGlobalStatesExcept(List<Object> keep) {
         Iterator<Object> keys = states.keySet().iterator();
         while(keys.hasNext()) {
             final Object key = keys.next();
-            if(!keep.contains(key)) {
+            if(!globalKeys.contains(key) && !keep.contains(key)) {
                 keys.remove();
             }
         }

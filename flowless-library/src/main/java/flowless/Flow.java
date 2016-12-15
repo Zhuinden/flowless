@@ -392,7 +392,7 @@ public final class Flow {
             pendingTraversal = next;
 
             if(pendingTraversal == null) {
-                keyManager.clearStatesExcept(history.asList());
+                keyManager.clearNonGlobalStatesExcept(history.asList());
             } else if(dispatcher != null) {
                 pendingTraversal.execute();
             }
