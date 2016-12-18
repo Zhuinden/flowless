@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-class KeyManager {
+public class KeyManager {
     static final String GLOBAL_KEYS = "GLOBAL_KEYS";
     static final String HISTORY_KEYS = "HISTORY_KEYS";
 

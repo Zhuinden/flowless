@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-Flowless Version 1.0-alpha1.20 *(2016-12-18)*
+Flowless Version 1.0-alpha1.21 *(2016-12-18)*
 ---------------------------------------------
 * BREAKING CHANGE: `ForceBundler.saveToBundle` finally no longer takes `Activity` parameter
 * Added `Installer.globalKey()` to register global key, that can have state bound to it which never gets cleared
