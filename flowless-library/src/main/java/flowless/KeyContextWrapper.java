@@ -15,7 +15,7 @@ public interface KeyContextWrapper {
 
         public static KeyContextWrapper get(Context context) {
             //noinspection ResourceType
-            @SuppressWarnings("WrongConstant") KeyContextWrapper wrapper = (FlowContextWrapper) context.getSystemService(KEY_CONTEXT_WRAPPER);
+            @SuppressWarnings("WrongConstant") KeyContextWrapper wrapper = (KeyContextWrapper) context.getSystemService(KEY_CONTEXT_WRAPPER);
             return wrapper;
         }
     }

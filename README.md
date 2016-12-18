@@ -45,7 +45,7 @@ In order to use Flow(less), you need to add jitpack to your project root gradle:
 
 and add the compile dependency to your module level gradle.
 
-    compile 'com.github.Zhuinden:flowless:1.0-alpha1.19'
+    compile 'com.github.Zhuinden:flowless:1.0-alpha1.20'
 
 
 Then, install Flow into your Activity:
@@ -59,7 +59,7 @@ public class MainActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        flowDispatcher = new ExampleDispatcher(this);
+        flowDispatcher = new TransitionDispatcher(this);
         newBase = Flow.configure(newBase, this) //
                 .defaultKey(FirstKey.create()) //
                 .dispatcher(flowDispatcher) //
