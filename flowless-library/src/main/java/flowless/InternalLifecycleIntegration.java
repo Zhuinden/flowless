@@ -116,6 +116,7 @@ public final class InternalLifecycleIntegration
 
     static void addHistoryToIntent(Intent intent, History history, KeyParceler parceler, KeyManager keyManager) {
         Bundle bundle = new Bundle();
+        Bundle innerBundle = new Bundle();
         ArrayList<Parcelable> parcelables = new ArrayList<>(history.size());
         final Iterator<Object> keys = history.reverseIterator();
         while(keys.hasNext()) {
@@ -128,7 +129,13 @@ public final class InternalLifecycleIntegration
             }
             parcelables.add(keyState.toBundle(parceler));
         }
-        bundle.putParcelableArrayList(PERSISTENCE_KEY, parcelables);
+        innerBundle.putParcelableArrayList(KeyManager.HISTORY_KEYS, parcelables);
+
+        if(keyManager != null) {
+            innerBundle.putParcelableArrayList(KeyManager.GLOBAL_KEYS,
+                    collectStatesFromKeys(keyManager, parceler, keyManager.globalKeys.iterator(), keyManager.globalKeys.size()));
+        }
+        bundle.putBundle(PERSISTENCE_KEY, innerBundle);
         intent.putExtra(INTENT_KEY, bundle);
     }
 
@@ -136,7 +143,7 @@ public final class InternalLifecycleIntegration
         if(intent.hasExtra(INTENT_KEY)) {
             checkNotNull(parceler, "Intent has a Flow history extra, but Flow was not installed with a KeyParceler");
             History.Builder builder = History.emptyBuilder();
-            load((Bundle) intent.getParcelableExtra(INTENT_KEY), parceler, builder, keyManager);
+            load(intent.<Bundle>getParcelableExtra(INTENT_KEY), parceler, builder, keyManager);
             flow.setHistory(builder.build(), Direction.REPLACE);
         }
     }
@@ -149,7 +156,7 @@ public final class InternalLifecycleIntegration
             if(savedInstanceState != null && savedInstanceState.containsKey(INTENT_KEY)) {
                 checkNotNull(parceler, "no KeyParceler installed");
                 History.Builder builder = History.emptyBuilder();
-                Bundle bundle = savedInstanceState.getParcelable(INTENT_KEY);
+                Bundle bundle = savedInstanceState.getBundle(INTENT_KEY);
                 load(bundle, parceler, builder, keyManager);
                 savedHistory = builder.build();
             }
@@ -232,44 +239,64 @@ public final class InternalLifecycleIntegration
 
     private static History selectHistory(Intent intent, History saved, History defaultHistory, @Nullable KeyParceler parceler, KeyManager keyManager) {
         if(saved != null) {
-            //Log.i(TAG, "Saved selected [" + saved + "]");
             return saved;
         }
         if(intent != null && intent.hasExtra(INTENT_KEY)) {
             checkNotNull(parceler, "Intent has a Flow history extra, but Flow was not installed with a KeyParceler");
             History.Builder history = History.emptyBuilder();
             load(intent.<Bundle>getParcelableExtra(INTENT_KEY), parceler, history, keyManager);
-            //Log.i(TAG, "Intent Key selected [" + history + "]");
             return history.build();
         }
-        //Log.i(TAG, "Default history selected [" + defaultHistory + "]");
         return defaultHistory;
     }
 
     private static void save(Bundle bundle, KeyParceler parceler, History history, KeyManager keyManager) {
-        ArrayList<Parcelable> parcelables = new ArrayList<>(history.size());
-        final Iterator<Object> keys = history.reverseIterator();
+        ArrayList<Parcelable> historyStates = collectStatesFromKeys(keyManager, parceler, history.reverseIterator(), history.size());
+        ArrayList<Parcelable> globalStates = collectStatesFromKeys(keyManager,
+                parceler,
+                keyManager.globalKeys.iterator(),
+                keyManager.globalKeys.size());
+        Bundle innerBundle = new Bundle();
+        innerBundle.putParcelableArrayList(KeyManager.GLOBAL_KEYS, globalStates);
+        innerBundle.putParcelableArrayList(KeyManager.HISTORY_KEYS, historyStates);
+        bundle.putBundle(PERSISTENCE_KEY, innerBundle);
+    }
+
+    private static ArrayList<Parcelable> collectStatesFromKeys(KeyManager keyManager, KeyParceler parceler, Iterator<Object> keys, int size) {
+        ArrayList<Parcelable> parcelables = new ArrayList<>(size);
         while(keys.hasNext()) {
             Object key = keys.next();
             if(!key.getClass().isAnnotationPresent(NotPersistent.class)) {
                 parcelables.add(keyManager.getState(key).toBundle(parceler));
             }
         }
-        bundle.putParcelableArrayList(PERSISTENCE_KEY, parcelables);
+        return parcelables;
+    }
+
+    private static void loadStatesIntoManager(ArrayList<Parcelable> stateBundles, KeyParceler parceler, KeyManager keyManager, History.Builder builder, boolean addToHistory) {
+        if(stateBundles != null) {
+            for(Parcelable stateBundle : stateBundles) {
+                State state = State.fromBundle((Bundle) stateBundle, parceler);
+                if(addToHistory) {
+                    builder.push(state.getKey());
+                }
+                if(!keyManager.hasState(state.getKey())) {
+                    keyManager.addState(state);
+                }
+            }
+        }
+
     }
 
     private static void load(Bundle bundle, KeyParceler parceler, History.Builder builder, KeyManager keyManager) {
         if(!bundle.containsKey(PERSISTENCE_KEY)) {
             return;
         }
-        ArrayList<Parcelable> stateBundles = bundle.getParcelableArrayList(PERSISTENCE_KEY);
-        //noinspection ConstantConditions
-        for(Parcelable stateBundle : stateBundles) {
-            State state = State.fromBundle((Bundle) stateBundle, parceler);
-            builder.push(state.getKey());
-            if(!keyManager.hasState(state.getKey())) {
-                keyManager.addState(state);
-            }
+        Bundle innerBundle = bundle.getBundle(PERSISTENCE_KEY);
+        if(innerBundle != null) {
+            //noinspection ConstantConditions
+            loadStatesIntoManager(innerBundle.getParcelableArrayList(KeyManager.HISTORY_KEYS), parceler, keyManager, builder, true);
+            loadStatesIntoManager(innerBundle.getParcelableArrayList(KeyManager.GLOBAL_KEYS), parceler, keyManager, builder, false);
         }
     }
 }

@@ -26,18 +26,25 @@ import java.util.Map;
 import java.util.Set;
 
 class KeyManager {
-    private final Map<Object, State> states = new LinkedHashMap<>();
-    private final Set<Object> globalKeys;
+    static final String GLOBAL_KEYS = "GLOBAL_KEYS";
+    static final String HISTORY_KEYS = "HISTORY_KEYS";
 
-    KeyManager(Object... globalKeys) {
-        if(globalKeys == null || globalKeys.length == 0) {
+    private final Map<Object, State> states = new LinkedHashMap<>();
+    final Set<Object> globalKeys;
+
+    KeyManager() {
+        this(null);
+    }
+
+    KeyManager(Object globalKey) {
+        if(globalKey == null) {
             this.globalKeys = Collections.emptySet();
         } else {
-            this.globalKeys = new LinkedHashSet<>(Arrays.asList(globalKeys));
+            this.globalKeys = new LinkedHashSet<>(Arrays.asList(globalKey));
         }
     }
 
-    boolean hasState(Object key) {
+    public boolean hasState(Object key) {
         return states.containsKey(key);
     }
 
@@ -45,7 +52,7 @@ class KeyManager {
         states.put(state.getKey(), state);
     }
 
-    State getState(Object key) {
+    public State getState(Object key) {
         State state = states.get(key);
         if(state == null) {
             state = new State(key);

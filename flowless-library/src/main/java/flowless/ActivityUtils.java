@@ -3,14 +3,11 @@ package flowless;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.util.Log;
 
 /**
  * Created by Zhuinden on 2016.05.26..
  */
 public class ActivityUtils {
-    private static final String TAG = "ActivityUtils";
-
     public static Activity getActivity(Context context) {
         if(context instanceof Activity) {
             return (Activity) context;
@@ -30,7 +27,6 @@ public class ActivityUtils {
                 }
             }
         }
-        Log.e(TAG, "No activity could be found in [" + context + "]");
         throw new IllegalStateException("No activity could be found in [" + context + "]");
     }
 }

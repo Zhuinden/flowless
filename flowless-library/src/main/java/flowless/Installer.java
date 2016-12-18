@@ -30,7 +30,7 @@ public final class Installer {
     private KeyParceler parceler;
     private Object defaultKey;
     private Dispatcher dispatcher;
-    private Object[] globalKeys;
+    private Object globalKey;
 
     Installer(Context baseContext, Activity activity) {
         this.baseContext = baseContext;
@@ -55,8 +55,8 @@ public final class Installer {
         return this;
     }
 
-    public Installer globalKeys(@NonNull Object... globalKeys) {
-        this.globalKeys = globalKeys;
+    public Installer globalKey(@NonNull Object globalKey) {
+        this.globalKey = globalKey;
         return this;
     }
 
@@ -78,10 +78,10 @@ public final class Installer {
 
         final History defaultHistory = History.single(defState);
         final Application app = (Application) baseContext.getApplicationContext();
-        final KeyManager keyManager = new KeyManager(globalKeys);
+        final KeyManager keyManager = new KeyManager(globalKey);
         final ServiceProvider serviceProvider = new ServiceProvider();
         InternalLifecycleIntegration.install(app, activity, parceler, defaultHistory, dispatcher, serviceProvider, keyManager);
 
-        return new InternalContextWrapper(baseContext, activity);
+        return new InternalContextWrapper(baseContext, activity, keyManager, serviceProvider);
     }
 }

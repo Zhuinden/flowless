@@ -1,9 +1,12 @@
 Change Log
 ==========
 
-Flowless Version 1.0-alpha1.18 *(2016-12-15)*
+Flowless Version 1.0-alpha1.19 *(2016-12-18)*
 ---------------------------------------------
-* Added `Installer.globalKeys()` to register global keys, that can have state bound to them which never gets cleared
+* BREAKING CHANGE: `ForceBundler.saveToBundle` finally no longer takes `Activity` parameter
+* Added `Installer.globalKey()` to register global key, that can have state bound to it which never gets cleared
+* Enhancement: Global key is available from `baseContext` via `Flow.getKey()`
+* Change: `KeyManager` is exposed in Flow via `Flow.getStates()` to allow persisting global key state
 
 Flowless Version 1.0-alpha1.17 *(2016-12-11)*
 ---------------------------------------------

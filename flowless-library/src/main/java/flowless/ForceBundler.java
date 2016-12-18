@@ -1,6 +1,5 @@
 package flowless;
 
-import android.app.Activity;
 import android.view.View;
 
 import flowless.preset.FlowLifecycles;
@@ -9,12 +8,12 @@ import flowless.preset.FlowLifecycles;
  * Created by Zhuinden on 2016.03.02..
  */
 public class ForceBundler {
-    public static void saveToBundle(Activity activity, View... activeViews) {
-        InternalLifecycleIntegration internalLifeCycleIntegration = InternalLifecycleIntegration.find(activity);
-        if(internalLifeCycleIntegration != null) {
-            KeyManager keyManager = internalLifeCycleIntegration.keyManager;
+    public static void saveToBundle(View... activeViews) {
+        if(activeViews != null && activeViews.length > 0) {
             for(View view : activeViews) {
                 if(view != null) {
+                    Flow flow = Flow.get(view);
+                    KeyManager keyManager = flow.getStates();
                     State state = keyManager.getState(Flow.getKey(view));
                     state.save(view);
                     if(view instanceof Bundleable) {
@@ -25,12 +24,12 @@ public class ForceBundler {
         }
     }
 
-    public static void restoreFromBundle(Activity activity, View... activeViews) {
-        InternalLifecycleIntegration internalLifeCycleIntegration = InternalLifecycleIntegration.find(activity);
-        if(internalLifeCycleIntegration != null) {
-            KeyManager keyManager = internalLifeCycleIntegration.keyManager;
+    public static void restoreFromBundle(View... activeViews) {
+        if(activeViews != null && activeViews.length > 0) {
             for(View view : activeViews) {
                 if(view != null) {
+                    Flow flow = Flow.get(view);
+                    KeyManager keyManager = flow.getStates();
                     State state = keyManager.getState(Flow.getKey(view));
                     if(state != null) {
                         state.restore(view);

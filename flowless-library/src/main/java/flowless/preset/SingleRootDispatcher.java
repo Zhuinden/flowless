@@ -91,7 +91,7 @@ public abstract class SingleRootDispatcher
             FlowLifecycleProvider.onSaveInstanceState(rootHolder.root.getChildAt(0), outState);
 
             // Important: Single Root Dispatcher can handle its child's state directly, but Container Root Dispatcher cannot.
-            ForceBundler.saveToBundle(activity, rootHolder.root.getChildAt(0));
+            ForceBundler.saveToBundle(rootHolder.root.getChildAt(0));
         }
     }
 

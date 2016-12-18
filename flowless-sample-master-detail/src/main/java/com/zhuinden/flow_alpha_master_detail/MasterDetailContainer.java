@@ -15,7 +15,6 @@ import com.zhuinden.flow_alpha_master_detail.extracted.LayoutKey;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import flowless.ActivityUtils;
 import flowless.Dispatcher;
 import flowless.ForceBundler;
 import flowless.Traversal;
@@ -291,7 +290,7 @@ public class MasterDetailContainer
         }
         if(getChildCount() > 0 && !(getChildAt(0) instanceof SinglePaneContainer)) {
             FlowLifecycleProvider.onSaveInstanceState(getChildAt(0), outState);
-            ForceBundler.saveToBundle(ActivityUtils.getActivity(getContext()), getChildAt(0));
+            ForceBundler.saveToBundle(getChildAt(0));
         }
     }
 

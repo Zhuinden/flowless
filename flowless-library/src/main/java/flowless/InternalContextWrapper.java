@@ -26,7 +26,8 @@ import android.content.res.Resources;
 import android.os.Bundle;
 
 final class InternalContextWrapper
-        extends ContextWrapper {
+        extends ContextWrapper
+        implements KeyContextWrapper {
     static final String FLOW_SERVICE = "flow.InternalContextWrapper.FLOW_SERVICE";
     static final String CONTEXT_MANAGER_SERVICE = "flow.InternalContextWrapper.CONTEXT_MANAGER_SERVICE";
     static final String ACTIVITY = "flow.InternalContextWrapper.ACTIVITY_SERVICE";
@@ -37,9 +38,11 @@ final class InternalContextWrapper
     private KeyManager keyManager;
     private ServiceProvider serviceProvider;
 
-    InternalContextWrapper(Context baseContext, Activity activity) {
+    InternalContextWrapper(Context baseContext, Activity activity, KeyManager keyManager, ServiceProvider serviceProvider) {
         super(baseContext);
         this.activity = activity;
+        this.keyManager = keyManager;
+        this.serviceProvider = serviceProvider;
     }
 
     private Flow findFlow() {
@@ -67,25 +70,13 @@ final class InternalContextWrapper
 
     @Override
     public Object getSystemService(String name) {
-        if(FLOW_SERVICE.equals(name)) {
+        if(KEY_CONTEXT_WRAPPER.equals(name)) {
+            return this;
+        } else if(FLOW_SERVICE.equals(name)) {
             return findFlow();
         } else if(CONTEXT_MANAGER_SERVICE.equals(name)) {
-            Flow flow = findFlow();
-            if(flow == null) {
-                return null;
-            }
-            if(keyManager == null) {
-                keyManager = flow.keyManager;
-            }
             return keyManager;
         } else if(SERVICE_PROVIDER.equals(name)) {
-            Flow flow = findFlow();
-            if(flow == null) {
-                return null;
-            }
-            if(serviceProvider == null) {
-                serviceProvider = flow.serviceProvider;
-            }
             return serviceProvider;
         } else if(ACTIVITY.equals(name)) {
             return activity;
@@ -138,5 +129,15 @@ final class InternalContextWrapper
     @Override
     public Resources.Theme getTheme() {
         return activity.getTheme();
+    }
+
+    @Override
+    public <T> T getKey() {
+        if(!keyManager.globalKeys.isEmpty()) {
+            // noinspection unchecked
+            return (T) keyManager.globalKeys.iterator().next();
+        } else {
+            return null;
+        }
     }
 }

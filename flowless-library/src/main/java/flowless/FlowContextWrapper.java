@@ -21,15 +21,8 @@ import android.content.ContextWrapper;
 import android.view.LayoutInflater;
 
 final class FlowContextWrapper
-        extends ContextWrapper {
-    static final String SYSTEM_SERVICE = "flow_services_context_wrapper";
-
-    static FlowContextWrapper get(Context context) {
-        //noinspection ResourceType
-        @SuppressWarnings("WrongConstant") FlowContextWrapper wrapper = (FlowContextWrapper) context.getSystemService(SYSTEM_SERVICE);
-        return wrapper;
-    }
-
+        extends ContextWrapper
+        implements KeyContextWrapper {
     final Object key;
 
     private LayoutInflater inflater;
@@ -41,7 +34,7 @@ final class FlowContextWrapper
 
     @Override
     public Object getSystemService(String name) {
-        if(SYSTEM_SERVICE.equals(name)) {
+        if(KEY_CONTEXT_WRAPPER.equals(name)) {
             return this;
         }
         if(LAYOUT_INFLATER_SERVICE.equals(name)) {
@@ -53,6 +46,7 @@ final class FlowContextWrapper
         return super.getSystemService(name);
     }
 
+    @Override
     public <T> T getKey() {
         //noinspection unchecked
         return (T) key;

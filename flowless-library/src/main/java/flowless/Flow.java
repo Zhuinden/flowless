@@ -67,12 +67,17 @@ public final class Flow {
         return serviceProvider;
     }
 
+    @NonNull
+    public KeyManager getStates() {
+        return keyManager;
+    }
+
     /**
      * @return null if context has no Flow key embedded.
      */
     @Nullable
     public static <T> T getKey(@NonNull Context context) {
-        final FlowContextWrapper wrapper = FlowContextWrapper.get(context);
+        final KeyContextWrapper wrapper = KeyContextWrapper.Methods.get(context);
         if(wrapper == null) {
             return null;
         }
