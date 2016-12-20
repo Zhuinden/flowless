@@ -30,21 +30,19 @@ import android.os.Bundle;
         implements KeyContextWrapper {
     private final Activity activity;
     private Flow flow;
-    private KeyManager keyManager;
-    private ServiceProvider serviceProvider;
 
-    InternalContextWrapper(Context baseContext, Activity activity, KeyManager keyManager, ServiceProvider serviceProvider) {
+    private static final String FLOW_NOT_YET_INITIALIZED = "Flow instance does not exist before `onPostCreate()`";
+
+    InternalContextWrapper(Context baseContext, Activity activity) {
         super(baseContext);
         this.activity = activity;
-        this.keyManager = keyManager;
-        this.serviceProvider = serviceProvider;
     }
 
     private Flow findFlow() {
         if(flow == null) {
             InternalLifecycleIntegration internalLifecycleIntegration = InternalLifecycleIntegration.find(activity);
             if(internalLifecycleIntegration == null) {
-                return null;
+                throw new IllegalStateException(FLOW_NOT_YET_INITIALIZED);
             }
             flow = internalLifecycleIntegration.flow;
         }
@@ -64,9 +62,11 @@ import android.os.Bundle;
         } else if(Flow.SERVICE_TAG.equals(name)) {
             return findFlow();
         } else if(KeyManager.SERVICE_TAG.equals(name)) {
-            return keyManager;
+            Flow flow = findFlow();
+            return flow.getStates();
         } else if(ServiceProvider.SERVICE_TAG.equals(name)) {
-            return serviceProvider;
+            Flow flow = findFlow();
+            return flow.getServices();
         } else if(ActivityUtils.ACTIVITY_SERVICE_TAG.equals(name)) {
             return activity;
         } else {
@@ -122,11 +122,17 @@ import android.os.Bundle;
 
     @Override
     public <T> T getKey() {
-        if(!keyManager.globalKeys.isEmpty()) {
-            // noinspection unchecked
-            return (T) keyManager.globalKeys.iterator().next();
+        Flow flow = findFlow();
+        if(flow != null) {
+            KeyManager keyManager = flow.getStates();
+            if(!keyManager.globalKeys.isEmpty()) {
+                // noinspection unchecked
+                return (T) keyManager.globalKeys.iterator().next();
+            } else {
+                return null;
+            }
         } else {
-            return null;
+            throw new IllegalStateException(FLOW_NOT_YET_INITIALIZED);
         }
     }
 }

@@ -66,13 +66,13 @@ public /*final*/ class Flow {
     }
 
     @NonNull
-    public ServiceProvider getServices(@NonNull Context context) {
-        return ServiceProvider.get(context);
+    public ServiceProvider getServices() {
+        return serviceProvider;
     }
 
     @NonNull
-    public KeyManager getStates(@NonNull Context context) {
-        return KeyManager.get(context);
+    public KeyManager getStates() {
+        return keyManager;
     }
 
     /**
