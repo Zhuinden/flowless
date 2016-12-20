@@ -34,7 +34,7 @@ import static java.util.Collections.unmodifiableList;
 /**
  * Describes the history of a {@link Flow} at a specific point in time.
  */
-public final class History
+public /*final*/ class History
         implements Iterable<Object> {
 
     private final List<Object> history;
@@ -109,7 +109,7 @@ public final class History
         return Arrays.deepToString(history.toArray());
     }
 
-    public static final class Builder {
+    public static /*final*/ class Builder {
         private final List<Object> history;
 
         private Builder(Collection<Object> history) {

@@ -14,7 +14,7 @@
 
 package flowless;
 
-final class Preconditions {
+/*final*/ class Preconditions {
     private Preconditions() {
         throw new AssertionError();
     }

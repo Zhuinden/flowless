@@ -20,7 +20,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public final class Traversal {
+public /*final*/  class Traversal {
     /**
      * May be null if this is a traversal into the start state.
      */
@@ -30,6 +30,7 @@ public final class Traversal {
     public final History destination;
     @NonNull
     public final Direction direction;
+
     private final KeyManager keyManager;
 
     Traversal(@Nullable History from, @NonNull History to, @NonNull Direction direction, KeyManager keyManager) {

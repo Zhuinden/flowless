@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha1.22 *(2016-12-20)*
+---------------------------------------------
+* Added `ServiceProvider.get(Context)` and `KeyManager.get(Context)` methods to use instead of `flow.getServices()` and `flow.getStates()`
+* Change: `Flow`, `KeyManager`, `ServiceProvider` and `ActivityUtils` has public `SERVICE_TAG` constant that is used for `Context.getSystemService()`
+* Added public `KeyContextWrapper.KEY_SERVICE_TAG` constant which is used for obtaining key from `Context.getSystemService()`
+* Change: `final` classes are now marked as `/* final */` to be open for mocks (no point in subclassing them)
+
+
 Flowless Version 1.0-alpha1.21 *(2016-12-18)*
 ---------------------------------------------
 * BREAKING CHANGE: `ForceBundler.saveToBundle` finally no longer takes `Activity` parameter

@@ -10,7 +10,6 @@ _"It's better if you're good at one thing than if you're bad at many things just
 
 This used to be a fork of Flow 1.0-alpha by Square, with the "resource management" aspect removed.
 Now it provides more than that, both in terms of bug fixes and some additional features (specifically the dispatcher lifecycle integration) alike.
-Also, you can't file issues on forks, which makes it not palatable on the long run.
 
 ## Features
 
@@ -45,7 +44,7 @@ In order to use Flow(less), you need to add jitpack to your project root gradle:
 
 and add the compile dependency to your module level gradle.
 
-    compile 'com.github.Zhuinden:flowless:1.0-alpha1.21'
+    compile 'com.github.Zhuinden:flowless:1.0-alpha1.22'
 
 
 Then, install Flow into your Activity:
@@ -294,7 +293,7 @@ The view is created based on the key:
 public abstract class FirstKey
         implements LayoutKey {
     public static FirstKey create() {
-        return new AutoValue_FirstKey(R.layout.path_first, FlowAnimation.NONE);
+        return new AutoValue_FirstKey(R.layout.path_first);
     }
 }
 ```

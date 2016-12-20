@@ -22,9 +22,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public final class Installer {
-
-
+public /*final*/ class Installer {
     private final Context baseContext;
     private final Activity activity;
     private KeyParceler parceler;

@@ -12,8 +12,7 @@ public class ForceBundler {
         if(activeViews != null && activeViews.length > 0) {
             for(View view : activeViews) {
                 if(view != null) {
-                    Flow flow = Flow.get(view);
-                    KeyManager keyManager = flow.getStates();
+                    KeyManager keyManager = KeyManager.get(view);
                     State state = keyManager.getState(Flow.getKey(view));
                     state.save(view);
                     if(view instanceof Bundleable) {
@@ -28,8 +27,7 @@ public class ForceBundler {
         if(activeViews != null && activeViews.length > 0) {
             for(View view : activeViews) {
                 if(view != null) {
-                    Flow flow = Flow.get(view);
-                    KeyManager keyManager = flow.getStates();
+                    KeyManager keyManager = KeyManager.get(view);
                     State state = keyManager.getState(Flow.getKey(view));
                     if(state != null) {
                         state.restore(view);

@@ -15,6 +15,17 @@ import static flowless.Preconditions.checkNotNull;
  * Created by Zhuinden on 2016.08.29..
  */
 public class ServiceProvider {
+    public static final String SERVICE_TAG = "flowless.SERVICE_PROVIDER";
+
+    public static ServiceProvider get(@NonNull Context context) {
+        // noinspection ResourceType
+        return (ServiceProvider) context.getSystemService(SERVICE_TAG);
+    }
+
+    public static ServiceProvider get(@NonNull View view) {
+        return get(view.getContext());
+    }
+
     public static class NoServiceException
             extends RuntimeException {
         private Object key;
@@ -35,7 +46,7 @@ public class ServiceProvider {
         }
     }
 
-    protected Map<Object, Map<String, Object>> services;
+    Map<Object, Map<String, Object>> services;
 
     public ServiceProvider() {
         services = new LinkedHashMap<>();

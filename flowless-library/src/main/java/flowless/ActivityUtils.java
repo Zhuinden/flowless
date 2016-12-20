@@ -8,6 +8,8 @@ import android.content.ContextWrapper;
  * Created by Zhuinden on 2016.05.26..
  */
 public class ActivityUtils {
+    public static final String ACTIVITY_SERVICE_TAG = "flowless.ACTIVITY";
+
     public static Activity getActivity(Context context) {
         if(context instanceof Activity) {
             return (Activity) context;

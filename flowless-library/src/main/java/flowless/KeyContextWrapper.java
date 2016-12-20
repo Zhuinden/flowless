@@ -7,16 +7,16 @@ import android.content.Context;
  */
 
 public interface KeyContextWrapper {
-    static final String KEY_CONTEXT_WRAPPER = "flow_services_context_wrapper";
+    public static final String KEY_SERVICE_TAG = "flowless.KEY";
 
     public class Methods {
         private Methods() {
         }
 
-        public static KeyContextWrapper get(Context context) {
+        @SuppressWarnings("unchecked")
+        public static <T> T getKey(Context context) {
             //noinspection ResourceType
-            @SuppressWarnings("WrongConstant") KeyContextWrapper wrapper = (KeyContextWrapper) context.getSystemService(KEY_CONTEXT_WRAPPER);
-            return wrapper;
+            return (T) context.getSystemService(KEY_SERVICE_TAG);
         }
     }
 

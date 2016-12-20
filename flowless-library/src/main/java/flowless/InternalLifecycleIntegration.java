@@ -35,7 +35,7 @@ import static flowless.Preconditions.checkNotNull;
 /**
  * Pay no attention to this class. It's only public because it has to be.
  */
-public final class InternalLifecycleIntegration
+public /*final*/ class InternalLifecycleIntegration
         extends Fragment {
     static final String INTENT_KEY = "Flow_history";
     static final String TAG = "flow-lifecycle-integration";

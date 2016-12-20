@@ -20,7 +20,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.view.LayoutInflater;
 
-final class FlowContextWrapper
+/*final*/ class FlowContextWrapper
         extends ContextWrapper
         implements KeyContextWrapper {
     final Object key;
@@ -34,8 +34,8 @@ final class FlowContextWrapper
 
     @Override
     public Object getSystemService(String name) {
-        if(KEY_CONTEXT_WRAPPER.equals(name)) {
-            return this;
+        if(KEY_SERVICE_TAG.equals(name)) {
+            return key;
         }
         if(LAYOUT_INFLATER_SERVICE.equals(name)) {
             if(inflater == null) {

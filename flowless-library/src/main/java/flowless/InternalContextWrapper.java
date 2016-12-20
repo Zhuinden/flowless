@@ -25,14 +25,9 @@ import android.content.IntentSender;
 import android.content.res.Resources;
 import android.os.Bundle;
 
-final class InternalContextWrapper
+/*final*/ class InternalContextWrapper
         extends ContextWrapper
         implements KeyContextWrapper {
-    static final String FLOW_SERVICE = "flow.InternalContextWrapper.FLOW_SERVICE";
-    static final String CONTEXT_MANAGER_SERVICE = "flow.InternalContextWrapper.CONTEXT_MANAGER_SERVICE";
-    static final String ACTIVITY = "flow.InternalContextWrapper.ACTIVITY_SERVICE";
-    static final String SERVICE_PROVIDER = "flow.InternalContextWrapper.SERVICE_PROVIDER";
-
     private final Activity activity;
     private Flow flow;
     private KeyManager keyManager;
@@ -56,29 +51,23 @@ final class InternalContextWrapper
         return flow;
     }
 
-    static Flow getFlow(Context context) {
-        //noinspection ResourceType
-        @SuppressWarnings("WrongConstant") Flow systemService = (Flow) context.getSystemService(FLOW_SERVICE);
-        return systemService;
-    }
-
     static Activity getActivity(Context context) {
         //noinspection ResourceType
-        Activity activity = (Activity) context.getSystemService(ACTIVITY);
+        Activity activity = (Activity) context.getSystemService(ActivityUtils.ACTIVITY_SERVICE_TAG);
         return activity;
     }
 
     @Override
     public Object getSystemService(String name) {
-        if(KEY_CONTEXT_WRAPPER.equals(name)) {
-            return this;
-        } else if(FLOW_SERVICE.equals(name)) {
+        if(KEY_SERVICE_TAG.equals(name)) {
+            return getKey();
+        } else if(Flow.SERVICE_TAG.equals(name)) {
             return findFlow();
-        } else if(CONTEXT_MANAGER_SERVICE.equals(name)) {
+        } else if(KeyManager.SERVICE_TAG.equals(name)) {
             return keyManager;
-        } else if(SERVICE_PROVIDER.equals(name)) {
+        } else if(ServiceProvider.SERVICE_TAG.equals(name)) {
             return serviceProvider;
-        } else if(ACTIVITY.equals(name)) {
+        } else if(ActivityUtils.ACTIVITY_SERVICE_TAG.equals(name)) {
             return activity;
         } else {
             return super.getSystemService(name);

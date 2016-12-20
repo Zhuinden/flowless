@@ -33,7 +33,9 @@ import static flowless.Preconditions.checkNotNull;
 /**
  * Holds the current truth, the history of screens, and exposes operations to change it.
  */
-public final class Flow {
+public /*final*/ class Flow {
+    public static final String SERVICE_TAG = "flowless.FLOW_SERVICE";
+
     public static final KeyParceler DEFAULT_KEY_PARCELER = new KeyParceler() { //
         @Override
         @NonNull
@@ -55,7 +57,8 @@ public final class Flow {
 
     @NonNull
     public static Flow get(@NonNull Context context) {
-        Flow flow = InternalContextWrapper.getFlow(context);
+        // noinspection ResourceType
+        Flow flow = (Flow) context.getSystemService(Flow.SERVICE_TAG);
         if(null == flow) {
             throw new IllegalStateException("Context was not wrapped with flow. " + "Make sure attachBaseContext was overridden in your main activity");
         }
@@ -63,13 +66,13 @@ public final class Flow {
     }
 
     @NonNull
-    public ServiceProvider getServices() {
-        return serviceProvider;
+    public ServiceProvider getServices(@NonNull Context context) {
+        return ServiceProvider.get(context);
     }
 
     @NonNull
-    public KeyManager getStates() {
-        return keyManager;
+    public KeyManager getStates(@NonNull Context context) {
+        return KeyManager.get(context);
     }
 
     /**
@@ -77,11 +80,7 @@ public final class Flow {
      */
     @Nullable
     public static <T> T getKey(@NonNull Context context) {
-        final KeyContextWrapper wrapper = KeyContextWrapper.Methods.get(context);
-        if(wrapper == null) {
-            return null;
-        }
-        return wrapper.getKey();
+        return KeyContextWrapper.Methods.getKey(context);
     }
 
     /**
@@ -127,6 +126,7 @@ public final class Flow {
     private History history;
     private Dispatcher dispatcher;
     private PendingTraversal pendingTraversal;
+
     final KeyManager keyManager;
     final ServiceProvider serviceProvider;
 

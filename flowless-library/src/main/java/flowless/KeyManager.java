@@ -16,6 +16,10 @@
 
 package flowless;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.view.View;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -26,10 +30,21 @@ import java.util.Map;
 import java.util.Set;
 
 public class KeyManager {
+    public static final String SERVICE_TAG = "flowless.KEY_MANAGER";
+
+    public static KeyManager get(@NonNull Context context) {
+        //noinspection ResourceType
+        return (KeyManager) context.getSystemService(SERVICE_TAG);
+    }
+
+    public static KeyManager get(@NonNull View view) {
+        return get(view.getContext());
+    }
+
     static final String GLOBAL_KEYS = "GLOBAL_KEYS";
     static final String HISTORY_KEYS = "HISTORY_KEYS";
 
-    private final Map<Object, State> states = new LinkedHashMap<>();
+    /* private */ final Map<Object, State> states = new LinkedHashMap<>();
     final Set<Object> globalKeys;
 
     KeyManager() {
