@@ -317,14 +317,14 @@ And it's inflated based on the following XML:
 
 
 ### Managing resources (optional)
-You can manage resources shared through your context manually using the `ServiceProvider`, which you can obtain through `flow.getServices()`.
+You can manage resources shared through your context manually using the `ServiceProvider`, which you can obtain through `ServiceProvider.get()`.
 
 This way, you can bind services you need when you initialize your View in its constructor (before `onFinishInflate()` is called) or before it's inflated in the Dispatcher itself, while also sharing them to additional views that belong to the same Context.
 
 Here is a rather barebones implementation that creates services for elements that are currently within the history of keys.
 
 ``` java
-ServiceProvider serviceProvider = Flow.get(newContext).getServices();
+ServiceProvider serviceProvider = ServiceProvider.get(newContext);
 
 // destroyNotIn()
 Iterator<Object> aElements = traversal.origin != null ? traversal.origin.reverseIterator() : Collections.emptyList().iterator();
@@ -360,7 +360,7 @@ public class DaggerService {
     @SuppressWarnings("unchecked")
     public static <T> T getComponent(Context context) {
         //noinspection ResourceType
-        return (T) Flow.get(context).getServices().getService(Flow.getKey(context), TAG);
+        return (T) ServiceProvider.get(context).getService(Flow.getKey(context), TAG);
     }
 }
 ```
