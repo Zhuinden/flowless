@@ -30,12 +30,14 @@ import android.os.Bundle;
         implements KeyContextWrapper {
     private final Activity activity;
     private Flow flow;
+    private Object globalKey;
 
     private static final String FLOW_NOT_YET_INITIALIZED = "Flow instance does not exist before `onPostCreate()`";
 
-    InternalContextWrapper(Context baseContext, Activity activity) {
+    InternalContextWrapper(Context baseContext, Activity activity, Object globalKey) {
         super(baseContext);
         this.activity = activity;
+        this.globalKey = globalKey;
     }
 
     private Flow findFlow() {
@@ -122,17 +124,7 @@ import android.os.Bundle;
 
     @Override
     public <T> T getKey() {
-        Flow flow = findFlow();
-        if(flow != null) {
-            KeyManager keyManager = flow.getStates();
-            if(!keyManager.globalKeys.isEmpty()) {
-                // noinspection unchecked
-                return (T) keyManager.globalKeys.iterator().next();
-            } else {
-                return null;
-            }
-        } else {
-            throw new IllegalStateException(FLOW_NOT_YET_INITIALIZED);
-        }
+        // noinspection unchecked
+        return (T) globalKey;
     }
 }

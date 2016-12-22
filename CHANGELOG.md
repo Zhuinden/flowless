@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha1.24 *(????-??-??)*
+---------------------------------------------
+* Change: `InternalContextWrapper` should be able to return global key even if Flow is not initialized
+
 Flowless Version 1.0-alpha1.23 *(2016-12-20)*
 ---------------------------------------------
 * CRITICAL FIX: Regression of 1.19 - Internal changes that allowed `ServiceProvider` and `Flow` to exist during `onCreate()`. They exist in `dispatch()` and from `onPostCreate()`.

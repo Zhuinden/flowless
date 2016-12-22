@@ -80,6 +80,6 @@ public /*final*/ class Installer {
         final ServiceProvider serviceProvider = new ServiceProvider();
         InternalLifecycleIntegration.install(app, activity, parceler, defaultHistory, dispatcher, serviceProvider, keyManager);
 
-        return new InternalContextWrapper(baseContext, activity);
+        return new InternalContextWrapper(baseContext, activity, globalKey);
     }
 }
