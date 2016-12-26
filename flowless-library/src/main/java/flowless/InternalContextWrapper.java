@@ -47,6 +47,9 @@ import android.os.Bundle;
                 throw new IllegalStateException(FLOW_NOT_YET_INITIALIZED);
             }
             flow = internalLifecycleIntegration.flow;
+            if(flow == null) {
+                throw new IllegalStateException(FLOW_NOT_YET_INITIALIZED);
+            }
         }
         return flow;
     }

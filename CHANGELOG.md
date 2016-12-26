@@ -1,8 +1,9 @@
 Change Log
 ==========
 
-Flowless Version 1.0-alpha1.24 *(????-??-??)*
+Flowless Version 1.0-alpha1.24 *(2016-12-26)*
 ---------------------------------------------
+* Fix: `context.getSystemService()` integration should throw IllegalStateException if Flow is not found after process death, instead of crashing with NPE
 * Change: `InternalContextWrapper` should be able to return global key even if Flow is not initialized
 
 Flowless Version 1.0-alpha1.23 *(2016-12-20)*
