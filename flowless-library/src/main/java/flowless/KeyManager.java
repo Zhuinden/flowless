@@ -22,6 +22,7 @@ import android.view.View;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -43,9 +44,11 @@ public class KeyManager {
 
     static final String GLOBAL_KEYS = "GLOBAL_KEYS";
     static final String HISTORY_KEYS = "HISTORY_KEYS";
+    static final String REGISTERED_KEYS = "REGISTERED_KEYS";
 
     /* private */ final Map<Object, State> states = new LinkedHashMap<>();
     final Set<Object> globalKeys;
+    final Set<Object> registeredKeys = new HashSet<>();
 
     KeyManager() {
         this(null);
@@ -76,11 +79,20 @@ public class KeyManager {
         return state;
     }
 
+    public boolean registerKey(Object key) {
+        getState(key); // initialize state if does not exist
+        return registeredKeys.add(key);
+    }
+
+    public boolean unregisterKey(Object key) {
+        return registeredKeys.remove(key);
+    }
+
     void clearNonGlobalStatesExcept(List<Object> keep) {
         Iterator<Object> keys = states.keySet().iterator();
         while(keys.hasNext()) {
             final Object key = keys.next();
-            if(!globalKeys.contains(key) && !keep.contains(key)) {
+            if(!globalKeys.contains(key) && !registeredKeys.contains(key) && !keep.contains(key)) {
                 keys.remove();
             }
         }

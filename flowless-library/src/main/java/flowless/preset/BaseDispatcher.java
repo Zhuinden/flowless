@@ -1,6 +1,5 @@
 package flowless.preset;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
@@ -32,10 +31,7 @@ public abstract class BaseDispatcher
     protected Context baseContext;
     protected final RootHolder rootHolder;
 
-    protected final Activity activity;
-
-    public BaseDispatcher(Activity activity) {
-        this.activity = activity; // required by ForceBundler
+    public BaseDispatcher() {
         this.rootHolder = createRootHolder();
     }
 

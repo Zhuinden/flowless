@@ -1,25 +1,16 @@
 package com.zhuinden.flowtransitions;
 
 import android.content.Context;
-import android.os.AsyncTask;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-
-import com.transitionseverywhere.AutoTransition;
-import com.transitionseverywhere.Scene;
-import com.transitionseverywhere.TransitionManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import flowless.Flow;
-import flowless.Installer;
 
 public class MainActivity
         extends AppCompatActivity {
@@ -32,7 +23,7 @@ public class MainActivity
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        transitionDispatcher = new TransitionDispatcher(this);
+        transitionDispatcher = new TransitionDispatcher();
         newBase = Flow.configure(newBase, this)
                 .defaultKey(SceneMainDefaultKey.create())
                 .dispatcher(transitionDispatcher)
@@ -47,6 +38,32 @@ public class MainActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         transitionDispatcher.getRootHolder().setRoot(root);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        transitionDispatcher.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        transitionDispatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        transitionDispatcher.preSaveViewState();
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(transitionDispatcher.onBackPressed()) {
+            return;
+        }
+        super.onBackPressed();
     }
 }
 

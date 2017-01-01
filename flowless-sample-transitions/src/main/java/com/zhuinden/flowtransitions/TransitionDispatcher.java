@@ -1,12 +1,7 @@
 package com.zhuinden.flowtransitions;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +11,9 @@ import com.transitionseverywhere.TransitionManager;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import flowless.Direction;
-import flowless.Dispatcher;
-import flowless.Flow;
-import flowless.ForceBundler;
 import flowless.Traversal;
 import flowless.TraversalCallback;
 import flowless.preset.DispatcherUtils;
-import flowless.preset.FlowContainerLifecycleListener;
 import flowless.preset.SingleRootDispatcher;
 
 /**
@@ -31,10 +21,6 @@ import flowless.preset.SingleRootDispatcher;
  */
 
 public class TransitionDispatcher extends SingleRootDispatcher {
-    public TransitionDispatcher(Activity activity) {
-        super(activity);
-    }
-
     @Override
     public void dispatch(@NonNull Traversal traversal, @NonNull TraversalCallback callback) {
         if(DispatcherUtils.isPreviousKeySameAsNewKey(traversal.origin, traversal.destination)) { //short circuit on same key

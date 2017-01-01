@@ -51,8 +51,10 @@ public class OrientationSampleDispatcher
         }
     }
 
+    protected final Activity activity;
+
     public OrientationSampleDispatcher(Activity activity) {
-        super(activity);
+        this.activity = activity;
     }
 
     @Override

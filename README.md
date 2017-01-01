@@ -44,7 +44,7 @@ In order to use Flow(less), you need to add jitpack to your project root gradle:
 
 and add the compile dependency to your module level gradle.
 
-    compile 'com.github.Zhuinden:flowless:1.0-alpha1.24'
+    compile 'com.github.Zhuinden:flowless:1.0-alpha1.25'
 
 
 Then, install Flow into your Activity:
@@ -58,7 +58,7 @@ public class MainActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        flowDispatcher = new TransitionDispatcher(this);
+        flowDispatcher = new TransitionDispatcher();
         newBase = Flow.configure(newBase, this) //
                 .defaultKey(FirstKey.create()) //
                 .dispatcher(flowDispatcher) //
@@ -199,7 +199,7 @@ Android is a hostile environment. One of its greatest challenges is that your Ac
 
 You [supply the serialization](https://github.com/Zhuinden/flowless/blob/master/flowless-library/src/main/java/flowless/KeyParceler.java) for your keys, and Flow does the rest. The default parceler uses Parcelable objects. Flow automatically saves and restores your History (including any state you've saved), taking care of all of the Android lifecycle events so you don't have to worry about them.
 
-**Note:** If you use the `ContainerDispatcherRoot`, you must call `ForceBundler.saveToBundle(activity, view)` manually in the `preSaveViewState()` method on the child you wish to persist in your container, because this cannot be handled automatically.
+**Note:** If you use the `ContainerDispatcherRoot`, you must call `ForceBundler.saveToBundle(view)` manually in the `preSaveViewState()` method on the child you wish to persist in your container, because this cannot be handled automatically.
 
 ## Pre-set dispatchers for common use-cases
 

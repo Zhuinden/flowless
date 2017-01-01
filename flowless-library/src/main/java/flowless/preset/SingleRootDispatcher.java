@@ -1,6 +1,5 @@
 package flowless.preset;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.CheckResult;
@@ -121,9 +120,5 @@ public abstract class SingleRootDispatcher
         if(hasActiveView()) {
             FlowLifecycleProvider.onRequestPermissionsResult(rootHolder.root.getChildAt(0), requestCode, permissions, grantResults);
         }
-    }
-
-    public SingleRootDispatcher(Activity activity) {
-        super(activity);
     }
 }

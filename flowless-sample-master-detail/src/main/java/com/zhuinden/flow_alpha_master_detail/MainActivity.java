@@ -24,7 +24,7 @@ public class MainActivity
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        flowDispatcher = new ContainerRootDispatcher(this);
+        flowDispatcher = new ContainerRootDispatcher();
         newBase = Flow.configure(newBase, this) //
                 .defaultKey(FirstKey.create()) //
                 .dispatcher(flowDispatcher) //

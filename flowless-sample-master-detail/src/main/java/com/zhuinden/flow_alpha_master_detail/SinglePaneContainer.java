@@ -11,7 +11,6 @@ import android.widget.FrameLayout;
 
 import com.zhuinden.flow_alpha_master_detail.extracted.ExampleDispatcher;
 
-import flowless.ActivityUtils;
 import flowless.Dispatcher;
 import flowless.Traversal;
 import flowless.TraversalCallback;
@@ -48,7 +47,7 @@ public class SinglePaneContainer
     SingleRootDispatcher singleRootDispatcher;
 
     private void init() {
-        singleRootDispatcher = new ExampleDispatcher(ActivityUtils.getActivity(getContext()));
+        singleRootDispatcher = new ExampleDispatcher();
         singleRootDispatcher.getRootHolder().setRoot(this);
         singleRootDispatcher.setBaseContext(((ContextWrapper)getContext()).getBaseContext());
     }

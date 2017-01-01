@@ -2,7 +2,6 @@ package com.zhuinden.flowless_viewpager_example.extracted;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +17,6 @@ import flowless.preset.SingleRootDispatcher;
  */
 
 public class ExampleDispatcher extends SingleRootDispatcher {
-    public ExampleDispatcher(Activity activity) {
-        super(activity);
-    }
-
     @Override
     public void dispatch(@NonNull Traversal traversal, final @NonNull TraversalCallback callback) {
         final ViewGroup root = rootHolder.getRoot();

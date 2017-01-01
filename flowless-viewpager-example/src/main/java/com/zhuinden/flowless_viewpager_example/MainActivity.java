@@ -23,7 +23,7 @@ public class MainActivity
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        flowDispatcher = new ExampleDispatcher(this);
+        flowDispatcher = new ExampleDispatcher();
         newBase = Flow.configure(newBase, this) //
                 .defaultKey(FirstKey.create()) //
                 .dispatcher(flowDispatcher) //

@@ -2,7 +2,6 @@ package com.zhuinden.flowless_dispatcher_sample.extracted;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +10,13 @@ import flowless.Direction;
 import flowless.Traversal;
 import flowless.TraversalCallback;
 import flowless.ViewUtils;
-import flowless.preset.*;
+import flowless.preset.SingleRootDispatcher;
 
 /**
  * Created by Zhuinden on 2016.12.03..
  */
 
 public class ExampleDispatcher extends SingleRootDispatcher {
-    public ExampleDispatcher(Activity activity) {
-        super(activity);
-    }
 
     @Override
     public void dispatch(@NonNull Traversal traversal, final @NonNull TraversalCallback callback) {

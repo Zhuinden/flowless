@@ -1,6 +1,5 @@
 package flowless.preset;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.CheckResult;
@@ -18,10 +17,6 @@ import flowless.TraversalCallback;
 public class ContainerRootDispatcher
         extends BaseDispatcher
         implements FlowContainerLifecycleListener {
-    public ContainerRootDispatcher(Activity activity) {
-        super(activity);
-    }
-
     private boolean hasActiveView() {
         return rootHolder != null && rootHolder.root != null;
     }

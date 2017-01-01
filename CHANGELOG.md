@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Flowless Version 1.0-alpha1.25 *(2017-01-01)*
+---------------------------------------------
+* BREAKING CHANGE: `BaseDispatcher` (and therefore `SingleRootDispatcher` and `ContainerRootDispatcher`) no longer take Activity constructor parameter
+* Added: `KeyManager.registerKey()` and `KeyManager.unregisterKey()` to allow registration of arbitrary key. The state bound to registered keys also gets retained.
+
 Flowless Version 1.0-alpha1.24 *(2016-12-26)*
 ---------------------------------------------
 * Fix: `context.getSystemService()` integration should throw IllegalStateException if Flow is not found after process death, instead of crashing with NPE
