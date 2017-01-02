@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhuinden.examplegithubclient.presentation.paths.repositorydetails.RepositoryDetailsView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/repository_details_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_fullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_owner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details__private"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_htmlUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_fork"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_forksUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_keysUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_collaboratorsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_teamsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_hooksUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_issueEventsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_eventsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_assigneesUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_branchesUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_tagsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_blobsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_gitTagsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_gitRefsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_treesUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_statusesUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_languagesUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_stargazersUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_contributorsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_subscribersUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_subscriptionUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_commitsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_gitCommitsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_commentsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_issueCommentUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_contentsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_compareUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_mergesUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_archiveUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_downloadsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_issuesUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_pullsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_milestonesUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_notificationsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_labelsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_releasesUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_deploymentsUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_createdAt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_updatedAt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_pushedAt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_gitUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_sshUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_cloneUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_svnUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_homepage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_stargazersCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_watchersCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_hasIssues"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_hasDownloads"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_hasWiki"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_hasPages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_forksCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_mirrorUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_openIssuesCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_forks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_openIssues"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_watchers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:id="@+id/repository_details_defaultBranch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:textSize="@dimen/_14sdp"/>
+        </LinearLayout>
+    </ScrollView>
+</com.zhuinden.examplegithubclient.presentation.paths.repositorydetails.RepositoryDetailsView>

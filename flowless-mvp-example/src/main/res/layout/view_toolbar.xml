@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/toolbar"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@color/primary"
+                android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/toolbar_drawer_toggle"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentLeft="true"
+        android:clickable="true">
+
+        <com.zhuinden.examplegithubclient.util.GlideImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_8sdp"
+            app:image_resource="@drawable/icon_hamburger"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/toolbar_go_previous"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentLeft="true"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <com.zhuinden.examplegithubclient.util.GlideImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_8sdp"
+            app:image_resource="@drawable/icon_arrow_back"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/toolbar_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:textColor="@color/icons"
+        android:textSize="@dimen/_16sdp"/>
+</RelativeLayout>

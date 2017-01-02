@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhuinden.examplegithubclient.presentation.views.leftdrawer.LeftDrawerView xmlns:android="http://schemas.android.com/apk/res/android"
+                                                                               android:layout_width="@dimen/_200sdp"
+                                                                               android:layout_height="match_parent"
+                                                                               android:clickable="true"
+                                                                               android:layout_gravity="left">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/left_drawer_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/primary_dark"/>
+</com.zhuinden.examplegithubclient.presentation.views.leftdrawer.LeftDrawerView>

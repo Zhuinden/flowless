@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Zh-Github</string>
+    <string name="title_repositories">REPOSITORIES</string>
+    <string name="title_about">ABOUT</string>
+    <string name="title_logout">LOGOUT</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="title_login">LOGIN</string>
+    <string name="title_repository_details">REPO DETAILS</string>
+    <string name="about_text">This project is meant to serve as an example of using Flow.\n\n\n\nCreated by Zhuinden</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="text_login">LOGIN</string>
+    <string name="failed_to_login">Failed to log in.</string>
+    <string name="please_wait">Please wait&#8230;</string>
+    <string name="loading">Loading&#8230;</string>
+</resources>
