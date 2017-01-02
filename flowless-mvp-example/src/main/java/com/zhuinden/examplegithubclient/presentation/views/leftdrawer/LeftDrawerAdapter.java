@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.zhuinden.examplegithubclient.R;
 import com.zhuinden.examplegithubclient.presentation.activity.main.MainComponent;
-import com.zhuinden.examplegithubclient.presentation.activity.main.MainKey;
 import com.zhuinden.examplegithubclient.presentation.activity.main.MainPresenter;
 import com.zhuinden.examplegithubclient.util.DaggerService;
 
@@ -19,7 +18,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import flowless.Flow;
-import flowless.ServiceProvider;
 
 /**
  * Created by Zhuinden on 2016.12.10..
@@ -57,8 +55,7 @@ public class LeftDrawerAdapter
         @OnClick(R.id.left_drawer_item)
         public void onClickDrawerItem(View view) {
             Object newKey = leftDrawerItem.getKeyCreator().createKey();
-            MainComponent component = ServiceProvider.get(context)
-                    .getService(MainKey.KEY, DaggerService.TAG);
+            MainComponent component = DaggerService.getGlobalComponent(context);
             MainPresenter mainPresenter = component.mainPresenter();
             mainPresenter.goToKey(Flow.get(view), newKey);
         }
