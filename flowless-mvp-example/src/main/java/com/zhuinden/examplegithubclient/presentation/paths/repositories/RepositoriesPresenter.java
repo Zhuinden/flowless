@@ -1,5 +1,8 @@
 package com.zhuinden.examplegithubclient.presentation.paths.repositories;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
 import com.zhuinden.examplegithubclient.application.BoltsExecutors;
 import com.zhuinden.examplegithubclient.application.injection.KeyScope;
 import com.zhuinden.examplegithubclient.data.model.RepositoryDataSource;
@@ -7,11 +10,14 @@ import com.zhuinden.examplegithubclient.data.repository.RepositoryRepository;
 import com.zhuinden.examplegithubclient.domain.data.response.repositories.Repository;
 import com.zhuinden.examplegithubclient.domain.interactor.GetRepositoriesInteractor;
 import com.zhuinden.examplegithubclient.util.BasePresenter;
+import com.zhuinden.examplegithubclient.util.BundleFactory;
 import com.zhuinden.examplegithubclient.util.Presenter;
 
 import java.util.List;
 
 import javax.inject.Inject;
+
+import flowless.Bundleable;
 
 /**
  * Created by Zhuinden on 2016.12.18..
@@ -19,7 +25,8 @@ import javax.inject.Inject;
 
 @KeyScope(RepositoriesKey.class)
 public class RepositoriesPresenter
-        extends BasePresenter<RepositoriesPresenter.ViewContract> {
+        extends BasePresenter<RepositoriesPresenter.ViewContract>
+        implements Bundleable {
     static final String REPO_NAME = "square";
 
     @Inject
@@ -108,6 +115,22 @@ public class RepositoriesPresenter
     public void downloadMore() {
         if(!isDownloading) {
             downloadPage();
+        }
+    }
+
+    @Override
+    public Bundle toBundle() {
+        Bundle bundle = BundleFactory.create();
+        bundle.putInt("currentPage", currentPage);
+        bundle.putBoolean("downloadedAll", downloadedAll);
+        return bundle;
+    }
+
+    @Override
+    public void fromBundle(@Nullable Bundle bundle) {
+        if(bundle != null) {
+            currentPage = bundle.getInt("currentPage");
+            downloadedAll = bundle.getBoolean("downloadedAll");
         }
     }
 }

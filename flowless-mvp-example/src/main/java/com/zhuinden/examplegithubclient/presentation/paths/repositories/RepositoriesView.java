@@ -2,6 +2,8 @@ package com.zhuinden.examplegithubclient.presentation.paths.repositories;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -10,6 +12,7 @@ import android.widget.RelativeLayout;
 import com.zhuinden.examplegithubclient.R;
 import com.zhuinden.examplegithubclient.domain.data.response.repositories.Repository;
 import com.zhuinden.examplegithubclient.presentation.paths.repositorydetails.RepositoryDetailsKey;
+import com.zhuinden.examplegithubclient.util.BundleFactory;
 import com.zhuinden.examplegithubclient.util.DaggerService;
 
 import java.util.List;
@@ -18,6 +21,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import flowless.Bundleable;
 import flowless.Flow;
 import flowless.preset.FlowLifecycles;
 
@@ -27,7 +31,7 @@ import flowless.preset.FlowLifecycles;
 
 public class RepositoriesView
         extends RelativeLayout
-        implements FlowLifecycles.ViewLifecycleListener, RepositoriesPresenter.ViewContract {
+        implements FlowLifecycles.ViewLifecycleListener, RepositoriesPresenter.ViewContract, Bundleable {
     public RepositoriesView(Context context) {
         super(context);
         init();
@@ -105,5 +109,19 @@ public class RepositoriesView
     @Override
     public void openRepository(String url) {
         Flow.get(this).set(RepositoryDetailsKey.create(Flow.getKey(this), url));
+    }
+
+    @Override
+    public Bundle toBundle() {
+        Bundle bundle = BundleFactory.create();
+        bundle.putBundle("PRESENTER_STATE", repositoriesPresenter.toBundle());
+        return bundle;
+    }
+
+    @Override
+    public void fromBundle(@Nullable Bundle bundle) {
+        if(bundle != null) {
+            repositoriesPresenter.fromBundle(bundle.getBundle("PRESENTER_STATE"));
+        }
     }
 }
