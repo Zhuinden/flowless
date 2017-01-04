@@ -79,6 +79,10 @@ public class KeyManager {
         return state;
     }
 
+    public boolean isKeyRegistered(Object key) {
+        return registeredKeys.contains(key);
+    }
+
     public boolean registerKey(Object key) {
         getState(key); // initialize state if does not exist
         return registeredKeys.add(key);
