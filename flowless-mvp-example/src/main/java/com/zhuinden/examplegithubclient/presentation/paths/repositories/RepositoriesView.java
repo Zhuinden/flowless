@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
 import com.zhuinden.examplegithubclient.R;
-import com.zhuinden.examplegithubclient.domain.data.response.repositories.Repository;
+import com.zhuinden.examplegithubclient.domain.data.response.repositories.GithubRepo;
 import com.zhuinden.examplegithubclient.presentation.paths.repositorydetails.RepositoryDetailsKey;
 import com.zhuinden.examplegithubclient.util.BundleFactory;
 import com.zhuinden.examplegithubclient.util.DaggerService;
@@ -102,7 +102,7 @@ public class RepositoriesView
     }
 
     @Override
-    public void updateRepositories(List<Repository> repositories) {
+    public void updateRepositories(List<GithubRepo> repositories) {
         repositoriesAdapter.updateRepositories();
     }
 

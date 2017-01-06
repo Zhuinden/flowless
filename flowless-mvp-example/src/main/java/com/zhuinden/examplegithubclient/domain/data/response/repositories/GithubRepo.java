@@ -5,7 +5,7 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 import com.zhuinden.examplegithubclient.domain.data.response.Owner;
 
 @JsonObject
-public class Repository {
+public class GithubRepo {
     @JsonField(name = "id")
     private Integer id;
     @JsonField(name = "name")

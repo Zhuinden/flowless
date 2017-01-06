@@ -1,7 +1,7 @@
 package com.zhuinden.examplegithubclient.data.model;
 
 import com.zhuinden.examplegithubclient.application.injection.ActivityScope;
-import com.zhuinden.examplegithubclient.domain.data.response.repositories.Repository;
+import com.zhuinden.examplegithubclient.domain.data.response.repositories.GithubRepo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,15 +14,15 @@ import javax.inject.Inject;
  */
 @ActivityScope
 public class RepositoryDataSource
-        extends BaseDataSource<Repository> {
+        extends BaseDataSource<GithubRepo> {
     @Inject
     public RepositoryDataSource() {
     }
 
-    private List<Repository> repositories = Collections.synchronizedList(new ArrayList<>());
+    private List<GithubRepo> repositories = Collections.synchronizedList(new ArrayList<>());
 
     @Override
-    protected List<Repository> getData() {
+    protected List<GithubRepo> getData() {
         return repositories;
     }
 }

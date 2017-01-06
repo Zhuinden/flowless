@@ -1,6 +1,6 @@
 package com.zhuinden.examplegithubclient.domain.interactor;
 
-import com.zhuinden.examplegithubclient.domain.data.response.repositories.Repository;
+import com.zhuinden.examplegithubclient.domain.data.response.repositories.GithubRepo;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ import bolts.Task;
  */
 
 public interface GetRepositoriesInteractor {
-    Task<List<Repository>> getRepositories(String user, int page);
+    Task<List<GithubRepo>> getRepositories(String user, int page);
 }

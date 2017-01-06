@@ -1,7 +1,7 @@
 package com.zhuinden.examplegithubclient.domain.service.retrofit;
 
 import com.zhuinden.examplegithubclient.domain.data.response.organization.Organization;
-import com.zhuinden.examplegithubclient.domain.data.response.repositories.Repository;
+import com.zhuinden.examplegithubclient.domain.data.response.repositories.GithubRepo;
 
 import java.util.List;
 
@@ -19,5 +19,5 @@ public interface RetrofitGithubService {
     Task<List<Organization>> getOrganizations(@Path("user") String user);
 
     @GET("users/{user}/repos")
-    Task<List<Repository>> getRepositories(@Path("user") String user, @Query("page") int page);
+    Task<List<GithubRepo>> getRepositories(@Path("user") String user, @Query("page") int page);
 }

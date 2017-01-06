@@ -2,7 +2,7 @@ package com.zhuinden.examplegithubclient.domain.service.impl;
 
 import com.zhuinden.examplegithubclient.application.injection.ActivityScope;
 import com.zhuinden.examplegithubclient.domain.data.response.organization.Organization;
-import com.zhuinden.examplegithubclient.domain.data.response.repositories.Repository;
+import com.zhuinden.examplegithubclient.domain.data.response.repositories.GithubRepo;
 import com.zhuinden.examplegithubclient.domain.service.GithubService;
 import com.zhuinden.examplegithubclient.domain.service.retrofit.RetrofitGithubService;
 
@@ -31,7 +31,7 @@ public class GithubServiceImpl
     }
 
     @Override
-    public Task<List<Repository>> getRepositories(String user, int page) {
+    public Task<List<GithubRepo>> getRepositories(String user, int page) {
         return retrofitGithubService.getRepositories(user, page);
     }
 }

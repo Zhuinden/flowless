@@ -1,7 +1,7 @@
 package com.zhuinden.examplegithubclient.presentation.paths.repositorydetails;
 
 import com.zhuinden.examplegithubclient.application.injection.KeyScope;
-import com.zhuinden.examplegithubclient.domain.data.response.repositories.Repository;
+import com.zhuinden.examplegithubclient.domain.data.response.repositories.GithubRepo;
 import com.zhuinden.examplegithubclient.util.BasePresenter;
 import com.zhuinden.examplegithubclient.util.Presenter;
 
@@ -16,22 +16,22 @@ public class RepositoryDetailsPresenter
         extends BasePresenter<RepositoryDetailsPresenter.ViewContract> {
     public interface ViewContract
             extends Presenter.ViewContract {
-        Repository getSelectedRepository();
+        GithubRepo getSelectedGithubRepo();
 
-        void setupView(Repository repository);
+        void setupView(GithubRepo githubRepo);
     }
 
     @Inject
     public RepositoryDetailsPresenter() {
     }
 
-    Repository selectedRepository;
+    GithubRepo selectedGithubRepo;
 
     @Override
     protected void initializeView(ViewContract view) {
-        selectedRepository = view.getSelectedRepository();
-        if(selectedRepository != null) { // proper persistence would fix this across process death
-            view.setupView(selectedRepository);
+        selectedGithubRepo = view.getSelectedGithubRepo();
+        if(selectedGithubRepo != null) { // proper persistence would fix this across process death
+            view.setupView(selectedGithubRepo);
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.zhuinden.examplegithubclient.application.injection.modules;
 
-import com.zhuinden.examplegithubclient.data.repository.RepositoryRepository;
-import com.zhuinden.examplegithubclient.data.repository.impl.RepositoryRepositoryInMemoryImpl;
+import com.zhuinden.examplegithubclient.data.repository.GithubRepoRepository;
+import com.zhuinden.examplegithubclient.data.repository.impl.GithubRepoRepositoryInMemoryImpl;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,7 +13,7 @@ import dagger.Provides;
 @Module
 public class RepositoryModule {
     @Provides
-    RepositoryRepository repositoryRepository(RepositoryRepositoryInMemoryImpl repositoryRepositoryInMemory) {
+    GithubRepoRepository repositoryRepository(GithubRepoRepositoryInMemoryImpl repositoryRepositoryInMemory) {
         return repositoryRepositoryInMemory;
     }
 }

@@ -1,7 +1,7 @@
 package com.zhuinden.examplegithubclient.presentation.paths.repositories;
 
-import com.zhuinden.examplegithubclient.data.repository.RepositoryRepository;
-import com.zhuinden.examplegithubclient.domain.data.response.repositories.Repository;
+import com.zhuinden.examplegithubclient.data.repository.GithubRepoRepository;
+import com.zhuinden.examplegithubclient.domain.data.response.repositories.GithubRepo;
 import com.zhuinden.examplegithubclient.domain.interactor.GetRepositoriesInteractor;
 import com.zhuinden.examplegithubclient.util.BoltsConfig;
 import com.zhuinden.examplegithubclient.util.PresenterUtils;
@@ -37,7 +37,7 @@ public class RepositoriesPresenterTest {
     GetRepositoriesInteractor getRepositoriesInteractor;
 
     @Mock
-    RepositoryRepository repositoryRepository;
+    GithubRepoRepository githubRepoRepository;
 
     @Before
     public void init() {
@@ -70,8 +70,8 @@ public class RepositoriesPresenterTest {
         repositoriesPresenter.downloadedAll = false;
         repositoriesPresenter.currentPage = 1;
         repositoriesPresenter.getRepositoriesInteractor = getRepositoriesInteractor;
-        repositoriesPresenter.repositoryRepository = repositoryRepository;
-        Task<List<Repository>> task = Mockito.mock(Task.class);
+        repositoriesPresenter.githubRepoRepository = githubRepoRepository;
+        Task<List<GithubRepo>> task = Mockito.mock(Task.class);
         Mockito.when(getRepositoriesInteractor.getRepositories(RepositoriesPresenter.REPO_NAME, 1)).thenReturn(task);
 
 
@@ -87,15 +87,15 @@ public class RepositoriesPresenterTest {
     public void initializeViewWithData()
             throws Exception {
         // given
-        List<Repository> repositories = new ArrayList<Repository>() {{
-            add(new Repository());
+        List<GithubRepo> repositories = new ArrayList<GithubRepo>() {{
+            add(new GithubRepo());
         }};
         repositoriesPresenter.repositories = repositories;
         repositoriesPresenter.downloadedAll = true;
         repositoriesPresenter.isDownloading = false;
         repositoriesPresenter.currentPage = 2;
         repositoriesPresenter.getRepositoriesInteractor = getRepositoriesInteractor;
-        repositoriesPresenter.repositoryRepository = repositoryRepository;
+        repositoriesPresenter.githubRepoRepository = githubRepoRepository;
 
         // when
         repositoriesPresenter.attachView(viewContract);
@@ -110,13 +110,13 @@ public class RepositoriesPresenterTest {
     public void getRepositories()
             throws Exception {
         // given
-        List<Repository> repositories = new ArrayList<Repository>() {{
-            add(new Repository());
+        List<GithubRepo> repositories = new ArrayList<GithubRepo>() {{
+            add(new GithubRepo());
         }};
         repositoriesPresenter.repositories = repositories;
 
         // when
-        List<Repository> presenterRepos = repositoriesPresenter.getRepositories();
+        List<GithubRepo> presenterRepos = repositoriesPresenter.getRepositories();
 
         // then
         assertThat(repositories).isEqualTo(presenterRepos);
@@ -126,12 +126,12 @@ public class RepositoriesPresenterTest {
     public void openRepository()
             throws Exception {
         // given
-        Repository repository = new Repository();
-        repository.setUrl("blah");
+        GithubRepo githubRepo = new GithubRepo();
+        githubRepo.setUrl("blah");
         PresenterUtils.setView(repositoriesPresenter, viewContract);
 
         // when
-        repositoriesPresenter.openRepository(repository);
+        repositoriesPresenter.openRepository(githubRepo);
 
         // then
         Mockito.verify(viewContract).openRepository("blah");
@@ -161,7 +161,7 @@ public class RepositoriesPresenterTest {
         repositoriesPresenter.isDownloading = false;
         repositoriesPresenter.getRepositoriesInteractor = getRepositoriesInteractor;
         PresenterUtils.setView(repositoriesPresenter, viewContract);
-        Task<List<Repository>> task = Mockito.mock(Task.class);
+        Task<List<GithubRepo>> task = Mockito.mock(Task.class);
         Mockito.when(getRepositoriesInteractor.getRepositories(RepositoriesPresenter.REPO_NAME, 1)).thenReturn(task);
 
         // when
@@ -175,8 +175,8 @@ public class RepositoriesPresenterTest {
 //    @Test
 //    public void downloadWithNoListSetsListAndUpdates() {
 //        // given
-//        final List<Repository> repositories = new ArrayList<Repository>() {{
-//            add(new Repository());
+//        final List<GithubRepo> repositories = new ArrayList<GithubRepo>() {{
+//            add(new GithubRepo());
 //        }};
 //        repositoriesPresenter.currentPage = 1;
 //        repositoriesPresenter.repositories = null;
@@ -199,11 +199,11 @@ public class RepositoriesPresenterTest {
 //    @Test
 //    public void downloadWithListAddsItemsAndUpdates() {
 //        // given
-//        final List<Repository> originalRepository = new ArrayList<Repository>() {{
-//            add(new Repository());
+//        final List<GithubRepo> originalRepository = new ArrayList<GithubRepo>() {{
+//            add(new GithubRepo());
 //        }};
-//        final Repository newRepository = new Repository();
-//        final List<Repository> newRepositories = new ArrayList<Repository>() {{
+//        final GithubRepo newRepository = new GithubRepo();
+//        final List<GithubRepo> newRepositories = new ArrayList<GithubRepo>() {{
 //            add(newRepository);
 //        }};
 //        repositoriesPresenter.currentPage = 2;
@@ -229,10 +229,10 @@ public class RepositoriesPresenterTest {
 //    @Test
 //    public void downloadingEmptyListSetsDownloadedAll() {
 //        // given
-//        final List<Repository> originalRepository = new ArrayList<Repository>() {{
-//            add(new Repository());
+//        final List<GithubRepo> originalRepository = new ArrayList<GithubRepo>() {{
+//            add(new GithubRepo());
 //        }};
-//        final List<Repository> newRepositories = new ArrayList<Repository>();
+//        final List<GithubRepo> newRepositories = new ArrayList<GithubRepo>();
 //        repositoriesPresenter.currentPage = 2;
 //        repositoriesPresenter.repositories = originalRepository;
 //        repositoriesPresenter.isDownloading = false;

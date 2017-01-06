@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import com.zhuinden.examplegithubclient.application.BoltsExecutors;
 import com.zhuinden.examplegithubclient.application.injection.KeyScope;
 import com.zhuinden.examplegithubclient.data.model.RepositoryDataSource;
-import com.zhuinden.examplegithubclient.data.repository.RepositoryRepository;
-import com.zhuinden.examplegithubclient.domain.data.response.repositories.Repository;
+import com.zhuinden.examplegithubclient.data.repository.GithubRepoRepository;
+import com.zhuinden.examplegithubclient.domain.data.response.repositories.GithubRepo;
 import com.zhuinden.examplegithubclient.domain.interactor.GetRepositoriesInteractor;
 import com.zhuinden.examplegithubclient.util.BasePresenter;
 import com.zhuinden.examplegithubclient.util.BundleFactory;
@@ -33,19 +33,19 @@ public class RepositoriesPresenter
     GetRepositoriesInteractor getRepositoriesInteractor;
 
     @Inject
-    RepositoryRepository repositoryRepository;
+    GithubRepoRepository githubRepoRepository;
 
     @Inject
     public RepositoriesPresenter() {
     }
 
-    List<Repository> repositories;
+    List<GithubRepo> repositories;
 
     RepositoryDataSource.Unbinder unbinder;
 
     @Override
     protected void onAttach() {
-        unbinder = repositoryRepository.subscribe( //
+        unbinder = githubRepoRepository.subscribe( //
                 newRepositories -> {
                     RepositoriesPresenter.this.repositories = newRepositories;
                     updateRepositoriesInView();
@@ -59,7 +59,7 @@ public class RepositoriesPresenter
 
     public interface ViewContract
             extends Presenter.ViewContract {
-        void updateRepositories(List<Repository> repositories);
+        void updateRepositories(List<GithubRepo> repositories);
 
         void openRepository(String url);
     }
@@ -78,7 +78,7 @@ public class RepositoriesPresenter
             isDownloading = true;
             getRepositoriesInteractor.getRepositories(REPO_NAME, currentPage).continueWith(task -> {
                 isDownloading = false;
-                List<Repository> repositories = task.getResult();
+                List<GithubRepo> repositories = task.getResult();
                 if(repositories.size() <= 0) {
                     downloadedAll = true;
                 } else {
@@ -104,12 +104,12 @@ public class RepositoriesPresenter
         }
     }
 
-    public List<Repository> getRepositories() {
+    public List<GithubRepo> getRepositories() {
         return repositories;
     }
 
-    public void openRepository(Repository repository) {
-        view.openRepository(repository.getUrl());
+    public void openRepository(GithubRepo githubRepo) {
+        view.openRepository(githubRepo.getUrl());
     }
 
     public void downloadMore() {

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zhuinden.examplegithubclient.R;
-import com.zhuinden.examplegithubclient.domain.data.response.repositories.Repository;
+import com.zhuinden.examplegithubclient.domain.data.response.repositories.GithubRepo;
 import com.zhuinden.examplegithubclient.util.DaggerService;
 
 import javax.inject.Inject;
@@ -80,11 +80,11 @@ public class RepositoriesAdapter
         @BindView(R.id.repositories_row_text)
         TextView row;
 
-        private Repository repository;
+        private GithubRepo githubRepo;
 
         @OnClick(R.id.repositories_row)
         public void rowClicked() {
-            repositoriesPresenter.openRepository(repository);
+            repositoriesPresenter.openRepository(githubRepo);
         }
 
         public ViewHolder(View itemView) {
@@ -95,9 +95,9 @@ public class RepositoriesAdapter
             repositoriesComponent.inject(this);
         }
 
-        public void bind(Repository repository) {
-            this.repository = repository;
-            row.setText(repository.getName());
+        public void bind(GithubRepo githubRepo) {
+            this.githubRepo = githubRepo;
+            row.setText(githubRepo.getName());
         }
     }
 

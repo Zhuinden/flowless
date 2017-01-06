@@ -3,8 +3,8 @@ package com.zhuinden.examplegithubclient.data.repository.impl;
 import com.zhuinden.examplegithubclient.application.injection.ActivityScope;
 import com.zhuinden.examplegithubclient.data.model.DataSource;
 import com.zhuinden.examplegithubclient.data.model.RepositoryDataSource;
-import com.zhuinden.examplegithubclient.data.repository.RepositoryRepository;
-import com.zhuinden.examplegithubclient.domain.data.response.repositories.Repository;
+import com.zhuinden.examplegithubclient.data.repository.GithubRepoRepository;
+import com.zhuinden.examplegithubclient.domain.data.response.repositories.GithubRepo;
 
 import java.util.List;
 
@@ -14,27 +14,27 @@ import javax.inject.Inject;
  * Created by Zhuinden on 2017.01.02..
  */
 @ActivityScope
-public class RepositoryRepositoryInMemoryImpl
-        implements RepositoryRepository {
+public class GithubRepoRepositoryInMemoryImpl
+        implements GithubRepoRepository {
     @Inject
     RepositoryDataSource repositoryDataSource;
 
     @Inject
-    public RepositoryRepositoryInMemoryImpl() {
+    public GithubRepoRepositoryInMemoryImpl() {
     }
 
     @Override
-    public DataSource.Unbinder subscribe(DataSource.ChangeListener<Repository> changeListener) {
+    public DataSource.Unbinder subscribe(DataSource.ChangeListener<GithubRepo> changeListener) {
         return repositoryDataSource.registerChangeListener(changeListener);
     }
 
     @Override
-    public Repository findOne(Integer id) {
+    public GithubRepo findOne(Integer id) {
         return repositoryDataSource.search(repositories -> {
             if(repositories != null) {
-                for(Repository repository : repositories) {
-                    if(repository.getId().equals(id)) {
-                        return repository;
+                for(GithubRepo githubRepo : repositories) {
+                    if(githubRepo.getId().equals(id)) {
+                        return githubRepo;
                     }
                 }
             }
@@ -43,23 +43,23 @@ public class RepositoryRepositoryInMemoryImpl
     }
 
     @Override
-    public List<Repository> findAll() {
+    public List<GithubRepo> findAll() {
         return repositoryDataSource.search(immutableRepositories -> immutableRepositories);
     }
 
     @Override
-    public Repository saveOrUpdate(final Repository repository) {
-        if(repository == null) {
+    public GithubRepo saveOrUpdate(final GithubRepo githubRepo) {
+        if(githubRepo == null) {
             throw new NullPointerException();
         }
         return repositoryDataSource.modify(mutableRepositories -> {
-            mutableRepositories.add(repository);
-            return repository;
+            mutableRepositories.add(githubRepo);
+            return githubRepo;
         });
     }
 
     @Override
-    public List<Repository> saveOrUpdate(List<Repository> items) {
+    public List<GithubRepo> saveOrUpdate(List<GithubRepo> items) {
         if(items == null) {
             throw new NullPointerException();
         }
@@ -70,27 +70,27 @@ public class RepositoryRepositoryInMemoryImpl
     }
 
     @Override
-    public Repository delete(Repository repository) {
-        if(repository == null) {
+    public GithubRepo delete(GithubRepo githubRepo) {
+        if(githubRepo == null) {
             return null;
         }
-        return repositoryDataSource.modify(mutableRepositories -> delete(repository.getId()));
+        return repositoryDataSource.modify(mutableRepositories -> delete(githubRepo.getId()));
     }
 
     @Override
-    public Repository delete(Integer id) {
+    public GithubRepo delete(Integer id) {
         if(id == null) {
             return null;
         }
         return repositoryDataSource.modify(mutableRepositories -> {
-            Repository _repository = findOne(id);
-            mutableRepositories.remove(_repository);
-            return _repository;
+            GithubRepo _githubRepo = findOne(id);
+            mutableRepositories.remove(_githubRepo);
+            return _githubRepo;
         });
     }
 
     @Override
-    public List<Repository> delete(List<Repository> items) {
+    public List<GithubRepo> delete(List<GithubRepo> items) {
         if(items == null) {
             throw new NullPointerException();
         }
@@ -106,12 +106,12 @@ public class RepositoryRepositoryInMemoryImpl
     }
 
     @Override
-    public Repository findByUrl(String url) {
+    public GithubRepo findByUrl(String url) {
         return repositoryDataSource.search(repositories -> {
             if(repositories != null) {
-                for(Repository repository : repositories) {
-                    if(repository.getUrl().equals(url)) {
-                        return repository;
+                for(GithubRepo githubRepo : repositories) {
+                    if(githubRepo.getUrl().equals(url)) {
+                        return githubRepo;
                     }
                 }
             }
