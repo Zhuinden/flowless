@@ -2,7 +2,7 @@ package com.zhuinden.examplegithubclient.data.repository.impl;
 
 import com.zhuinden.examplegithubclient.application.injection.ActivityScope;
 import com.zhuinden.examplegithubclient.data.model.DataSource;
-import com.zhuinden.examplegithubclient.data.model.RepositoryDataSource;
+import com.zhuinden.examplegithubclient.data.model.GithubRepoDataSource;
 import com.zhuinden.examplegithubclient.data.repository.GithubRepoRepository;
 import com.zhuinden.examplegithubclient.domain.data.response.repositories.GithubRepo;
 
@@ -17,7 +17,7 @@ import javax.inject.Inject;
 public class GithubRepoRepositoryInMemoryImpl
         implements GithubRepoRepository {
     @Inject
-    RepositoryDataSource repositoryDataSource;
+    GithubRepoDataSource githubRepoDataSource;
 
     @Inject
     public GithubRepoRepositoryInMemoryImpl() {
@@ -25,12 +25,12 @@ public class GithubRepoRepositoryInMemoryImpl
 
     @Override
     public DataSource.Unbinder subscribe(DataSource.ChangeListener<GithubRepo> changeListener) {
-        return repositoryDataSource.registerChangeListener(changeListener);
+        return githubRepoDataSource.registerChangeListener(changeListener);
     }
 
     @Override
     public GithubRepo findOne(Integer id) {
-        return repositoryDataSource.search(repositories -> {
+        return githubRepoDataSource.search(repositories -> {
             if(repositories != null) {
                 for(GithubRepo githubRepo : repositories) {
                     if(githubRepo.getId().equals(id)) {
@@ -44,7 +44,7 @@ public class GithubRepoRepositoryInMemoryImpl
 
     @Override
     public List<GithubRepo> findAll() {
-        return repositoryDataSource.search(immutableRepositories -> immutableRepositories);
+        return githubRepoDataSource.search(immutableRepositories -> immutableRepositories);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class GithubRepoRepositoryInMemoryImpl
         if(githubRepo == null) {
             throw new NullPointerException();
         }
-        return repositoryDataSource.modify(mutableRepositories -> {
+        return githubRepoDataSource.modify(mutableRepositories -> {
             mutableRepositories.add(githubRepo);
             return githubRepo;
         });
@@ -63,7 +63,7 @@ public class GithubRepoRepositoryInMemoryImpl
         if(items == null) {
             throw new NullPointerException();
         }
-        return repositoryDataSource.modify(mutableRepositories -> {
+        return githubRepoDataSource.modify(mutableRepositories -> {
             mutableRepositories.addAll(items);
             return items;
         });
@@ -74,7 +74,7 @@ public class GithubRepoRepositoryInMemoryImpl
         if(githubRepo == null) {
             return null;
         }
-        return repositoryDataSource.modify(mutableRepositories -> delete(githubRepo.getId()));
+        return githubRepoDataSource.modify(mutableRepositories -> delete(githubRepo.getId()));
     }
 
     @Override
@@ -82,7 +82,7 @@ public class GithubRepoRepositoryInMemoryImpl
         if(id == null) {
             return null;
         }
-        return repositoryDataSource.modify(mutableRepositories -> {
+        return githubRepoDataSource.modify(mutableRepositories -> {
             GithubRepo _githubRepo = findOne(id);
             mutableRepositories.remove(_githubRepo);
             return _githubRepo;
@@ -94,7 +94,7 @@ public class GithubRepoRepositoryInMemoryImpl
         if(items == null) {
             throw new NullPointerException();
         }
-        return repositoryDataSource.modify(mutableRepositories -> {
+        return githubRepoDataSource.modify(mutableRepositories -> {
             mutableRepositories.removeAll(items);
             return items;
         });
@@ -102,12 +102,12 @@ public class GithubRepoRepositoryInMemoryImpl
 
     @Override
     public long count() {
-        return repositoryDataSource.search(immutableRepositories -> ((Integer) immutableRepositories.size()).longValue());
+        return githubRepoDataSource.search(immutableRepositories -> ((Integer) immutableRepositories.size()).longValue());
     }
 
     @Override
     public GithubRepo findByUrl(String url) {
-        return repositoryDataSource.search(repositories -> {
+        return githubRepoDataSource.search(repositories -> {
             if(repositories != null) {
                 for(GithubRepo githubRepo : repositories) {
                     if(githubRepo.getUrl().equals(url)) {

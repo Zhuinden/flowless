@@ -13,10 +13,10 @@ import javax.inject.Inject;
  * Created by Owner on 2016.12.26.
  */
 @ActivityScope
-public class RepositoryDataSource
+public class GithubRepoDataSource
         extends BaseDataSource<GithubRepo> {
     @Inject
-    public RepositoryDataSource() {
+    public GithubRepoDataSource() {
     }
 
     private List<GithubRepo> repositories = Collections.synchronizedList(new ArrayList<>());

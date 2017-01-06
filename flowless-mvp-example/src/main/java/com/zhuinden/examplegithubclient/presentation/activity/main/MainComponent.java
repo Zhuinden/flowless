@@ -6,7 +6,7 @@ import com.zhuinden.examplegithubclient.application.injection.modules.OkHttpModu
 import com.zhuinden.examplegithubclient.application.injection.modules.RepositoryModule;
 import com.zhuinden.examplegithubclient.application.injection.modules.RetrofitModule;
 import com.zhuinden.examplegithubclient.application.injection.modules.ServiceModule;
-import com.zhuinden.examplegithubclient.data.model.RepositoryDataSource;
+import com.zhuinden.examplegithubclient.data.model.GithubRepoDataSource;
 import com.zhuinden.examplegithubclient.data.repository.GithubRepoRepository;
 import com.zhuinden.examplegithubclient.domain.interactor.GetRepositoriesInteractor;
 import com.zhuinden.examplegithubclient.domain.interactor.LoginInteractor;
@@ -43,7 +43,7 @@ public interface MainComponent {
 
     LoginInteractor loginInteractor();
 
-    RepositoryDataSource repositoryDataSource();
+    GithubRepoDataSource repositoryDataSource();
 
     GithubRepoRepository repositoryRepository();
 

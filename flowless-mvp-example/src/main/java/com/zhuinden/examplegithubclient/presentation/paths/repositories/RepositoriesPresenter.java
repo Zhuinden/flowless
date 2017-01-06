@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.zhuinden.examplegithubclient.application.BoltsExecutors;
 import com.zhuinden.examplegithubclient.application.injection.KeyScope;
-import com.zhuinden.examplegithubclient.data.model.RepositoryDataSource;
+import com.zhuinden.examplegithubclient.data.model.GithubRepoDataSource;
 import com.zhuinden.examplegithubclient.data.repository.GithubRepoRepository;
 import com.zhuinden.examplegithubclient.domain.data.response.repositories.GithubRepo;
 import com.zhuinden.examplegithubclient.domain.interactor.GetRepositoriesInteractor;
@@ -41,7 +41,7 @@ public class RepositoriesPresenter
 
     List<GithubRepo> repositories;
 
-    RepositoryDataSource.Unbinder unbinder;
+    GithubRepoDataSource.Unbinder unbinder;
 
     @Override
     protected void onAttach() {
