@@ -26,7 +26,7 @@ public abstract class FlowlessActivity
                 .globalKey(getGlobalKey()) //
                 .dispatcher(this) //
                 .install(); //
-        transitionDispatcher.setBaseContext(newBase);
+        transitionDispatcher.setBaseContext(this);
         super.attachBaseContext(newBase);
     }
 

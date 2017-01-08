@@ -2,7 +2,6 @@ package com.zhuinden.flow_alpha_master_detail;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +10,7 @@ import android.widget.FrameLayout;
 
 import com.zhuinden.flow_alpha_master_detail.extracted.ExampleDispatcher;
 
+import flowless.ActivityUtils;
 import flowless.Dispatcher;
 import flowless.Traversal;
 import flowless.TraversalCallback;
@@ -49,7 +49,7 @@ public class SinglePaneContainer
     private void init() {
         singleRootDispatcher = new ExampleDispatcher();
         singleRootDispatcher.getRootHolder().setRoot(this);
-        singleRootDispatcher.setBaseContext(((ContextWrapper)getContext()).getBaseContext());
+        singleRootDispatcher.setBaseContext(ActivityUtils.getActivity(getContext()));
     }
 
     @Override

@@ -28,7 +28,7 @@ public class MainActivity
                 .defaultKey(SceneMainDefaultKey.create())
                 .dispatcher(transitionDispatcher)
                 .install();
-        transitionDispatcher.setBaseContext(newBase);
+        transitionDispatcher.setBaseContext(this);
         super.attachBaseContext(newBase);
     }
 

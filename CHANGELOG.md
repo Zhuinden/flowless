@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Flowless Version 1.0-RC2 *(2017-01-08)*
+---------------------------------------------
+* Fix: Make `ActivityUtils.getActivity()` work if provided `baseContext` is not `InternalContextWrapper`
+* Enhancement: ˙samples to use `setBaseContext(Activity)` to properly support `AppCompat*` inflation
+
 Flowless Version 1.0-RC1 *(2017-01-04)*
 ---------------------------------------------
 * Added: `KeyManager.isKeyRegistered()`

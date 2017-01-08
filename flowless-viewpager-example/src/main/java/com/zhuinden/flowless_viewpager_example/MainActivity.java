@@ -28,7 +28,7 @@ public class MainActivity
                 .defaultKey(FirstKey.create()) //
                 .dispatcher(flowDispatcher) //
                 .install(); //
-        flowDispatcher.setBaseContext(newBase);
+        flowDispatcher.setBaseContext(this);
         super.attachBaseContext(newBase);
     }
 
