@@ -1,12 +1,13 @@
 package com.zhuinden.examplegithubclient.domain.interactor.impl;
 
-import com.zhuinden.examplegithubclient.application.BoltsExecutors;
 import com.zhuinden.examplegithubclient.application.injection.ActivityScope;
 import com.zhuinden.examplegithubclient.domain.interactor.LoginInteractor;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
-import bolts.Task;
+import io.reactivex.Single;
 
 /**
  * Created by Zhuinden on 2016.12.18..
@@ -20,10 +21,7 @@ public class LoginInteractorImpl
     }
 
     @Override
-    public Task<Boolean> login(String username, String password) {
-        return Task.call(() -> {
-            Thread.sleep(3250); // simulate login
-            return true;
-        }, BoltsExecutors.BACKGROUND_THREAD);
+    public Single<Boolean> login(String username, String password) {
+        return Single.just(true).delay(3250, TimeUnit.MILLISECONDS);
     }
 }

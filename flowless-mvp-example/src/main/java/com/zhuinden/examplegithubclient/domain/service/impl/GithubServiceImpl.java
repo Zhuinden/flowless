@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import bolts.Task;
+import io.reactivex.Single;
 
 /**
  * Created by Owner on 2016.12.10.
@@ -26,12 +26,12 @@ public class GithubServiceImpl
     }
 
     @Override
-    public Task<List<Organization>> getOrganizations(String user) {
+    public Single<List<Organization>> getOrganizations(String user) {
         return retrofitGithubService.getOrganizations(user);
     }
 
     @Override
-    public Task<List<GithubRepo>> getRepositories(String user, int page) {
+    public Single<List<GithubRepo>> getRepositories(String user, int page) {
         return retrofitGithubService.getRepositories(user, page);
     }
 }

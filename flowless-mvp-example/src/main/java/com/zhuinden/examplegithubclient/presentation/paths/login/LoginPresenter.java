@@ -3,7 +3,6 @@ package com.zhuinden.examplegithubclient.presentation.paths.login;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.zhuinden.examplegithubclient.application.BoltsExecutors;
 import com.zhuinden.examplegithubclient.application.injection.KeyScope;
 import com.zhuinden.examplegithubclient.domain.interactor.LoginInteractor;
 import com.zhuinden.examplegithubclient.util.BasePresenter;
@@ -11,8 +10,8 @@ import com.zhuinden.examplegithubclient.util.BundleFactory;
 
 import javax.inject.Inject;
 
-import bolts.Continuation;
 import flowless.Bundleable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by Zhuinden on 2016.12.18..
@@ -71,19 +70,15 @@ public class LoginPresenter
 
     public void login() {
         showLoading();
-        loginInteractor.login(username, password).continueWith(loginCallback, BoltsExecutors.UI_THREAD);
+        loginInteractor.login(username, password).observeOn(AndroidSchedulers.mainThread()).subscribe(result -> {
+            hideLoading();
+            if(result) {
+                view.handleLoginSuccess(); // can View be null here?
+            } else {
+                view.handleLoginError();
+            }
+        });
     }
-
-    Continuation<Boolean, Object> loginCallback = task -> {
-        hideLoading();
-        Boolean result = task.getResult();
-        if(result) {
-            view.handleLoginSuccess(); // can View be null here?
-        } else {
-            view.handleLoginError();
-        }
-        return null;
-    };
 
     private void showLoading() {
         isLoading = true;

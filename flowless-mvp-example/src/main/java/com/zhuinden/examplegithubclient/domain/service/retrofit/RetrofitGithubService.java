@@ -5,7 +5,7 @@ import com.zhuinden.examplegithubclient.domain.data.response.repositories.Github
 
 import java.util.List;
 
-import bolts.Task;
+import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -16,8 +16,8 @@ import retrofit2.http.Query;
 
 public interface RetrofitGithubService {
     @GET("orgs/{user}/repos")
-    Task<List<Organization>> getOrganizations(@Path("user") String user);
+    Single<List<Organization>> getOrganizations(@Path("user") String user);
 
     @GET("users/{user}/repos")
-    Task<List<GithubRepo>> getRepositories(@Path("user") String user, @Query("page") int page);
+    Single<List<GithubRepo>> getRepositories(@Path("user") String user, @Query("page") int page);
 }
