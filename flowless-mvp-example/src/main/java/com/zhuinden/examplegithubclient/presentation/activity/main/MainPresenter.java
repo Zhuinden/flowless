@@ -86,6 +86,11 @@ public class MainPresenter
         } else {
             hideDrawerToggle();
         }
+        if(leftDrawerEnabled) {
+            enableLeftDrawer();
+        } else {
+            disableLeftDrawer();
+        }
     }
 
     public void setTitle(int title) {

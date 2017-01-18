@@ -3,7 +3,6 @@ package com.zhuinden.examplegithubclient.presentation.paths.login;
 import android.os.Bundle;
 
 import com.zhuinden.examplegithubclient.domain.interactor.LoginInteractor;
-import com.zhuinden.examplegithubclient.util.BoltsConfig;
 import com.zhuinden.examplegithubclient.util.BundleFactory;
 import com.zhuinden.examplegithubclient.util.BundleFactoryConfig;
 import com.zhuinden.examplegithubclient.util.PresenterUtils;
@@ -16,7 +15,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
-import bolts.Task;
+import io.reactivex.Single;
+import io.reactivex.android.plugins.RxAndroidPlugins;
+import io.reactivex.schedulers.Schedulers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,8 +39,9 @@ public class LoginPresenterTest {
     @Before
     public void init() {
         loginPresenter = new LoginPresenter();
-        BoltsConfig.configureMocks();
+        // BoltsConfig.configureMocks();
         BundleFactoryConfig.setProvider(() -> Mockito.mock(Bundle.class));
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler(schedulerCallable -> Schedulers.trampoline());
     }
 
     @Test
@@ -111,7 +113,7 @@ public class LoginPresenterTest {
         loginPresenter.loginInteractor = loginInteractor;
         PresenterUtils.setView(loginPresenter, viewContract);
 
-        Task<Boolean> task = Mockito.mock(Task.class);
+        Single<Boolean> task = Mockito.mock(Single.class);
         Mockito.when(loginInteractor.login("Hello", "World")).thenReturn(task);
 
         // when
@@ -127,7 +129,7 @@ public class LoginPresenterTest {
         // given
         loginPresenter.username = "Hello";
         loginPresenter.password = "World";
-        loginPresenter.loginInteractor = (username, password) -> Task.call(() -> true);
+        loginPresenter.loginInteractor = (username, password) -> Single.just(true);
         PresenterUtils.setView(loginPresenter, viewContract);
 
         // when
@@ -145,7 +147,7 @@ public class LoginPresenterTest {
         // given
         loginPresenter.username = "Hello";
         loginPresenter.password = "World";
-        loginPresenter.loginInteractor = (username, password) -> Task.call(() -> false);
+        loginPresenter.loginInteractor = (username, password) -> Single.just(false);
         PresenterUtils.setView(loginPresenter, viewContract);
 
         // when

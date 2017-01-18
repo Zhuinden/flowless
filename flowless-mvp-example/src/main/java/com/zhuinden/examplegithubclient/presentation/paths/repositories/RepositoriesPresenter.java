@@ -3,7 +3,6 @@ package com.zhuinden.examplegithubclient.presentation.paths.repositories;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.zhuinden.examplegithubclient.application.BoltsExecutors;
 import com.zhuinden.examplegithubclient.application.injection.KeyScope;
 import com.zhuinden.examplegithubclient.data.model.GithubRepoDataSource;
 import com.zhuinden.examplegithubclient.data.repository.GithubRepoRepository;
@@ -18,6 +17,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import flowless.Bundleable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by Zhuinden on 2016.12.18..
@@ -76,16 +76,16 @@ public class RepositoriesPresenter
     private void downloadPage() {
         if(!downloadedAll) {
             isDownloading = true;
-            getRepositoriesInteractor.getRepositories(REPO_NAME, currentPage).continueWith(task -> {
+            getRepositoriesInteractor.getRepositories(REPO_NAME, currentPage)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(repositories -> {
                 isDownloading = false;
-                List<GithubRepo> repositories = task.getResult();
                 if(repositories.size() <= 0) {
                     downloadedAll = true;
                 } else {
                     currentPage++;
                 }
-                return null;
-            }, BoltsExecutors.UI_THREAD);
+                    });
         }
     }
 

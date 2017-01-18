@@ -1,11 +1,12 @@
 package com.zhuinden.examplegithubclient.data.model;
 
-import com.zhuinden.examplegithubclient.application.BoltsExecutors;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by Zhuinden on 2017.01.02..
@@ -32,7 +33,9 @@ public abstract class BaseDataSource<M>
 
     public <R> R modify(Modify<R, M> modify) {
         R m = modify.modify(getData());
-        BoltsExecutors.UI_THREAD.execute(this::notifyChangeListeners);
+        Single.fromCallable(() -> true).subscribeOn(AndroidSchedulers.mainThread()).subscribe(ignored -> {
+            notifyChangeListeners();
+        });
         return m;
     }
 

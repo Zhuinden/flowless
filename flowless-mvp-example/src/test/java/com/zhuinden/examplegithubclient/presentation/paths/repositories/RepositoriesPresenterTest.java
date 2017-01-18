@@ -3,7 +3,6 @@ package com.zhuinden.examplegithubclient.presentation.paths.repositories;
 import com.zhuinden.examplegithubclient.data.repository.GithubRepoRepository;
 import com.zhuinden.examplegithubclient.domain.data.response.repositories.GithubRepo;
 import com.zhuinden.examplegithubclient.domain.interactor.GetRepositoriesInteractor;
-import com.zhuinden.examplegithubclient.util.BoltsConfig;
 import com.zhuinden.examplegithubclient.util.PresenterUtils;
 
 import org.junit.Before;
@@ -17,7 +16,9 @@ import org.mockito.junit.MockitoRule;
 import java.util.ArrayList;
 import java.util.List;
 
-import bolts.Task;
+import io.reactivex.Single;
+import io.reactivex.android.plugins.RxAndroidPlugins;
+import io.reactivex.schedulers.Schedulers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,7 +43,8 @@ public class RepositoriesPresenterTest {
     @Before
     public void init() {
         repositoriesPresenter = new RepositoriesPresenter();
-        BoltsConfig.configureMocks();
+        // BoltsConfig.configureMocks();
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler(schedulerCallable -> Schedulers.trampoline());
     }
 
     @Test
@@ -71,7 +73,7 @@ public class RepositoriesPresenterTest {
         repositoriesPresenter.currentPage = 1;
         repositoriesPresenter.getRepositoriesInteractor = getRepositoriesInteractor;
         repositoriesPresenter.githubRepoRepository = githubRepoRepository;
-        Task<List<GithubRepo>> task = Mockito.mock(Task.class);
+        Single<List<GithubRepo>> task = Mockito.mock(Single.class);
         Mockito.when(getRepositoriesInteractor.getRepositories(RepositoriesPresenter.REPO_NAME, 1)).thenReturn(task);
 
 
@@ -161,7 +163,7 @@ public class RepositoriesPresenterTest {
         repositoriesPresenter.isDownloading = false;
         repositoriesPresenter.getRepositoriesInteractor = getRepositoriesInteractor;
         PresenterUtils.setView(repositoriesPresenter, viewContract);
-        Task<List<GithubRepo>> task = Mockito.mock(Task.class);
+        Single<List<GithubRepo>> task = Mockito.mock(Single.class);
         Mockito.when(getRepositoriesInteractor.getRepositories(RepositoriesPresenter.REPO_NAME, 1)).thenReturn(task);
 
         // when
