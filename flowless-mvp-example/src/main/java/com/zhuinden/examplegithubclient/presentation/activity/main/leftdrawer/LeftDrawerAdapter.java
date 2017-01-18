@@ -57,7 +57,7 @@ public class LeftDrawerAdapter
             Object newKey = leftDrawerItem.getKeyCreator().createKey();
             MainComponent component = DaggerService.getGlobalComponent(context);
             MainPresenter mainPresenter = component.mainPresenter();
-            mainPresenter.goToKey(Flow.get(view), newKey);
+            mainPresenter.goToKey(newKey);
         }
 
         public LeftDrawerViewHolder(View itemView) {

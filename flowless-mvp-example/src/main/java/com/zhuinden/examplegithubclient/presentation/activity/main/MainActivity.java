@@ -46,11 +46,12 @@ public class MainActivity
             return;
         }
         didInject = true;
+        Flow flow = Flow.get(getBaseContext());
         ServiceProvider serviceProvider = ServiceProvider.get(getBaseContext());
         MainKey mainKey = Flow.getKey(getBaseContext());
         MainComponent mainComponent;
         if(!serviceProvider.hasService(mainKey, DaggerService.TAG)) {
-            mainComponent = MainComponentConfig.create();
+            mainComponent = MainComponentConfig.create(flow);
             serviceProvider.bindService(mainKey, DaggerService.TAG, mainComponent);
         } else {
             mainComponent = DaggerService.getGlobalComponent(getBaseContext());

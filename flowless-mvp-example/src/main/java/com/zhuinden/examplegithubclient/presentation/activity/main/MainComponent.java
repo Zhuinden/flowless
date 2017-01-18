@@ -2,6 +2,7 @@ package com.zhuinden.examplegithubclient.presentation.activity.main;
 
 import com.zhuinden.examplegithubclient.application.injection.ActivityScope;
 import com.zhuinden.examplegithubclient.application.injection.modules.InteractorModule;
+import com.zhuinden.examplegithubclient.application.injection.modules.NavigationModule;
 import com.zhuinden.examplegithubclient.application.injection.modules.OkHttpModule;
 import com.zhuinden.examplegithubclient.application.injection.modules.RepositoryModule;
 import com.zhuinden.examplegithubclient.application.injection.modules.RetrofitModule;
@@ -16,6 +17,9 @@ import com.zhuinden.examplegithubclient.domain.service.retrofit.RetrofitGithubSe
 import com.zhuinden.examplegithubclient.util.AnnotationCache;
 
 import dagger.Component;
+import flowless.Flow;
+import flowless.KeyManager;
+import flowless.ServiceProvider;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
@@ -23,8 +27,14 @@ import retrofit2.Retrofit;
  * Created by Owner on 2016.12.10.
  */
 @ActivityScope
-@Component(modules = {OkHttpModule.class, RetrofitModule.class, InteractorModule.class, RepositoryModule.class, ServiceModule.class})
+@Component(modules = {OkHttpModule.class, RetrofitModule.class, InteractorModule.class, NavigationModule.class, RepositoryModule.class, ServiceModule.class})
 public interface MainComponent {
+    Flow flow();
+
+    ServiceProvider serviceProvider();
+
+    KeyManager keyManager();
+
     HeaderInterceptor headerInterceptor();
 
     AnnotationCache annotationCache();
