@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhuinden.examplegithubclient.presentation.views.leftdrawer.LeftDrawerView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhuinden.examplegithubclient.presentation.activity.main.leftdrawer.LeftDrawerView xmlns:android="http://schemas.android.com/apk/res/android"
                                                                                android:layout_width="@dimen/_200sdp"
                                                                                android:layout_height="match_parent"
                                                                                android:clickable="true"
@@ -13,4 +13,4 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@color/primary_dark"/>
-</com.zhuinden.examplegithubclient.presentation.views.leftdrawer.LeftDrawerView>
+</com.zhuinden.examplegithubclient.presentation.activity.main.leftdrawer.LeftDrawerView>

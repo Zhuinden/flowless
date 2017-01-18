@@ -1,4 +1,4 @@
-package com.zhuinden.examplegithubclient.presentation.views.leftdrawer;
+package com.zhuinden.examplegithubclient.presentation.activity.main.leftdrawer;
 
 import android.annotation.TargetApi;
 import android.content.Context;
