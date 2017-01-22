@@ -85,7 +85,7 @@ public class RepositoriesPresenter
                 } else {
                     currentPage++;
                 }
-                    });
+            });
         }
     }
 
