@@ -339,7 +339,7 @@ while(aElements.hasNext() && bElements.hasNext()) {
 }
 while(aElements.hasNext()) {
     BaseKey aElement = (BaseKey) aElements.next();
-    serviceProvider.unbindServices(aElements.next()); // returns map of bound services
+    serviceProvider.unbindServices(aElement); // returns map of bound services
 }
 // end destroyNotIn
 
