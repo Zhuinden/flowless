@@ -1,3 +1,19 @@
+# [DEPRECATED]
+
+Deprecated in favor of [Simple-Stack](https://github.com/Zhuinden/simple-stack).
+
+Due to the way Flow initializes itself, the Backstack cannot be accessed before the bootstrap traversal, and doesn't exist before `onPostCreate()`.
+
+That, and restoring application state from a `History` added to an `Intent` using `Flow.addHistoryToIntent()` is a nightmare in terms of extendability, and this is entirely because only Flow's internal classes know how to restore the backstack from an intent directly.
+
+A migration guide (along with the motivation behind the change) is available [here](https://github.com/square/flow/issues/225#issuecomment-277508674).
+
+`BackstackDelegate` has since been replaced (for most use-cases) with `Navigator`.
+
+For replacing `ServiceFactory` and `MultiKey`/`TreeKey`, refer to the `nestedstack` example, with the help of `zhuinden/service-tree` library.
+
+-----------------------------
+
 # Flow(less)
 
 _"Name-giving will be the foundation of our science."_ - Linnaeus
