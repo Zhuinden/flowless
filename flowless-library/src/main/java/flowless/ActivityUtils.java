@@ -8,18 +8,15 @@ import android.content.ContextWrapper;
  * Created by Zhuinden on 2016.05.26..
  */
 public class ActivityUtils {
-    public static final String ACTIVITY_SERVICE_TAG = "flowless.ACTIVITY";
-
     public static Activity getActivity(Context context) {
-        if(context instanceof Activity) {
+        if (context instanceof Activity) {
             return (Activity) context;
-        } else if(context instanceof ContextWrapper) {
-            if(context instanceof FlowContextWrapper || context instanceof InternalContextWrapper) {
-                return InternalContextWrapper.getActivity(context);
-            } else {
-                Context baseContext = ((ContextWrapper) context).getBaseContext();
-                if(baseContext instanceof Activity) {
-                    return (Activity) baseContext;
+        } else if (context instanceof ContextWrapper) {
+            Context contextWrapper = context;
+            while (contextWrapper instanceof ContextWrapper && ((ContextWrapper) context).getBaseContext() != null) {
+                contextWrapper = ((ContextWrapper) contextWrapper).getBaseContext();
+                if (contextWrapper instanceof Activity) {
+                    return (Activity) contextWrapper;
                 }
             }
         }
