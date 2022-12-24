@@ -10,8 +10,7 @@ A migration guide (along with the motivation behind the change) is available [he
 
 `BackstackDelegate` has since been replaced (for most use-cases) with `Navigator`.
 
-For replacing `ServiceFactory` and `MultiKey`/`TreeKey`, refer to the `nestedstack` example, with the help of `zhuinden/service-tree` library.
-
+For replacing `ServiceFactory` and `MultiKey`/`TreeKey`, use `ScopedServices` and `ScopeKey`/`ScopeKey.Child`.
 -----------------------------
 
 # Flow(less)
